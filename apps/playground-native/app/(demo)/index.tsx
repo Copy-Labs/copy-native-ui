@@ -1,19 +1,9 @@
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Card,
   Checkbox,
-  Code,
   Flex,
-  Heading,
-  RadioGroup,
   Select,
-  Strong,
-  Switch,
   Text,
   TextArea,
   TextField,
@@ -35,45 +25,58 @@ export default function App() {
         mode={'light'}
         themeOptions={{ accentColor: 'blue', radiusFactor: 4, scaling: 1 }}
       >
-        <SafeAreaView style={{ flex: 1 }}>
-          <Flex direction={'column'} gap={4} paddingVertical={12}>
-            <Text align={'center'} size={8} weight={'bold'}>
-              Radix-UI Native
-            </Text>
-            <Text color={'gray'} align={'center'} size={4}>
-              Playground App for Testing Components
-            </Text>
-            <Text color={'ruby'} align={'center'} size={3}>
-              All you see in this app is built using Radix-UI Native
-            </Text>
-          </Flex>
-          <Flex direction={'column'} gap={16} paddingHorizontal={8}>
-            <Link href={'/buttons'}>
-              <Text size={4}>Buttons</Text>
-            </Link>
-            <Link href={'/badge'}>
-              <Text size={4}>Badge</Text>
-            </Link>
-            <Link href={'/switch'}>
-              <Text size={4}>Switch</Text>
-            </Link>
-            <Link href={'/card'}>
-              <Text size={4}>Card</Text>
-            </Link>
-            <Link href={'/radio'}>
-              <Text size={4}>Radio</Text>
-            </Link>
-            <Link href={'/text_fields'}>
-              <Text size={4}>Text Fields</Text>
-            </Link>
-            <Link href={'/textarea'}>
-              <Text size={4}>Text Area</Text>
-            </Link>
-            <Link href={'/heading'}>
-              <Text size={4}>Heading</Text>
-            </Link>
-          </Flex>
-        </SafeAreaView>
+        <Flex direction={'column'} gap={4} paddingVertical={16}>
+          <Text align={'center'} size={8} weight={'bold'}>
+            Radix-UI Native
+          </Text>
+          <Text color={'gray'} align={'center'} size={4}>
+            Playground App for Testing Components
+          </Text>
+          <Text color={'ruby'} align={'center'} size={3}>
+            All you see in this app is built using Radix-UI Native
+          </Text>
+        </Flex>
+        <Flex direction={'column'} gap={16} paddingHorizontal={8}>
+          <Link href={'/buttons'}>
+            <Text size={4}>Buttons</Text>
+          </Link>
+          <Link href={'/badge'}>
+            <Text size={4}>Badge</Text>
+          </Link>
+          <Link href={'/switch'}>
+            <Text size={4}>Switch</Text>
+          </Link>
+          <Link href={'/card'}>
+            <Text size={4}>Card</Text>
+          </Link>
+          <Link href={'/radio'}>
+            <Text size={4}>Radio</Text>
+          </Link>
+          <Link href={'/text_fields'}>
+            <Text size={4}>Text Fields</Text>
+          </Link>
+          <Link href={'/textarea'}>
+            <Text size={4}>Text Area</Text>
+          </Link>
+          <Link href={'/heading'}>
+            <Text size={4}>Heading</Text>
+          </Link>
+          <Link href={'/text'}>
+            <Text size={4}>text</Text>
+          </Link>
+          <Link href={'/code'}>
+            <Text size={4}>code</Text>
+          </Link>
+          <Link href={'/em'}>
+            <Text size={4}>em</Text>
+          </Link>
+          <Link href={'/kbd'}>
+            <Text size={4}>kbd</Text>
+          </Link>
+          <Link href={'/strong'}>
+            <Text size={4}>strong</Text>
+          </Link>
+        </Flex>
       </ThemeProvider>
 
       <ThemeProvider
