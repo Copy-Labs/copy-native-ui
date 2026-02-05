@@ -89,7 +89,7 @@ const Table = <T extends Record<string, any>>({
   const grayAlpha = getGrayAlpha(theme);
 
   const tableStyle: ViewStyle = {
-    borderRadius: theme.radii[2],
+    borderRadius: theme.radii.medium,
     overflow: 'hidden',
   };
 

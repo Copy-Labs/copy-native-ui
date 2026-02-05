@@ -25,7 +25,7 @@ export default function App() {
       {/*<SafeAreaView>*/}
       <ThemeProvider
         mode={'light'}
-        themeOptions={{ accentColor: 'blue', radiusFactor: 4, scaling: 1 }}
+        themeOptions={{ accentColor: 'blue', scaling: 1 }}
       >
         <Flex direction={'column'} gap={4} paddingVertical={16}>
           <Text align={'center'} size={8} weight={'bold'}>

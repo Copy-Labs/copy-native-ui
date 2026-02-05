@@ -97,7 +97,7 @@ const TextField = React.forwardRef<React.ComponentRef<typeof RNTextInput>, TextF
             fontSize: theme.typography.fontSizes[1].fontSize,
             paddingVertical: theme.space[2],
             paddingHorizontal: theme.space[3],
-            borderRadius: theme.radii[1],
+            borderRadius: theme.radii.small,
             height: multiline ? undefined : 36,
           };
         case '3':
@@ -105,7 +105,7 @@ const TextField = React.forwardRef<React.ComponentRef<typeof RNTextInput>, TextF
             fontSize: theme.typography.fontSizes[3].fontSize,
             paddingVertical: theme.space[4],
             paddingHorizontal: theme.space[4],
-            borderRadius: theme.radii[2],
+            borderRadius: theme.radii.medium,
             height: multiline ? undefined : 52,
           };
         case '2':
@@ -114,7 +114,7 @@ const TextField = React.forwardRef<React.ComponentRef<typeof RNTextInput>, TextF
             fontSize: theme.typography.fontSizes[2].fontSize,
             paddingVertical: theme.space[3],
             paddingHorizontal: theme.space[3],
-            borderRadius: theme.radii[2],
+            borderRadius: theme.radii.medium,
             height: multiline ? undefined : 44,
           };
       }

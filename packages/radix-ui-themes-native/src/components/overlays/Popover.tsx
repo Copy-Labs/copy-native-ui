@@ -26,7 +26,7 @@ interface PopoverContextValue {
   colors: ColorScale | BaseColorScale;
   grayAlpha: ReturnType<typeof getGrayAlpha>;
   accentColor: string;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
   anchorRef: React.RefObject<View | null>;
   contentRef: React.RefObject<View | null>;
 }
@@ -243,7 +243,7 @@ export const PopoverContent = ({
           styles.content,
           {
             backgroundColor: grayAlpha['2'],
-            borderRadius: radii[3],
+            borderRadius: radii.medium,
             borderWidth: 1,
             borderColor: grayAlpha['7'],
           },

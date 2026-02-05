@@ -107,7 +107,7 @@ const DataList = <T extends object>({
 
   const listContainerStyle: ViewStyle = {
     backgroundColor: backgroundColor,
-    borderRadius: theme.radii[2],
+    borderRadius: theme.radii.medium,
     overflow: 'hidden',
   };
 

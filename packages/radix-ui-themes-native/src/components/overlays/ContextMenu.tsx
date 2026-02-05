@@ -14,7 +14,7 @@ interface ContextMenuContextValue {
   position: { x: number; y: number };
   setPosition: (position: { x: number; y: number }) => void;
   colors: ColorScale | BaseColorScale;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
 }
 
 const ContextMenuContext = createContext<ContextMenuContextValue | null>(null);
@@ -219,7 +219,7 @@ export const ContextMenuContent = ({ children, style }: ContextMenuContentProps)
         styles.content,
         {
           backgroundColor: colors[1],
-          borderRadius: radii[3],
+          borderRadius: radii.medium,
           borderWidth: 1,
           borderColor: colors[6],
           minWidth: 180,

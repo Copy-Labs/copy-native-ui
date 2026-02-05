@@ -71,14 +71,14 @@ const Badge = React.forwardRef<any, BadgeProps>(
             paddingVertical: 1,
             paddingHorizontal: 6,
             fontSize: theme.typography.fontSizes[1].fontSize,
-            borderRadius: radii[1],
+            borderRadius: radii.small,
           };
         case 3:
           return {
             paddingVertical: 6,
             paddingHorizontal: 12,
             fontSize: theme.typography.fontSizes[3].fontSize,
-            borderRadius: radii[2],
+            borderRadius: radii.small,
           };
         case 2:
         default:
@@ -86,7 +86,7 @@ const Badge = React.forwardRef<any, BadgeProps>(
             paddingVertical: 3,
             paddingHorizontal: 8,
             fontSize: theme.typography.fontSizes[2].fontSize,
-            borderRadius: radii[2],
+            borderRadius: radii.small,
           };
       }
     };

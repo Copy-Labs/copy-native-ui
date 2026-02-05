@@ -4,6 +4,7 @@ import { Slot } from '../../components';
 import { View } from '../primitives';
 import { useTheme } from '../../hooks/useTheme';
 import type { BoxProps } from './Box.props';
+import type { RadiusSize } from '../../theme/types';
 
 // Custom areEqual function for Box to optimize re-renders
 const areEqual = (prevProps: BoxProps, nextProps: BoxProps) => {
@@ -94,11 +95,19 @@ const Box = React.memo(
       let radiusValue: number | undefined;
       if (radius) {
         if (typeof radius === 'number') {
-          radiusValue = radii[radius as keyof typeof radii] || radii[1];
-        } else if (radius === 'none') {
-          radiusValue = 0;
-        } else if (radius === 'full') {
-          radiusValue = radii.full;
+          // Support for legacy numeric radius values (deprecated)
+          const radiusMap: Record<number, RadiusSize> = {
+            1: 'small',
+            2: 'small',
+            3: 'medium',
+            4: 'medium',
+            5: 'large',
+            6: 'large',
+          };
+          radiusValue = radii[radiusMap[radius] || 'medium'];
+        } else {
+          // Support for semantic radius values: 'none', 'small', 'medium', 'large', 'full'
+          radiusValue = radii[radius];
         }
       }
 

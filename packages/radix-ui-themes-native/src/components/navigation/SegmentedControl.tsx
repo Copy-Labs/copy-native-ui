@@ -87,7 +87,7 @@ const SegmentedControl = ({
         styles.container,
         {
           backgroundColor: grayAlpha['3'],
-          borderRadius: radii[2],
+          borderRadius: radii.medium,
           height: sizeValues.height,
         },
         style,
@@ -110,12 +110,12 @@ const SegmentedControl = ({
             ? (isDark ? grayAlpha['5'] : grayAlpha['4'])
             : 'transparent',
           borderRadius: isFirst
-            ? radii[2]
+            ? radii.medium
             : isLast
-            ? radii[2]
+            ? radii.medium
             : 0,
-          marginLeft: isFirst ? 0 : -radii[2] / 2,
-          marginRight: isLast ? 0 : -radii[2] / 2,
+          marginLeft: isFirst ? 0 : -radii.medium / 2,
+          marginRight: isLast ? 0 : -radii.medium / 2,
         };
 
         const handlePress = () => {

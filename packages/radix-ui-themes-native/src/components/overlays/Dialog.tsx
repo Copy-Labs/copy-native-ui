@@ -26,7 +26,7 @@ interface DialogContextValue {
   onOpenChange: (open: boolean) => void;
   colors: ColorScale | BaseColorScale;
   grayAlpha: ReturnType<typeof getGrayAlpha>;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
 }
 
 const DialogContext = createContext<DialogContextValue | null>(null);
@@ -193,7 +193,7 @@ export const DialogContent = ({
         styles.content,
         {
           backgroundColor: grayAlpha['2'],
-          borderRadius: radii[3],
+          borderRadius: radii.medium,
           maxWidth: Math.min(screenWidth - 32, 400),
         },
         style,

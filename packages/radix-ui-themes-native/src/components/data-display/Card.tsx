@@ -122,7 +122,7 @@ const Card = React.forwardRef<any, CardProps>(
       backgroundColor: variantStyles.backgroundColor,
       borderColor: variantStyles.borderColor,
       borderWidth: variantStyles.borderWidth,
-      borderRadius: radii[3],
+      borderRadius: radii.medium,
       padding: sizeValues.padding,
       ...shadowStyle,
     };

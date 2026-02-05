@@ -138,20 +138,20 @@ const IconButton = React.forwardRef<React.ElementRef<typeof RnTouchableOpacity>,
           return {
             size: 32,
             iconSize: 16,
-            borderRadius: radii[1],
+            borderRadius: radii.small,
           };
         case 3:
           return {
             size: 56,
             iconSize: 24,
-            borderRadius: radii[2],
+            borderRadius: radii.medium,
           };
         case 2:
         default:
           return {
             size: 40,
             iconSize: 20,
-            borderRadius: radii[2],
+            borderRadius: radii.medium,
           };
       }
     };

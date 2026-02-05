@@ -24,7 +24,7 @@ interface AlertDialogContextValue {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   colors: ColorScale | BaseColorScale;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
 }
 
 const AlertDialogContext = createContext<AlertDialogContextValue | null>(null);
@@ -173,7 +173,7 @@ export const AlertDialogContent = ({ children, style }: AlertDialogContentProps)
         styles.content,
         {
           backgroundColor: colors[1],
-          borderRadius: radii[3],
+          borderRadius: radii.medium,
           maxWidth: Math.min(screenWidth - 32, 400),
         },
         style,

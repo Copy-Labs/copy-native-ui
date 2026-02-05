@@ -89,7 +89,7 @@ const Select = React.forwardRef<React.ComponentRef<typeof RNView>, SelectProps>(
             fontSize: theme.typography.fontSizes[1].fontSize,
             paddingVertical: theme.space[2],
             paddingHorizontal: theme.space[3],
-            borderRadius: theme.radii[1],
+            borderRadius: theme.radii.small,
             height: 36,
             itemHeight: 40,
           };
@@ -98,7 +98,7 @@ const Select = React.forwardRef<React.ComponentRef<typeof RNView>, SelectProps>(
             fontSize: theme.typography.fontSizes[3].fontSize,
             paddingVertical: theme.space[4],
             paddingHorizontal: theme.space[4],
-            borderRadius: theme.radii[2],
+            borderRadius: theme.radii.medium,
             height: 52,
             itemHeight: 56,
           };
@@ -108,7 +108,7 @@ const Select = React.forwardRef<React.ComponentRef<typeof RNView>, SelectProps>(
             fontSize: theme.typography.fontSizes[2].fontSize,
             paddingVertical: theme.space[3],
             paddingHorizontal: theme.space[3],
-            borderRadius: theme.radii[2],
+            borderRadius: theme.radii.medium,
             height: 44,
             itemHeight: 48,
           };
@@ -208,8 +208,8 @@ const Select = React.forwardRef<React.ComponentRef<typeof RNView>, SelectProps>(
 
     const modalContentStyle: ViewStyle = {
       backgroundColor: colors[1],
-      borderTopLeftRadius: theme.radii[4],
-      borderTopRightRadius: theme.radii[4],
+      borderTopLeftRadius: theme.radii.large,
+      borderTopRightRadius: theme.radii.large,
       maxHeight: '70%',
     };
 

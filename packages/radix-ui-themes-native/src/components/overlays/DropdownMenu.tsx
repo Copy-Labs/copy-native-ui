@@ -14,7 +14,7 @@ interface DropdownMenuContextValue {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   colors: ColorScale | BaseColorScale;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
   openSubmenu: string | null;
   onOpenSubmenu: (id: string | null) => void;
 }
@@ -181,7 +181,7 @@ export const DropdownMenuContent = ({
         styles.content,
         {
           backgroundColor: colors[1],
-          borderRadius: radii[3],
+          borderRadius: radii.medium,
           borderWidth: 1,
           borderColor: colors[6],
           minWidth: 200,
@@ -499,7 +499,7 @@ export const DropdownMenuSubContent = ({ children }: DropdownMenuSubContentProps
         styles.content,
         {
           backgroundColor: colors[1],
-          borderRadius: radii[3],
+          borderRadius: radii.medium,
           borderWidth: 1,
           borderColor: colors[6],
           minWidth: 180,

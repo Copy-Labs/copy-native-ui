@@ -14,7 +14,7 @@ interface TooltipContextValue {
   onOpenChange: (open: boolean) => void;
   colors: ColorScale | BaseColorScale;
   grayAlpha: ReturnType<typeof getGrayAlpha>;
-  radii: RadiusScale | Record<number, number>;
+  radii: RadiusScale;
   delayDuration: number;
 }
 
@@ -299,7 +299,7 @@ export const TooltipContent = ({
           styles.content,
           {
             backgroundColor: tooltipBackground,
-            borderRadius: radii[2],
+            borderRadius: radii.small,
             paddingHorizontal: theme.space[3],
             paddingVertical: theme.space[2],
           },

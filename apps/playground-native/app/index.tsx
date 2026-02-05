@@ -7,19 +7,19 @@ export default function App() {
     <SafeAreaView style={{ flex: 1 }}>
       <ThemeProvider
         mode={'light'}
-        themeOptions={{ accentColor: 'blue', radiusFactor: 4, scaling: 1 }}
+        themeOptions={{ accentColor: 'blue', radius: 'medium', scaling: 1 }}
       >
         <Box padding={8}>
           <Heading align={'center'} size={5}>Radix UI Native</Heading>
           <Text align={'center'} size={4}>Visit these places to Explore Radix UI Native</Text>
           <Flex direction={'column'} gap={12} padding={12}>
-            <Button variant={'soft'}>
+            <Button size={3} variant={'soft'}>
               <Link href={'/demo'}>All Components</Link>
             </Button>
             <Button variant={'soft'}>
               <Link href={'/profile'}>Twitter Profile Demo</Link>
             </Button>
-            <Button variant={'soft'}>
+            <Button size={1} variant={'soft'}>
               <Link href={'/tabs'}>Default Expo Project</Link>
             </Button>
           </Flex>

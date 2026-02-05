@@ -1,4 +1,5 @@
 import type { DimensionValue, StyleProp, ViewStyle } from 'react-native';
+import type { RadiusSize } from '../../theme';
 
 // ============================================================================
 // Box Component
@@ -24,7 +25,7 @@ export interface BoxProps {
   /**
    * Border radius variant
    */
-  radius?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 'none' | 'full';
+  radius?: RadiusSize;
   /**
    * Display prop
    */

@@ -7,10 +7,11 @@ import {
   ThemeMode,
   ExtendedColorScale,
   AlphaColorScale,
+  RadiusSize,
 } from '../theme/types';
 
 // Re-export types
-export type { ExtendedColorScale };
+export type { ExtendedColorScale, RadiusSize };
 
 export * from './types';
 
@@ -226,10 +227,21 @@ export const createTheme = (options: Partial<Theme> = {}): Theme => {
   const {
     name = 'default',
     scaling = 1,
-    radiusFactor = 1,
+    radius = 'medium',
     grayColor = 'mauve',
     accentColor = 'indigo',
   } = options;
+
+  // Radius scale multipliers
+  const radiusMultipliers: Record<RadiusSize, number> = {
+    none: 0,
+    small: 0.5,
+    medium: 1,
+    large: 1.5,
+    full: 2,
+  };
+
+  const radiusScale = radiusMultipliers[radius] ?? 1;
 
   const scaledSpace = {
     1: 4 * scaling,
@@ -244,16 +256,11 @@ export const createTheme = (options: Partial<Theme> = {}): Theme => {
   };
 
   const scaledRadii = {
-    1: 3 * radiusFactor,
-    2: 5 * radiusFactor,
-    3: 6 * radiusFactor,
-    4: 8 * radiusFactor,
-    5: 10 * radiusFactor,
-    6: 12 * radiusFactor,
-    7: 14 * radiusFactor,
-    8: 16 * radiusFactor,
-    9: 9999,
-    full: 0,
+    none: 0,
+    small: 4 * radiusScale,
+    medium: 8 * radiusScale,
+    large: 12 * radiusScale,
+    full: 9999,
     thumb: 9999,
   };
 
@@ -290,7 +297,7 @@ export const createTheme = (options: Partial<Theme> = {}): Theme => {
   return {
     name,
     scaling,
-    radiusFactor,
+    radius,
     grayColor,
     accentColor,
     colors: {

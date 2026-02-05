@@ -61,7 +61,7 @@ const Kbd = React.memo(
 
       const containerStyle: TextStyle = useMemo(
         () => ({
-          borderRadius: radii[1],
+          borderRadius: radii.small,
           paddingHorizontal: theme.space[2],
           paddingVertical: theme.space[1],
         }),

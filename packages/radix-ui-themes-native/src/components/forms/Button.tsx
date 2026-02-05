@@ -118,6 +118,7 @@ const Button = React.memo(
       const accentAlpha = getColorAlpha(theme, activeColor);
       const focusColor = getFocusColor(theme, mode);
       const radii = theme.radii;
+      const radius = theme.radius;
 
       // Get colors based on variant and mode
       /*const getVariantColors = useCallback(() => {
@@ -182,14 +183,14 @@ const Button = React.memo(
               paddingVertical: theme.space[2],
               paddingHorizontal: theme.space[3],
               fontSize: theme.typography.fontSizes[1].fontSize,
-              borderRadius: radii[1],
+              borderRadius: radius === 'full' ? 9999 : radii.small,
             };
           case 3:
             return {
               paddingVertical: theme.space[4],
               paddingHorizontal: theme.space[5],
               fontSize: theme.typography.fontSizes[4].fontSize,
-              borderRadius: radii[2],
+              borderRadius: radius === 'full' ? 9999 : radii.large,
             };
           case 2:
           default:
@@ -197,7 +198,7 @@ const Button = React.memo(
               paddingVertical: theme.space[3],
               paddingHorizontal: theme.space[4],
               fontSize: theme.typography.fontSizes[2].fontSize,
-              borderRadius: radii[2],
+              borderRadius: radius === 'full' ? 9999 : radii.medium,
             };
         }
       }, [size, theme, radii]);

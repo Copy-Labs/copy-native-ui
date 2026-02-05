@@ -155,16 +155,14 @@ export interface SpaceScale {
   9: number;
 }
 
+// Radius size enum matching radix-ui-themes
+export type RadiusSize = 'none' | 'small' | 'medium' | 'large' | 'full';
+
 export interface RadiusScale {
-  1: number;
-  2: number;
-  3: number;
-  4: number;
-  5: number;
-  6: number;
-  7: number;
-  8: number;
-  9: number;
+  none: number;
+  small: number;
+  medium: number;
+  large: number;
   full: number;
   thumb: number;
 }
@@ -274,7 +272,7 @@ export interface ThemeTokens {
 export interface Theme extends ThemeTokens {
   name: string;
   scaling: number;
-  radiusFactor: number;
+  radius: RadiusSize;
   grayColor: 'gray' | 'mauve' | 'olive' | 'sage' | 'sand' | 'slate';
   accentColor: Color;
 }
