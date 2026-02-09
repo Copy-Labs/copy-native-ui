@@ -106,7 +106,7 @@ const SegmentedControlItem = ({
         : theme.colors.gray['1']
       : 'transparent',
     borderWidth: isSelected ? 0.5 : 0,
-    borderColor: isSelected ? theme.colors.gray['8'] : 'transparent',
+    borderColor: color ? (isSelected ? solidVariantColors.backgroundColor : 'transparent') : (isSelected ? theme.colors.gray['8'] : 'transparent'),
     borderRadius: selectedRadius === 'full' ? 9999 : radii,
   };
 
