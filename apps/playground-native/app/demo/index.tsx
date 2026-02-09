@@ -84,6 +84,9 @@ export default function App() {
           <Link href={'/demo/fancylist'}>
             <Text size={4}>fancylist</Text>
           </Link>
+          <Link href={'/demo/segmented_control'}>
+            <Text size={4}>segmented control</Text>
+          </Link>
         </Flex>
       </ThemeProvider>
 

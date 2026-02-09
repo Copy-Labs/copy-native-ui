@@ -2,7 +2,7 @@
 
 // SegmentedControl
 export { SegmentedControl } from './SegmentedControl';
-export type { SegmentedControlProps, SegmentedControlOption } from './SegmentedControl';
+export type { SegmentedControlRootProps, SegmentedControlItemProps } from './SegmentedControl';
 
 // TabNav
 export { TabNav } from './TabNav';
