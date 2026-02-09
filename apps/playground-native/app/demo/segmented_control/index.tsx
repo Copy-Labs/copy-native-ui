@@ -1,4 +1,4 @@
-import { Box, Flex, SegmentedControl, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Flex, SegmentedControl, ThemeProvider, Text } from '@radix-ui/themes-native';
 import { useState } from 'react';
 
 export default function SegmentedControlDemo() {
@@ -11,111 +11,73 @@ export default function SegmentedControlDemo() {
     >
       <Flex direction={'column'} gap={12} padding={12} align={'center'} justify={'center'}>
         <Box padding={12}>
-          <SegmentedControl
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'option1', label: 'Option 1' },
-              { value: 'option2', label: 'Option 2' },
-              { value: 'option3', label: 'Option 3' },
-            ]}
-            disabled={false}
-            // highContrast={false}
-          />
+          <SegmentedControl.Root defaultValue={'option1'}>
+            <SegmentedControl.Item value="option1">Option 1</SegmentedControl.Item>
+            <SegmentedControl.Item value="option2">Option 2</SegmentedControl.Item>
+            <SegmentedControl.Item value="option3">Option 3</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         {/* Size 1 - Segmented Control */}
         <Box padding={12}>
-          <SegmentedControl
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-            size={1}
-          />
+          <SegmentedControl.Root value={sg} onValueChange={setSg} size={1}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         {/* Size 2 - Segmented Control */}
         <Box padding={12}>
-          <SegmentedControl
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-            size={2}
-          />
+          <SegmentedControl.Root value={sg} onValueChange={setSg} size={2}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         {/* Size 3 - Segmented Control */}
         <Box padding={12}>
-          <SegmentedControl
-            variant={'soft'}
-            radius={'large'}
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-            size={3}
-          />
+          <SegmentedControl.Root radius={'large'} value={sg} onValueChange={setSg} size={3}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         {/* Size 4 - Segmented Control */}
         <Box padding={12}>
-          <SegmentedControl
-            radius={'full'}
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-            size={4}
-          />
+          <SegmentedControl.Root radius={'full'} value={sg} onValueChange={setSg} size={4}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         {/* Colors - Segmented Control */}
         <Box padding={12}>
-          <SegmentedControl
-            color={'grass'}
-            radius={'full'}
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-          />
+          <SegmentedControl.Root color={'grass'} defaultValue={'apple'} radius={'full'} value={sg} onValueChange={setSg}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
 
         <Box padding={12}>
-          <SegmentedControl
-            color={'blue'}
-            radius={'large'}
-            value={sg}
-            onValueChange={(value: string) => setSg(value)}
-            options={[
-              { value: 'apple', label: 'Apple' },
-              { value: 'banana', label: 'Banana' },
-              { value: 'carrot', label: 'Carrot' },
-            ]}
-            disabled={false}
-          />
+          <SegmentedControl.Root color={'blue'} radius={'large'} value={sg} onValueChange={setSg}>
+            <SegmentedControl.Item value="apple">Apple</SegmentedControl.Item>
+            <SegmentedControl.Item value="banana">Banana</SegmentedControl.Item>
+            <SegmentedControl.Item value="carrot">Carrot</SegmentedControl.Item>
+          </SegmentedControl.Root>
+        </Box>
+
+        {/* Per-item disabled */}
+        <Box padding={12}>
+          <SegmentedControl.Root value={sg} onValueChange={setSg}>
+            <SegmentedControl.Item value="enabled">Enabled</SegmentedControl.Item>
+            <SegmentedControl.Item value="disabled" disabled>Disabled</SegmentedControl.Item>
+            <SegmentedControl.Item value="also-enabled">Also Enabled</SegmentedControl.Item>
+          </SegmentedControl.Root>
         </Box>
       </Flex>
     </ThemeProvider>

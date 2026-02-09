@@ -192,10 +192,14 @@ export interface TypographyTokens {
     9: FontSize;
   };
   fontWeights: {
+    thin: '200';
     light: '300';
     regular: '400';
     medium: '500';
+    semibold: '600';
     bold: '700';
+    extrabold: '800';
+    black: '900';
   };
   lineHeights: {
     1: number;
