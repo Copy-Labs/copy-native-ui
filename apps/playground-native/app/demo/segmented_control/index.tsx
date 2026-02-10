@@ -108,7 +108,7 @@ export default function SegmentedControlDemo() {
               <SegmentedControl.Item value="sent">Sent</SegmentedControl.Item>
             </SegmentedControl.Root>
 
-            <SegmentedControl.Root defaultValue="inbox" size={4}>
+            <SegmentedControl.Root defaultValue="inbox" radius={'large'} size={4}>
               <SegmentedControl.Item value="inbox">Inbox</SegmentedControl.Item>
               <SegmentedControl.Item value="drafts">Drafts</SegmentedControl.Item>
               <SegmentedControl.Item value="sent">Sent</SegmentedControl.Item>
