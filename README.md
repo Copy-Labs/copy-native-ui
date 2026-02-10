@@ -1,5 +1,7 @@
 [![Radix Themes Logo](https://radix-ui.com/social/themes.png)](https://radix-ui.com/themes)
 
+[![Radix UI Native Themes Demo](https://youtube.com/shorts/sIvz3d_pAoo?feature=share)](https://youtube.com/shorts/sIvz3d_pAoo?feature=share)
+
 # Radix Themes
 
 **An open-source component library optimized for fast development, easy maintenance, and accessibility.**
