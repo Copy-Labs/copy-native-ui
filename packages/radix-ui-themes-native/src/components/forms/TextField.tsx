@@ -184,8 +184,6 @@ const TextField = React.forwardRef<React.ComponentRef<typeof RNTextInput>, TextF
     const inputBorderColor = () => {
       if (isFocused) {
         return 'transparent';
-      } else if (error) {
-        return theme.colors.ruby[9];
       } else {
         return variantColors.borderColor;
       }
@@ -219,7 +217,7 @@ const TextField = React.forwardRef<React.ComponentRef<typeof RNTextInput>, TextF
 
     const errorStyle = {
       color: theme.colors.ruby[10],
-      fontSize: theme.typography.fontSizes[1].fontSize,
+      fontSize: theme.typography.fontSizes[3].fontSize,
     };
 
     return (
