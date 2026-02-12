@@ -12,7 +12,7 @@ import {
 } from '@radix-ui/themes-native';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
-import { LucideEye, LucideMail } from 'lucide-react-native';
+import { LucideMail } from 'lucide-react-native';
 
 export default function TextAreas() {
   const [textValue, setTextValue] = useState<string>('text example text');
