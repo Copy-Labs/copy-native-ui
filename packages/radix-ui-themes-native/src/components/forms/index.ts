@@ -9,7 +9,7 @@ export type { IconButtonProps } from './IconButton';
 
 // Text input components
 export { TextField } from './TextField';
-export type { TextFieldProps } from './TextField';
+export type { TextFieldProps, TextFieldSlotProps } from './TextField';
 
 export { TextArea } from './TextArea';
 export type { TextAreaProps } from './TextArea';

@@ -2,10 +2,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet } from 'react-native';
 import {
   AlertDialog,
+  Box,
   Button,
   Checkbox,
   Dialog,
-  Flex,
+  Flex, Heading,
   Select,
   Text,
   TextArea,
@@ -53,6 +54,9 @@ export default function App() {
           </Link>
           <Link href={'/demo/card'}>
             <Text size={4}>Card</Text>
+          </Link>
+          <Link href={'/demo/checkbox'}>
+            <Text size={4}>Checkbox</Text>
           </Link>
           <Link href={'/demo/switch'}>
             <Text size={4}>Switch</Text>
@@ -112,14 +116,19 @@ export default function App() {
                     sessions will be expired.
                   </AlertDialog.Description>
                   <Flex gap={12} justify="flex-end">
-                    <AlertDialog.Cancel color={'gray'} variant={'surface'}>Cancel</AlertDialog.Cancel>
+                    <AlertDialog.Cancel color={'gray'} variant={'surface'}>
+                      Cancel
+                    </AlertDialog.Cancel>
                     <AlertDialog.Action variant={'solid'}>Confirm</AlertDialog.Action>
                   </Flex>
                 </AlertDialog.Content>
               </AlertDialog.Portal>
             </AlertDialog.Root>
 
-            <Dialog.Root open={isDialogOpen} onOpenChange={(open: boolean) => setIsDialogOpen(open)}>
+            <Dialog.Root
+              open={isDialogOpen}
+              onOpenChange={(open: boolean) => setIsDialogOpen(open)}
+            >
               <Dialog.Trigger>
                 <Button variant={'soft'}>Show Dialog</Button>
               </Dialog.Trigger>
@@ -139,12 +148,6 @@ export default function App() {
               </Dialog.Portal>
             </Dialog.Root>
 
-            <Checkbox
-              checked={checked}
-              size={'3'}
-              onCheckedChange={(checked: boolean) => setChecked(checked)}
-            />
-
             <Select
               disabled={false}
               placeholder={'Select a select'}
@@ -159,7 +162,6 @@ export default function App() {
 
             {/*<Slider value={sliderValue} onValueChange={setSliderValue} />*/}
 
-            <TextField size={'3'} value={textValue} onChangeText={setTextValue} />
             <TextArea
               label={'Your Bio'}
               size={'3'}
