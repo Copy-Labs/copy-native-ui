@@ -4,7 +4,7 @@ import { View, StyleSheet, Pressable, type StyleProp, ViewStyle, Modal, Dimensio
 } from 'react-native';
 import { useTheme, useThemeMode } from '../../hooks/useTheme';
 import { Text } from '../typography';
-import { BaseColorScale, Color, ColorScale, getVariantColors, RadiusScale } from '../../theme';
+import { BaseColorScale, type Color, ColorScale, getVariantColors, RadiusScale } from '../../theme';
 import {
   useAnchorPosition,
   calculatePopoverPosition,
@@ -137,6 +137,100 @@ export const DropdownMenuTrigger = ({ children, asChild = true }: DropdownMenuTr
     <Pressable ref={anchorRef} onPress={handlePress}>
       {children}
     </Pressable>
+  );
+};
+
+// ============================================================================
+// DropdownMenu.TriggerIcon - Icon button trigger
+// ============================================================================
+
+import { IconButton } from '../forms/IconButton';
+
+/**
+ * Default down chevron icon for dropdown menu trigger
+ * Uses Unicode character for React Native compatibility
+ */
+const ChevronDownIcon = ({ size, color }: { size?: number; color?: string }) => (
+  <Text style={{
+    fontSize: size || 16,
+    color: color || 'currentColor',
+    lineHeight: size ? size + 2 : 18,
+  }}>
+    ▾
+  </Text>
+);
+
+interface DropdownMenuTriggerIconProps {
+  /**
+   * Custom icon to render (defaults to down chevron ▾)
+   */
+  icon?: React.ReactNode;
+  /**
+   * Button variant
+   * @default 'ghost'
+   */
+  variant?: 'classic' | 'solid' | 'soft' | 'outline' | 'ghost';
+  /**
+   * Color scheme for the button
+   * @default undefined (uses theme's accentColor)
+   */
+  color?: Color;
+  /**
+   * Button size
+   * @default 2
+   */
+  size?: 1 | 2 | 3;
+  /**
+   * Whether the button is disabled
+   */
+  disabled?: boolean;
+  /**
+   * Accessibility label (required for accessibility)
+   * @default 'Open menu'
+   */
+  accessibilityLabel?: string;
+  /**
+   * High contrast mode for accessibility
+   */
+  highContrast?: boolean;
+  /**
+   * Additional style for the button
+   */
+  style?: StyleProp<ViewStyle>;
+}
+
+export const DropdownMenuTriggerIcon = ({
+  icon,
+  variant = 'ghost',
+  color,
+  size = 2,
+  disabled,
+  accessibilityLabel = 'Open menu',
+  highContrast,
+  style,
+}: DropdownMenuTriggerIconProps) => {
+  const { onOpenChange, open, anchorRef, measureAnchor } = useDropdownMenu();
+
+  const handlePress = () => {
+    measureAnchor();
+    onOpenChange(!open);
+  };
+
+  const defaultIcon = <ChevronDownIcon />;
+
+  return (
+    <IconButton
+      ref={anchorRef as React.RefObject<React.ElementRef<typeof IconButton>>}
+      icon={icon || defaultIcon}
+      variant={variant}
+      color={color}
+      size={size}
+      disabled={disabled}
+      onPress={handlePress}
+      accessibilityLabel={accessibilityLabel}
+      highContrast={highContrast}
+      style={style}
+    />
   );
 };
 
@@ -907,6 +1001,7 @@ const styles = StyleSheet.create({
 export const DropdownMenu = {
   Root: DropdownMenuRoot,
   Trigger: DropdownMenuTrigger,
+  TriggerIcon: DropdownMenuTriggerIcon,
   Portal: DropdownMenuPortal,
   Overlay: DropdownMenuOverlay,
   Content: DropdownMenuContent,
@@ -924,6 +1019,7 @@ export const DropdownMenu = {
 export type {
   DropdownMenuRootProps,
   DropdownMenuTriggerProps,
+  DropdownMenuTriggerIconProps,
   DropdownMenuPortalProps,
   DropdownMenuOverlayProps,
   DropdownMenuContentProps,

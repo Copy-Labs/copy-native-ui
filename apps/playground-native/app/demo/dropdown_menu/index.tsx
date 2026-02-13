@@ -25,7 +25,7 @@ export default function DropdownMenuDemo() {
   return (
     <ThemeProvider
       mode={'light'}
-      themeOptions={{ accentColor: 'blue', radius: 'medium', scaling: 1 }}
+      themeOptions={{ accentColor: 'indigo', radius: 'medium', scaling: 1 }}
     >
       <ScrollView>
         <SafeAreaView>
