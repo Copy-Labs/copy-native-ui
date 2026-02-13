@@ -1,10 +1,17 @@
 import React, { createContext, useContext, useState, useCallback, useRef, type ReactNode } from 'react';
-import { View, StyleSheet, Pressable, Animated, type StyleProp, ViewStyle, Modal, Dimensions, TouchableWithoutFeedback, FlatList,
+import { View, StyleSheet, Pressable, type StyleProp, ViewStyle, Modal, Dimensions, TouchableWithoutFeedback,
   TextStyle
 } from 'react-native';
 import { useTheme, useThemeMode } from '../../hooks/useTheme';
 import { Text } from '../typography';
 import type { BaseColorScale, ColorScale, RadiusScale } from '../../theme';
+import {
+  useAnchorPosition,
+  calculatePopoverPosition,
+  type AnchorPosition,
+  type PopoverSide,
+  type PopoverAlign,
+} from '../../hooks/useAnchorPosition';
 
 // ============================================================================
 // DropdownMenu Context
@@ -17,6 +24,9 @@ interface DropdownMenuContextValue {
   radii: RadiusScale;
   openSubmenu: string | null;
   onOpenSubmenu: (id: string | null) => void;
+  anchorRef: React.RefObject<View | null>;
+  anchorPosition: AnchorPosition;
+  measureAnchor: () => void;
 }
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
@@ -59,9 +69,20 @@ export const DropdownMenuRoot = ({
   const colors = useThemeMode() === 'dark' ? theme.colors.gray.dark : theme.colors.gray;
   const radii = theme.radii;
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const { anchorRef, anchorPosition, measureAnchor } = useAnchorPosition();
 
   return (
-    <DropdownMenuContext.Provider value={{ open, onOpenChange: handleOpenChange, colors, radii, openSubmenu, onOpenSubmenu: setOpenSubmenu }}>
+    <DropdownMenuContext.Provider value={{
+      open,
+      onOpenChange: handleOpenChange,
+      colors,
+      radii,
+      openSubmenu,
+      onOpenSubmenu: setOpenSubmenu,
+      anchorRef,
+      anchorPosition,
+      measureAnchor,
+    }}>
       {children}
     </DropdownMenuContext.Provider>
   );
@@ -77,23 +98,29 @@ interface DropdownMenuTriggerProps {
 }
 
 export const DropdownMenuTrigger = ({ children, asChild = true }: DropdownMenuTriggerProps) => {
-  const { onOpenChange, open } = useDropdownMenu();
+  const { onOpenChange, open, anchorRef, measureAnchor } = useDropdownMenu();
 
   const handlePress = () => {
+    // Measure the anchor position before opening
+    measureAnchor();
     onOpenChange(!open);
   };
 
   if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<any>, {
+    // Clone the child element and inject our ref and onPress handler
+    const child = children as React.ReactElement<any>;
+    return React.cloneElement(child, {
+      ref: anchorRef,
       onPress: (e: any) => {
-        (children as any).props?.onPress?.(e);
+        // Call the original onPress if it exists
+        child.props?.onPress?.(e);
         handlePress();
       },
     });
   }
 
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable ref={anchorRef} onPress={handlePress}>
       {children}
     </Pressable>
   );
@@ -146,56 +173,105 @@ export const DropdownMenuOverlay = ({ style }: DropdownMenuOverlayProps) => {
 // DropdownMenu.Content - The menu content
 // ============================================================================
 
+export type { PopoverSide as DropdownMenuSide, PopoverAlign as DropdownMenuAlign };
+
 interface DropdownMenuContentProps {
   children: ReactNode;
-  align?: 'start' | 'center' | 'end';
+  side?: PopoverSide;
   sideOffset?: number;
+  align?: PopoverAlign;
+  alignOffset?: number;
+  avoidCollisions?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
 export const DropdownMenuContent = ({
   children,
-  align = 'start',
+  side = 'bottom',
   sideOffset = 4,
+  align = 'start',
+  alignOffset = 0,
+  avoidCollisions = true,
   style,
 }: DropdownMenuContentProps) => {
-  const { colors, radii } = useDropdownMenu();
+  const { colors, radii, anchorPosition } = useDropdownMenu();
   const theme = useTheme();
+  const contentRef = useRef<View>(null);
+  const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
+  const [position, setPosition] = useState<{ top?: number; left?: number }>({});
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-  const getAlignStyle = (): ViewStyle => {
-    switch (align) {
-      case 'start':
-        return { left: 16 };
-      case 'end':
-        return { right: 16 };
-      case 'center':
-      default:
-        return { left: screenWidth / 2 - 100 };
+  // Calculate position when content size or anchor position changes
+  const updatePosition = useCallback(() => {
+    if (contentSize.width === 0 || contentSize.height === 0) {
+      return;
     }
-  };
+
+    const calculatedPosition = calculatePopoverPosition(
+      anchorPosition,
+      contentSize,
+      { width: screenWidth, height: screenHeight },
+      side,
+      align,
+      sideOffset,
+      alignOffset,
+      avoidCollisions
+    );
+
+    setPosition({
+      top: calculatedPosition.top,
+      left: calculatedPosition.left,
+    });
+  }, [anchorPosition, contentSize, screenWidth, screenHeight, side, align, sideOffset, alignOffset, avoidCollisions]);
+
+  // Update position when dependencies change
+  React.useEffect(() => {
+    updatePosition();
+  }, [updatePosition]);
+
+  // Handle content layout to get size
+  const handleLayout = useCallback((event: { nativeEvent: { layout: { width: number; height: number } } }) => {
+    const { width, height } = event.nativeEvent.layout;
+    setContentSize({ width, height });
+  }, []);
+
+  // Don't render until we have valid anchor position
+  const hasValidPosition = anchorPosition.x !== 0 || anchorPosition.y !== 0;
+  const hasContentSize = contentSize.width > 0 && contentSize.height > 0;
 
   return (
-    <View
-      style={[
-        styles.content,
-        {
-          backgroundColor: colors[1],
-          borderRadius: radii.medium,
-          borderWidth: 1,
-          borderColor: colors[6],
-          minWidth: 200,
-          maxWidth: screenWidth - 32,
-        },
-        getAlignStyle(),
-        { top: 80 + sideOffset }, // Below typical header area
-        style,
-      ]}
-    >
-      <View style={{ paddingVertical: theme.space[1] }}>
-        {children}
+    <TouchableWithoutFeedback>
+      <View
+        ref={contentRef}
+        onLayout={handleLayout}
+        style={[
+          styles.content,
+          {
+            backgroundColor: colors[1],
+            borderRadius: radii.medium,
+            borderWidth: 1,
+            borderColor: colors[6],
+            minWidth: 200,
+            maxWidth: screenWidth - 32,
+            // Only apply position styles when we have valid measurements
+            ...(hasValidPosition && hasContentSize ? {
+              position: 'absolute',
+              top: position.top ?? 0,
+              left: position.left ?? 0,
+            } : {
+              position: 'absolute',
+              left: -9999, // Off-screen until positioned
+              opacity: 0,
+            }),
+          },
+          style,
+        ]}
+      >
+        <View style={{ paddingVertical: theme.space[1] }}>
+          {children}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

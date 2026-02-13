@@ -43,7 +43,7 @@ export default function DropdownMenuDemo() {
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Overlay />
-                  <DropdownMenu.Content sideOffset={5}>
+                  <DropdownMenu.Content align={'center'} sideOffset={5}>
                     <DropdownMenu.Item onSelect={() => handleSelect('Profile')}>
                       Profile
                     </DropdownMenu.Item>
