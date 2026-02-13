@@ -40,6 +40,9 @@ export default function App() {
           </Text>
         </Flex>
         <Flex direction={'column'} gap={16} paddingHorizontal={8}>
+          <Link href={'/demo/alert_dialog'}>
+            <Text size={4}>Alert Dialog</Text>
+          </Link>
           <Link href={'/demo/aspect_ratio'}>
             <Text size={4}>Aspect ratio</Text>
           </Link>
@@ -57,6 +60,9 @@ export default function App() {
           </Link>
           <Link href={'/demo/checkbox'}>
             <Text size={4}>Checkbox</Text>
+          </Link>
+          <Link href={'/demo/dialog'}>
+            <Text size={4}>Dialog</Text>
           </Link>
           <Link href={'/demo/switch'}>
             <Text size={4}>Switch</Text>
@@ -93,6 +99,12 @@ export default function App() {
           </Link>
           <Link href={'/demo/segmented_control'}>
             <Text size={4}>segmented control</Text>
+          </Link>
+          <Link href={'/demo/popover'}>
+            <Text size={4}>Popover</Text>
+          </Link>
+          <Link href={'/demo/dropdown_menu'}>
+            <Text size={4}>DropdownMenu</Text>
           </Link>
         </Flex>
       </ThemeProvider>
@@ -161,14 +173,6 @@ export default function App() {
             />
 
             {/*<Slider value={sliderValue} onValueChange={setSliderValue} />*/}
-
-            <TextArea
-              label={'Your Bio'}
-              size={'3'}
-              placeholder={'Set placeholder'}
-              value={textValue}
-              onChangeText={setTextValue}
-            />
           </Flex>
         </SafeAreaView>
       </ThemeProvider>

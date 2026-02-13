@@ -151,7 +151,6 @@ export default function TextAreas() {
                 // numberOfLines={3}
                 accessibilityLabel={''}
                 secureTextEntry={false}
-                // highContrast={boolean}
               />
             </Flex>
           </Flex>
