@@ -1,8 +1,8 @@
 // Form components barrel export
 
 // Button components (already exist)
-export { Button } from './Button';
-export type { ButtonProps } from './Button';
+export { Button, ButtonIcon, ButtonLabel } from './Button';
+export type { ButtonProps, ButtonIconProps, ButtonLabelProps, ButtonCompoundComponent } from './Button';
 
 export { IconButton } from './IconButton';
 export type { IconButtonProps } from './IconButton';

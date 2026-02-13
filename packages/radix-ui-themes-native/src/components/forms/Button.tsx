@@ -1,9 +1,11 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, Children, isValidElement } from 'react';
 import {
   type ViewStyle,
   type GestureResponderEvent,
   ActivityIndicator,
   DimensionValue,
+  View,
+  type TextStyle,
 } from 'react-native';
 import { TouchableOpacity } from '../primitives';
 import { Text } from '../typography';
@@ -19,6 +21,10 @@ import {
 } from '../../theme/color-helpers';
 import RnTouchableOpacity from '../../components/primitives/TouchableOpacity';
 import { Color, RadiusSize } from '../../theme';
+
+// ============================================================================
+// Types
+// ============================================================================
 
 interface ButtonProps {
   /**
@@ -75,7 +81,87 @@ interface ButtonProps {
   highContrast?: boolean;
 }
 
+interface ButtonIconProps {
+  /**
+   * Icon or content to render
+   */
+  children: React.ReactNode;
+  /**
+   * Optional style overrides
+   */
+  style?: ViewStyle;
+}
+
+interface ButtonLabelProps {
+  /**
+   * Label content to render
+   */
+  children: React.ReactNode;
+  /**
+   * Optional style overrides for the label
+   */
+  style?: TextStyle;
+}
+
+// ============================================================================
+// ButtonIcon Component
+// ============================================================================
+
+const ButtonIcon = React.forwardRef<React.ComponentRef<typeof View>, ButtonIconProps>(
+  ({ children, style, ...props }, ref) => {
+    // This component is primarily a marker for the parent Button
+    // The actual rendering and styling is handled by the Button component
+    return (
+      <View ref={ref} style={style} {...props}>
+        {children}
+      </View>
+    );
+  }
+);
+
+ButtonIcon.displayName = 'ButtonIcon';
+
+// ============================================================================
+// ButtonLabel Component
+// ============================================================================
+
+const ButtonLabel = React.forwardRef<React.ComponentRef<typeof Text>, ButtonLabelProps>(
+  ({ children, style, ...props }, ref) => {
+    // This component is primarily a marker for the parent Button
+    // The actual rendering and styling is handled by the Button component
+    return (
+      <Text ref={ref} style={style} {...props}>
+        {children}
+      </Text>
+    );
+  }
+);
+
+ButtonLabel.displayName = 'ButtonLabel';
+
+// ============================================================================
+// Utility Functions
+// ============================================================================
+
+/**
+ * Get icon size based on button size
+ */
+const getIconSize = (size: 1 | 2 | 3): number => {
+  switch (size) {
+    case 1:
+      return 16;
+    case 3:
+      return 24;
+    case 2:
+    default:
+      return 20;
+  }
+};
+
+// ============================================================================
 // Custom areEqual function for Button to optimize re-renders
+// ============================================================================
+
 const areEqual = (prevProps: ButtonProps, nextProps: ButtonProps) => {
   if (
     prevProps.children === nextProps.children &&
@@ -95,8 +181,17 @@ const areEqual = (prevProps: ButtonProps, nextProps: ButtonProps) => {
   return false;
 };
 
+// ============================================================================
+// Button Component
+// ============================================================================
+
+interface ButtonCompoundComponent extends React.ForwardRefExoticComponent<ButtonProps> {
+  Icon: typeof ButtonIcon;
+  Label: typeof ButtonLabel;
+}
+
 const Button = React.memo(
-  React.forwardRef<React.ElementRef<typeof RnTouchableOpacity>, ButtonProps>(
+  React.forwardRef<React.ComponentRef<typeof RnTouchableOpacity>, ButtonProps>(
     (
       {
         children,
@@ -126,59 +221,6 @@ const Button = React.memo(
       const focusColor = getFocusColor(theme, mode);
       const radii = theme.radii[radius] ?? theme.radii.medium;
       const selectedRadius = radius || theme.radius;
-
-      // Get colors based on variant and mode
-      /*const getVariantColors = useCallback(() => {
-        // Text color for solid/solid-high-contrast: use contrast token
-        /!*const solidTextColor = highContrast
-          ? (['sky', 'mint', 'lime', 'yellow', 'amber'].includes(theme.accentColor) ? '#0c0a09' : '#ffffff')
-          : accentScale.contrast;*!/
-        const solidTextColor = getContrast(theme, activeColor, mode, highContrast);
-        // console.log("[Button] solidTextColor", solidTextColor, activeColor, accentScale);
-
-        // Text color for soft/outline/ghost: use alpha-11
-        const alphaTextColor = highContrast ? accentScale['12'] : accentAlpha['11'];
-
-        switch (variant) {
-          case 'solid':
-            return {
-              backgroundColor: accentScale['9'],
-              textColor: solidTextColor,
-              borderColor: 'transparent',
-            };
-          case 'soft':
-            return {
-              backgroundColor: accentAlpha['3'],
-              textColor: alphaTextColor,
-              borderColor: 'transparent',
-            };
-          case 'outline':
-            return {
-              backgroundColor: 'transparent',
-              textColor: alphaTextColor,
-              borderColor: accentAlpha['8'],
-            };
-          case 'surface':
-            return {
-              backgroundColor: accentAlpha['2'],
-              textColor: alphaTextColor,
-              borderColor: accentAlpha['8'],
-            };
-          case 'ghost':
-            return {
-              backgroundColor: 'transparent',
-              textColor: alphaTextColor,
-              borderColor: 'transparent',
-            };
-          case 'classic':
-          default:
-            return {
-              backgroundColor: accentScale[9],
-              textColor: solidTextColor,
-              borderColor: 'transparent',
-            };
-        }
-      }, [color, variant, isDark, highContrast, theme.accentColor, accentScale, accentAlpha]);*/
 
       const variantColors = useMemo(() => getVariantColors(theme, activeColor, mode, variant, highContrast), [getVariantColors, color, variant, highContrast, isDark, theme]);
 
@@ -212,6 +254,55 @@ const Button = React.memo(
 
       const sizeValues = useMemo(() => getSizeValues(), [getSizeValues]);
 
+      // Process children to separate ButtonIcon and ButtonLabel from text content
+      const { leftIcons, rightIcons, labelContent, textContent } = useMemo(() => {
+        const leftIcons: React.ReactNode[] = [];
+        const rightIcons: React.ReactNode[] = [];
+        let labelContent: React.ReactNode = null;
+        let textContent: string | null = null;
+        let foundLabel = false;
+
+        Children.forEach(children, (child) => {
+          if (!isValidElement(child)) {
+            // Handle string/number children as text content
+            if (typeof child === 'string' || typeof child === 'number') {
+              textContent = textContent ? `${textContent}${child}` : String(child);
+            }
+            return;
+          }
+
+          // Check if it's a ButtonIcon
+          if ((child.type as any)?.displayName === 'ButtonIcon') {
+            if (textContent || foundLabel || labelContent) {
+              // Icon after label = right position
+              rightIcons.push(child);
+            } else {
+              // Icon before label = left position
+              leftIcons.push(child);
+            }
+            return;
+          }
+
+          // Check if it's a ButtonLabel
+          if ((child.type as any)?.displayName === 'ButtonLabel') {
+            labelContent = child;
+            foundLabel = true;
+            return;
+          }
+
+          // For other valid elements, treat as non-text content
+          // If we haven't found label yet, it's a left icon
+          // If we have found label, it's a right icon
+          if (foundLabel || labelContent) {
+            rightIcons.push(child);
+          } else {
+            leftIcons.push(child);
+          }
+        });
+
+        return { leftIcons, rightIcons, labelContent, textContent };
+      }, [children]);
+
       const buttonStyle: ViewStyle = useMemo(
         () => ({
           backgroundColor: disabled
@@ -226,6 +317,8 @@ const Button = React.memo(
           opacity: disabled ? 0.5 : 1,
           alignItems: 'center',
           justifyContent: 'center',
+          flexDirection: 'row',
+          columnGap: theme.space[2],
         }),
         [disabled, grayAlpha, variantColors, variant, sizeValues, width, color, activeColor]
       );
@@ -235,7 +328,7 @@ const Button = React.memo(
           color: disabled ? grayAlpha['8'] : variantColors.textColor,
           fontSize: sizeValues.fontSize,
           fontWeight: '500' as const,
-          lineHeight: sizeValues.fontSize * 1.4,
+          // lineHeight: sizeValues.fontSize * 1.4,
         }),
         [disabled, grayAlpha, variantColors, sizeValues]
       );
@@ -248,6 +341,52 @@ const Button = React.memo(
         },
         [disabled, loading, onPress]
       );
+
+      // Icon size based on button size
+      const iconSize = getIconSize(size);
+      const iconColor = disabled ? grayAlpha['8'] : variantColors.textColor;
+
+      // Render an icon with proper size and color
+      const renderIcon = (iconChild: React.ReactNode, index: number) => {
+        if (!isValidElement(iconChild)) return iconChild;
+
+        // Get the children from ButtonIcon
+        const iconProps = iconChild.props as ButtonIconProps;
+        const iconContent = iconProps.children;
+
+        // Clone the icon element with size and color props
+        if (isValidElement(iconContent)) {
+          const clonedIcon = React.cloneElement(iconContent as React.ReactElement<any>, {
+            size: iconSize,
+            color: iconColor,
+          });
+
+          return (
+            <View key={index} style={iconProps.style}>
+              {clonedIcon}
+            </View>
+          );
+        }
+
+        return (
+          <View key={index} style={iconProps.style}>
+            {iconContent}
+          </View>
+        );
+      };
+
+      // Render label with proper styling
+      const renderLabel = () => {
+        if (!labelContent) return null;
+
+        const labelProps = (labelContent as React.ReactElement).props as ButtonLabelProps;
+
+        return (
+          <Text key="label" style={[textStyle, labelProps.style || {}]}>
+            {labelProps.children}
+          </Text>
+        );
+      };
 
       return (
         <TouchableOpacity
@@ -265,16 +404,39 @@ const Button = React.memo(
           {loading ? (
             <ActivityIndicator size="small" color={variantColors.textColor} />
           ) : (
-            <Text style={[textStyle]}>{children}</Text>
+            <>
+              {/* Left Icons */}
+              {leftIcons.map((icon, index) => renderIcon(icon, index))}
+
+              {/* ButtonLabel (explicit) */}
+              {labelContent && renderLabel()}
+
+              {/* Text Content (implicit from string children) */}
+              {textContent && <Text style={[textStyle]}>{textContent}</Text>}
+
+              {/* Right Icons */}
+              {rightIcons.map((icon, index) => renderIcon(icon, index))}
+            </>
           )}
         </TouchableOpacity>
       );
     }
   ),
   areEqual
-);
+) as ButtonCompoundComponent;
 
 Button.displayName = 'Button';
 
-export { Button };
-export type { ButtonProps };
+// ============================================================================
+// Compound Component Attachment
+// ============================================================================
+
+Button.Icon = ButtonIcon;
+Button.Label = ButtonLabel;
+
+// ============================================================================
+// Exports
+// ============================================================================
+
+export { Button, ButtonIcon, ButtonLabel };
+export type { ButtonProps, ButtonIconProps, ButtonLabelProps, ButtonCompoundComponent };

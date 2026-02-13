@@ -1,6 +1,14 @@
-import { AlertDialog, Button, Flex, ThemeProvider } from '@radix-ui/themes-native';
+import {
+  AlertDialog,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Text,
+  ThemeProvider,
+} from '@radix-ui/themes-native';
 import { ScrollView, View } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function AlertDialogDemo() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -13,6 +21,13 @@ export default function AlertDialogDemo() {
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Flex direction={'column'} gap={32} padding={12}>
+            <Box>
+              <Heading size={6}>Alert Dialog</Heading>
+              <Text color={'gray'} size={4}>
+                An alert dialog interrupts the user with important content and expects a response.
+              </Text>
+            </Box>
+
             <AlertDialog.Root open={isOpen} onOpenChange={(open: boolean) => setIsOpen(open)}>
               <AlertDialog.Trigger>
                 <Button variant={'soft'}>Show Alert Dialog</Button>

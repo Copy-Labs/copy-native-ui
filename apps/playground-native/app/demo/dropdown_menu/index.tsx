@@ -6,10 +6,12 @@ import {
   Box,
   Text,
   DropdownMenu,
+  Card,
+  Avatar,
 } from '@radix-ui/themes-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, View, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function DropdownMenuDemo() {
   const [selectedValue, setSelectedValue] = useState<string>('option1');
@@ -28,9 +30,46 @@ export default function DropdownMenuDemo() {
       themeOptions={{ accentColor: 'indigo', radius: 'medium', scaling: 1 }}
     >
       <ScrollView>
-        <SafeAreaView>
-          <Flex direction={'column'} gap={20} padding={12}>
-            <Heading size={6}>DropdownMenu</Heading>
+        <View>
+          <Flex direction={'column'} gap={32} padding={12}>
+            <Box>
+              <Heading size={6}>Dropdown Menu</Heading>
+              <Text color={'gray'} size={4}>
+                Menu representing a set of actions, triggered by a button.
+              </Text>
+            </Box>
+
+            <Card radius={'large'}>
+              <Flex align={'center'} justify={'space-between'}>
+                <Heading>Anno-mark</Heading>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger>
+                    <Button variant="ghost" size={1}>
+                      <Avatar
+                        radius={'full'}
+                        size={2}
+                        src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?&w=256&h=256&q=70&crop=focalpoint&fp-x=0.5&fp-y=0.3&fp-z=1&fit=crop"
+                        fallback="A"
+                      />
+                    </Button>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Overlay />
+                    <DropdownMenu.Content align={'center'} sideOffset={5} size={2}>
+                      <DropdownMenu.Item shortcut="⌘ E">Edit</DropdownMenu.Item>
+                      <DropdownMenu.Item shortcut="⌘ D">Duplicate</DropdownMenu.Item>
+                      <DropdownMenu.Separator />
+                      <DropdownMenu.Item shortcut="⌘ N">Archive</DropdownMenu.Item>
+
+                      <DropdownMenu.Separator />
+                      <DropdownMenu.Item shortcut="⌘ ⌫" color="red">
+                        Delete
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+              </Flex>
+            </Card>
 
             <Flex direction={'column'} gap={16}>
               <DropdownMenu.Root>
@@ -61,7 +100,9 @@ export default function DropdownMenuDemo() {
               <Heading size={4}>Basic DropdownMenu</Heading>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
-                  <Button variant={'soft'}>Open Menu ▾</Button>
+                  <Button variant={'soft'} width={120}>
+                    Open Menu
+                  </Button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
                   <DropdownMenu.Overlay />
@@ -90,8 +131,8 @@ export default function DropdownMenuDemo() {
               <Heading size={4}>Menu with Groups</Heading>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
-                  <Button variant={'soft'} color={'indigo'}>
-                    File Menu ▾
+                  <Button variant={'soft'} color={'indigo'} width={100}>
+                    File Menu
                   </Button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
@@ -123,8 +164,9 @@ export default function DropdownMenuDemo() {
               <Heading size={4}>Menu with Shortcuts</Heading>
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger>
-                  <Button variant={'soft'} color={'crimson'}>
-                    Edit Menu ▾
+                  <Button color={'crimson'} size={1} variant={'soft'} width={120}>
+                    Edit Menu
+                    <Ionicons name="caret-down" size={16} />
                   </Button>
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
@@ -370,7 +412,7 @@ export default function DropdownMenuDemo() {
               </Flex>
             </Flex>
           </Flex>
-        </SafeAreaView>
+        </View>
       </ScrollView>
     </ThemeProvider>
   );

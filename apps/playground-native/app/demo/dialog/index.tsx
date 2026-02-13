@@ -1,6 +1,6 @@
-import { Button, Dialog, Flex, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Button, Dialog, Flex, Heading, Text, ThemeProvider } from '@radix-ui/themes-native';
 import { ScrollView, View } from 'react-native';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function DialogDemo() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -13,10 +13,19 @@ export default function DialogDemo() {
       <ScrollView>
         <View style={{ flex: 1 }}>
           <Flex direction={'column'} gap={32} padding={12}>
-            <Dialog.Root
-              open={isOpen}
-              onOpenChange={(open: boolean) => setIsOpen(open)}
-            >
+            <Box>
+              <Heading size={6}>Dialog</Heading>
+              <Text color={'gray'} size={3}>
+                A dialog is a window that appears on top of the main application window and blocks
+                interaction with it.
+              </Text>
+              <Text color={'gray'} size={2} fontStyle={'italic'} weight={'medium'}>
+                (It can be used to ask the user for confirmation, or to display
+                important information. It can also be used to display a simple message.)
+              </Text>
+            </Box>
+
+            <Dialog.Root open={isOpen} onOpenChange={(open: boolean) => setIsOpen(open)}>
               <Dialog.Trigger>
                 <Button variant={'soft'}>Show Dialog</Button>
               </Dialog.Trigger>
