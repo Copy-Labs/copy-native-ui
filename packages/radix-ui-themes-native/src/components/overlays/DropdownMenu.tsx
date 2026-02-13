@@ -4,7 +4,7 @@ import { View, StyleSheet, Pressable, type StyleProp, ViewStyle, Modal, Dimensio
 } from 'react-native';
 import { useTheme, useThemeMode } from '../../hooks/useTheme';
 import { Text } from '../typography';
-import type { BaseColorScale, ColorScale, RadiusScale } from '../../theme';
+import { BaseColorScale, Color, ColorScale, getVariantColors, RadiusScale } from '../../theme';
 import {
   useAnchorPosition,
   calculatePopoverPosition,
@@ -17,6 +17,15 @@ import {
 // DropdownMenu Context
 // ============================================================================
 
+/**
+ * Size variant for DropdownMenu content
+ * - 1: Small - compact padding, smaller fonts
+ * - 2: Medium - default padding and font sizes
+ * - 3: Large - generous padding, large fonts
+ * - 4: Larger - generous padding, larger fonts
+ */
+export type DropdownMenuSize = 1 | 2 | 3 | 4;
+
 interface DropdownMenuContextValue {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -27,6 +36,7 @@ interface DropdownMenuContextValue {
   anchorRef: React.RefObject<View | null>;
   anchorPosition: AnchorPosition;
   measureAnchor: () => void;
+  size: DropdownMenuSize;
 }
 
 const DropdownMenuContext = createContext<DropdownMenuContextValue | null>(null);
@@ -71,6 +81,9 @@ export const DropdownMenuRoot = ({
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
   const { anchorRef, anchorPosition, measureAnchor } = useAnchorPosition();
 
+  // Default size is 2, will be overridden by DropdownMenuContent
+  const [size, setSize] = useState<DropdownMenuSize>(2);
+
   return (
     <DropdownMenuContext.Provider value={{
       open,
@@ -82,6 +95,7 @@ export const DropdownMenuRoot = ({
       anchorRef,
       anchorPosition,
       measureAnchor,
+      size,
     }}>
       {children}
     </DropdownMenuContext.Provider>
@@ -182,6 +196,11 @@ interface DropdownMenuContentProps {
   align?: PopoverAlign;
   alignOffset?: number;
   avoidCollisions?: boolean;
+  /**
+   * Size of the dropdown menu content
+   * @default 2
+   */
+  size?: DropdownMenuSize;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -192,6 +211,7 @@ export const DropdownMenuContent = ({
   align = 'start',
   alignOffset = 0,
   avoidCollisions = true,
+  size = 2,
   style,
 }: DropdownMenuContentProps) => {
   const { colors, radii, anchorPosition } = useDropdownMenu();
@@ -200,6 +220,43 @@ export const DropdownMenuContent = ({
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
   const [position, setPosition] = useState<{ top?: number; left?: number }>({});
   const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+  // Get size-based styles
+  const getSizeStyles = useCallback(() => {
+    switch (size) {
+      case 1:
+        return {
+          paddingVertical: theme.space[1],
+          paddingHorizontal: theme.space[1],
+          minWidth: 140,
+          maxWidth: 220,
+        };
+      case 3:
+        return {
+          paddingVertical: theme.space[3],
+          paddingHorizontal: theme.space[2],
+          minWidth: 240,
+          maxWidth: 360,
+        };
+      case 4:
+        return {
+          paddingVertical: theme.space[3],
+          paddingHorizontal: theme.space[2],
+          minWidth: 240,
+          maxWidth: 360,
+        };
+      case 2:
+      default:
+        return {
+          paddingVertical: theme.space[2],
+          paddingHorizontal: theme.space[2],
+          minWidth: 180,
+          maxWidth: 280,
+        };
+    }
+  }, [size, theme.space]);
+
+  const sizeStyles = getSizeStyles();
 
   // Calculate position when content size or anchor position changes
   const updatePosition = useCallback(() => {
@@ -239,38 +296,45 @@ export const DropdownMenuContent = ({
   const hasValidPosition = anchorPosition.x !== 0 || anchorPosition.y !== 0;
   const hasContentSize = contentSize.width > 0 && contentSize.height > 0;
 
+  // Create a new context with the size value for children
+  const contextValue = useDropdownMenu();
+  const contextWithSize = { ...contextValue, size };
+
   return (
     <TouchableWithoutFeedback>
-      <View
-        ref={contentRef}
-        onLayout={handleLayout}
-        style={[
-          styles.content,
-          {
-            backgroundColor: colors[1],
-            borderRadius: radii.medium,
-            borderWidth: 1,
-            borderColor: colors[6],
-            minWidth: 200,
-            maxWidth: screenWidth - 32,
-            // Only apply position styles when we have valid measurements
-            ...(hasValidPosition && hasContentSize ? {
-              position: 'absolute',
-              top: position.top ?? 0,
-              left: position.left ?? 0,
-            } : {
-              position: 'absolute',
-              left: -9999, // Off-screen until positioned
-              opacity: 0,
-            }),
-          },
-          style,
-        ]}
-      >
-        <View style={{ paddingVertical: theme.space[1] }}>
+      <DropdownMenuContext.Provider value={contextWithSize}>
+        <View
+          ref={contentRef}
+          onLayout={handleLayout}
+          style={[
+            styles.content,
+            {
+              backgroundColor: colors[1],
+              borderRadius: radii.medium,
+              borderWidth: 1,
+              borderColor: colors[6],
+              // Apply size-based styles
+              paddingVertical: sizeStyles.paddingVertical,
+              paddingHorizontal: sizeStyles.paddingHorizontal,
+              minWidth: sizeStyles.minWidth,
+              maxWidth: sizeStyles.maxWidth,
+              // Only apply position styles when we have valid measurements
+              ...(hasValidPosition && hasContentSize ? {
+                position: 'absolute',
+                top: position.top ?? 0,
+                left: position.left ?? 0,
+              } : {
+                position: 'absolute',
+                left: -9999, // Off-screen until positioned
+                opacity: 0,
+              }),
+            },
+            style,
+          ]}
+        >
           {children}
         </View>
-      </View>
+      </DropdownMenuContext.Provider>
     </TouchableWithoutFeedback>
   );
 };
@@ -293,6 +357,7 @@ export const DropdownMenuGroup = ({ children }: DropdownMenuGroupProps) => {
 
 interface DropdownMenuItemProps {
   children: ReactNode;
+  color?: Color;
   onSelect?: () => void;
   disabled?: boolean;
   shortcut?: string;
@@ -301,13 +366,55 @@ interface DropdownMenuItemProps {
 
 export const DropdownMenuItem = ({
   children,
+  color,
   onSelect,
   disabled = false,
   shortcut,
   style,
 }: DropdownMenuItemProps) => {
-  const { colors, onOpenChange } = useDropdownMenu();
+  const { colors, onOpenChange, size } = useDropdownMenu();
   const theme = useTheme();
+  const mode = useThemeMode();
+  const activeColor = color || theme.accentColor;
+  const itemVariant = 'solid';
+  const itemHighContrast = false;
+  const variantColors = getVariantColors(
+    theme,
+    activeColor,
+    mode,
+    itemVariant,
+    itemHighContrast
+  );
+
+  // Get font size based on size prop
+  const getFontSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return theme.typography.fontSizes[2].fontSize;
+      case 3:
+        return theme.typography.fontSizes[4].fontSize;
+      case 4:
+        return theme.typography.fontSizes[5].fontSize;
+      case 2:
+      default:
+        return theme.typography.fontSizes[3].fontSize;
+    }
+  }, [size, theme.typography.fontSizes, activeColor]);
+
+  // Get padding based on size prop
+  const getItemPadding = useCallback(() => {
+    switch (size) {
+      case 1:
+        return { paddingHorizontal: theme.space[2], paddingVertical: theme.space[1] };
+      case 3:
+        return { paddingHorizontal: theme.space[4], paddingVertical: theme.space[3] };
+      case 4:
+        return { paddingHorizontal: theme.space[5], paddingVertical: theme.space[4] };
+      case 2:
+      default:
+        return { paddingHorizontal: theme.space[3], paddingVertical: theme.space[2] };
+    }
+  }, [size, theme.space, activeColor]);
 
   const handlePress = () => {
     if (!disabled) {
@@ -315,6 +422,9 @@ export const DropdownMenuItem = ({
       onOpenChange(false);
     }
   };
+
+  const itemPadding = getItemPadding();
+  const fontSize = getFontSize();
 
   return (
     <Pressable
@@ -324,16 +434,18 @@ export const DropdownMenuItem = ({
         styles.item,
         disabled && styles.itemDisabled,
         { backgroundColor: disabled ? 'transparent' : 'transparent' },
+        itemPadding,
         style,
       ]}
       accessibilityRole="menuitem"
       accessibilityState={{ disabled }}
     >
       <Text
+        color={color}
         style={[
           {
-            color: disabled ? colors[8] : colors[12],
-            fontSize: theme.typography.fontSizes[2].fontSize,
+            // color: disabled ? colors[8] : '',
+            fontSize,
             flex: 1,
           },
         ]}
@@ -341,7 +453,7 @@ export const DropdownMenuItem = ({
         {children}
       </Text>
       {shortcut && (
-        <Text style={{ color: colors[8], fontSize: theme.typography.fontSizes[1].fontSize }}>
+        <Text style={{ color: theme.colors.gray['11'], fontSize: fontSize * 0.95 }}>
           {shortcut}
         </Text>
       )}
@@ -381,18 +493,46 @@ interface DropdownMenuLabelProps {
 }
 
 export const DropdownMenuLabel = ({ children, style = {} }: DropdownMenuLabelProps) => {
-  const { colors } = useDropdownMenu();
+  const { colors, size } = useDropdownMenu();
   const theme = useTheme();
+
+  // Get font size based on size prop
+  const getFontSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return theme.typography.fontSizes[1].fontSize;
+      case 3:
+        return theme.typography.fontSizes[3].fontSize;
+      case 2:
+      default:
+        return theme.typography.fontSizes[2].fontSize;
+    }
+  }, [size, theme.typography.fontSizes]);
+
+  // Get padding based on size prop
+  const getPadding = useCallback(() => {
+    switch (size) {
+      case 1:
+        return { paddingHorizontal: theme.space[2], paddingVertical: theme.space[1] };
+      case 3:
+        return { paddingHorizontal: theme.space[4], paddingVertical: theme.space[2] };
+      case 2:
+      default:
+        return { paddingHorizontal: theme.space[3], paddingVertical: theme.space[1] };
+    }
+  }, [size, theme.space]);
+
+  const padding = getPadding();
 
   return (
     <Text
       style={[
         {
           color: colors[10],
-          fontSize: theme.typography.fontSizes[1].fontSize,
+          fontSize: getFontSize(),
           fontWeight: '600',
-          paddingHorizontal: theme.space[3],
-          paddingVertical: theme.space[2],
+          paddingHorizontal: padding.paddingHorizontal,
+          paddingVertical: padding.paddingVertical,
           textTransform: 'uppercase',
           letterSpacing: 0.5,
         },
@@ -423,14 +563,37 @@ export const DropdownMenuCheckboxItem = ({
   disabled = false,
   shortcut,
 }: DropdownMenuCheckboxItemProps) => {
-  const { colors } = useDropdownMenu();
+  const { colors, size } = useDropdownMenu();
   const theme = useTheme();
 
-  const handlePress = () => {
-    if (!disabled) {
-      onCheckedChange(!checked);
+  // Get font size based on size prop
+  const getFontSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return theme.typography.fontSizes[1].fontSize;
+      case 3:
+        return theme.typography.fontSizes[3].fontSize;
+      case 2:
+      default:
+        return theme.typography.fontSizes[2].fontSize;
     }
-  };
+  }, [size, theme.typography.fontSizes]);
+
+  // Get checkbox size based on size prop
+  const getCheckboxSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return 14;
+      case 3:
+        return 22;
+      case 2:
+      default:
+        return 18;
+    }
+  }, [size]);
+
+  const fontSize = getFontSize();
+  const checkboxSize = getCheckboxSize();
 
   return (
     <DropdownMenuItem
@@ -443,16 +606,18 @@ export const DropdownMenuCheckboxItem = ({
           style={[
             styles.checkbox,
             {
+              width: checkboxSize,
+              height: checkboxSize,
               borderColor: colors[9],
               backgroundColor: checked ? colors[9] : 'transparent',
             },
           ]}
         >
           {checked && (
-            <Text style={{ color: colors[1], fontSize: 12, fontWeight: 'bold' }}>✓</Text>
+            <Text style={{ color: colors[1], fontSize: checkboxSize * 0.6, fontWeight: 'bold' }}>✓</Text>
           )}
         </View>
-        <Text style={{ color: disabled ? colors[8] : colors[12], marginLeft: theme.space[2] }}>
+        <Text style={{ color: disabled ? colors[8] : colors[12], marginLeft: theme.space[2], fontSize }}>
           {children}
         </Text>
       </View>
@@ -479,14 +644,58 @@ export const DropdownMenuRadioItem = ({
   onCheckedChange,
   disabled = false,
 }: DropdownMenuRadioItemProps) => {
-  const { colors } = useDropdownMenu();
+  const { colors, size } = useDropdownMenu();
   const theme = useTheme();
+
+  // Get font size based on size prop
+  const getFontSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return theme.typography.fontSizes[1].fontSize;
+      case 3:
+        return theme.typography.fontSizes[3].fontSize;
+      case 2:
+      default:
+        return theme.typography.fontSizes[2].fontSize;
+    }
+  }, [size, theme.typography.fontSizes]);
+
+  // Get radio size based on size prop
+  const getRadioSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return 14;
+      case 3:
+        return 22;
+      case 2:
+      default:
+        return 18;
+    }
+  }, [size]);
+
+  const fontSize = getFontSize();
+  const radioSize = getRadioSize();
 
   const handlePress = () => {
     if (!disabled) {
       onCheckedChange(value);
     }
   };
+
+  // Get padding based on size prop
+  const getItemPadding = useCallback(() => {
+    switch (size) {
+      case 1:
+        return { paddingHorizontal: theme.space[2], paddingVertical: theme.space[1] };
+      case 3:
+        return { paddingHorizontal: theme.space[4], paddingVertical: theme.space[3] };
+      case 2:
+      default:
+        return { paddingHorizontal: theme.space[3], paddingVertical: theme.space[2] };
+    }
+  }, [size, theme.space]);
+
+  const itemPadding = getItemPadding();
 
   return (
     <Pressable
@@ -495,6 +704,7 @@ export const DropdownMenuRadioItem = ({
       style={[
         styles.item,
         disabled && styles.itemDisabled,
+        itemPadding,
       ]}
       accessibilityRole="menuitem"
       accessibilityState={{ checked, disabled }}
@@ -504,6 +714,9 @@ export const DropdownMenuRadioItem = ({
           style={[
             styles.radio,
             {
+              width: radioSize,
+              height: radioSize,
+              borderRadius: radioSize / 2,
               borderColor: colors[9],
               backgroundColor: checked ? colors[9] : 'transparent',
             },
@@ -512,15 +725,15 @@ export const DropdownMenuRadioItem = ({
           {checked && (
             <View
               style={{
-                width: 6,
-                height: 6,
-                borderRadius: 3,
+                width: radioSize * 0.4,
+                height: radioSize * 0.4,
+                borderRadius: radioSize * 0.2,
                 backgroundColor: colors[1],
               }}
             />
           )}
         </View>
-        <Text style={{ color: disabled ? colors[8] : colors[12], marginLeft: theme.space[2] }}>
+        <Text style={{ color: disabled ? colors[8] : colors[12], marginLeft: theme.space[2], fontSize }}>
           {children}
         </Text>
       </View>
@@ -545,18 +758,47 @@ interface DropdownMenuSubTriggerProps {
 }
 
 export const DropdownMenuSubTrigger = ({ children }: DropdownMenuSubTriggerProps) => {
-  const { colors, openSubmenu, onOpenSubmenu } = useDropdownMenu();
+  const { colors, openSubmenu, onOpenSubmenu, size } = useDropdownMenu();
   const theme = useTheme();
   const submenuId = 'submenu'; // In a real implementation, this would be unique
+
+  // Get font size based on size prop
+  const getFontSize = useCallback(() => {
+    switch (size) {
+      case 1:
+        return theme.typography.fontSizes[1].fontSize;
+      case 3:
+        return theme.typography.fontSizes[3].fontSize;
+      case 2:
+      default:
+        return theme.typography.fontSizes[2].fontSize;
+    }
+  }, [size, theme.typography.fontSizes]);
+
+  // Get padding based on size prop
+  const getItemPadding = useCallback(() => {
+    switch (size) {
+      case 1:
+        return { paddingHorizontal: theme.space[2], paddingVertical: theme.space[1] };
+      case 3:
+        return { paddingHorizontal: theme.space[4], paddingVertical: theme.space[3] };
+      case 2:
+      default:
+        return { paddingHorizontal: theme.space[3], paddingVertical: theme.space[2] };
+    }
+  }, [size, theme.space]);
 
   const handlePress = () => {
     onOpenSubmenu(openSubmenu === submenuId ? null : submenuId);
   };
 
+  const itemPadding = getItemPadding();
+  const fontSize = getFontSize();
+
   return (
-    <Pressable onPress={handlePress} style={styles.item}>
-      <Text style={{ color: colors[12], flex: 1 }}>{children}</Text>
-      <Text style={{ color: colors[8] }}>›</Text>
+    <Pressable onPress={handlePress} style={[styles.item, itemPadding]}>
+      <Text style={{ color: colors[12], flex: 1, fontSize }}>{children}</Text>
+      <Text style={{ color: colors[8], fontSize }}>›</Text>
     </Pressable>
   );
 };
@@ -566,8 +808,32 @@ interface DropdownMenuSubContentProps {
 }
 
 export const DropdownMenuSubContent = ({ children }: DropdownMenuSubContentProps) => {
-  const { colors, radii } = useDropdownMenu();
+  const { colors, radii, size } = useDropdownMenu();
   const theme = useTheme();
+
+  // Get size-based styles
+  const getSizeStyles = useCallback(() => {
+    switch (size) {
+      case 1:
+        return {
+          paddingVertical: theme.space[1],
+          minWidth: 120,
+        };
+      case 3:
+        return {
+          paddingVertical: theme.space[3],
+          minWidth: 200,
+        };
+      case 2:
+      default:
+        return {
+          paddingVertical: theme.space[2],
+          minWidth: 160,
+        };
+    }
+  }, [size, theme.space]);
+
+  const sizeStyles = getSizeStyles();
 
   return (
     <View
@@ -578,7 +844,8 @@ export const DropdownMenuSubContent = ({ children }: DropdownMenuSubContentProps
           borderRadius: radii.medium,
           borderWidth: 1,
           borderColor: colors[6],
-          minWidth: 180,
+          paddingVertical: sizeStyles.paddingVertical,
+          minWidth: sizeStyles.minWidth,
           position: 'absolute',
           left: '100%',
           top: 0,
@@ -586,9 +853,7 @@ export const DropdownMenuSubContent = ({ children }: DropdownMenuSubContentProps
         },
       ]}
     >
-      <View style={{ paddingVertical: theme.space[1] }}>
-        {children}
-      </View>
+      {children}
     </View>
   );
 };
@@ -603,7 +868,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.01)',
   },
   content: {
-    paddingVertical: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,
@@ -613,8 +877,6 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
     minHeight: 44,
   },
   itemDisabled: {
@@ -626,17 +888,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
   },
   checkbox: {
-    width: 18,
-    height: 18,
     borderRadius: 3,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
   radio: {
-    width: 18,
-    height: 18,
-    borderRadius: 9,
     borderWidth: 2,
     alignItems: 'center',
     justifyContent: 'center',
