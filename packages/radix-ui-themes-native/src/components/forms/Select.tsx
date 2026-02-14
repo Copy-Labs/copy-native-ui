@@ -154,16 +154,74 @@ export const SelectRoot = ({
   // Track selected item text for Select.Value
   const [selectedItemText, setSelectedItemText] = useState<string>('');
 
-  // Track all registered items
-  const itemTextsRef = useRef<Map<string, string>>(new Map());
+  // Track all registered items - use state so changes trigger re-renders
+  const [itemTexts, setItemTexts] = useState<Map<string, string>>(new Map());
 
   const registerItem = useCallback((itemValue: string, text: string) => {
-    itemTextsRef.current.set(itemValue, text);
+    setItemTexts(prev => {
+      const newMap = new Map(prev);
+      newMap.set(itemValue, text);
+      return newMap;
+    });
   }, []);
 
   const unregisterItem = useCallback((itemValue: string) => {
-    itemTextsRef.current.delete(itemValue);
+    setItemTexts(prev => {
+      const newMap = new Map(prev);
+      newMap.delete(itemValue);
+      return newMap;
+    });
   }, []);
+
+  // Pre-register items from children on mount so Select.Value can display defaultValue text
+  React.useEffect(() => {
+    // Helper to extract text from children (same as in SelectItem)
+    const extractText = (node: ReactNode): string => {
+      if (typeof node === 'string') return node;
+      if (typeof node === 'number') return String(node);
+      if (!node) return '';
+      if (Array.isArray(node)) return node.map(extractText).join('');
+      if (React.isValidElement(node) && node.props.children) {
+        return extractText(node.props.children);
+      }
+      return '';
+    };
+
+    // Walk through children and register SelectItem components
+    const walkChildren = (node: ReactNode) => {
+      if (!node) return;
+      if (Array.isArray(node)) {
+        node.forEach(walkChildren);
+        return;
+      }
+      if (React.isValidElement(node)) {
+        // Check if this is a SelectItem (has value prop and children)
+        if (node.props && 'value' in node.props && node.props.children) {
+          const itemValue = node.props.value;
+          const itemText = extractText(node.props.children);
+          if (itemValue && itemText) {
+            registerItem(String(itemValue), itemText);
+          }
+        }
+        // Recursively walk children
+        if (node.props.children) {
+          walkChildren(node.props.children);
+        }
+      }
+    };
+
+    walkChildren(children);
+  }, [children, registerItem]);
+
+  // Initialize selectedItemText from defaultValue when items are registered
+  React.useEffect(() => {
+    if (defaultValue && itemTexts.size > 0 && !selectedItemText) {
+      const text = itemTexts.get(defaultValue);
+      if (text) {
+        setSelectedItemText(text);
+      }
+    }
+  }, [defaultValue, itemTexts, selectedItemText, setSelectedItemText]);
 
   return (
     <SelectContext.Provider value={{
@@ -180,7 +238,7 @@ export const SelectRoot = ({
       size,
       selectedItemText,
       setSelectedItemText,
-      itemTexts: itemTextsRef.current,
+      itemTexts: itemTexts,
       registerItem,
       unregisterItem,
     }}>
@@ -239,10 +297,11 @@ interface SelectValueProps {
 }
 
 export const SelectValue = ({ placeholder = 'Select an option', style }: SelectValueProps) => {
-  const { value, itemTexts, colors } = useSelect();
+  const { value, itemTexts, selectedItemText, colors } = useSelect();
 
-  // Get the text for the selected value
-  const selectedText = value ? itemTexts.get(value) : undefined;
+  // Priority: selectedItemText > itemTexts lookup > placeholder
+  // selectedItemText persists even when the dropdown closes (itemTexts gets cleared)
+  const selectedText = selectedItemText || (value ? itemTexts.get(value) : undefined);
 
   return (
     <Text style={[
@@ -480,29 +539,29 @@ export const SelectItem = ({
   disabled = false,
   style,
 }: SelectItemProps) => {
-  const { value, onValueChange, colors, onOpenChange, size, registerItem, unregisterItem } = useSelect();
+  const { value, onValueChange, colors, onOpenChange, size, registerItem, unregisterItem, setSelectedItemText } = useSelect();
   const theme = useTheme();
   const isSelected = value === itemValue;
 
+  // Helper to extract text from children
+  const extractText = useCallback((node: ReactNode): string => {
+    if (typeof node === 'string') return node;
+    if (typeof node === 'number') return String(node);
+    if (!node) return '';
+    if (Array.isArray(node)) return node.map(extractText).join('');
+    if (React.isValidElement(node) && node.props.children) {
+      return extractText(node.props.children);
+    }
+    return '';
+  }, []);
+
   // Extract text from children for Select.Value
   React.useEffect(() => {
-    // Extract text from children
-    const extractText = (node: ReactNode): string => {
-      if (typeof node === 'string') return node;
-      if (typeof node === 'number') return String(node);
-      if (!node) return '';
-      if (Array.isArray(node)) return node.map(extractText).join('');
-      if (React.isValidElement(node) && node.props.children) {
-        return extractText(node.props.children);
-      }
-      return '';
-    };
-
     const text = extractText(children);
     registerItem(itemValue, text);
 
     return () => unregisterItem(itemValue);
-  }, [children, itemValue, registerItem, unregisterItem]);
+  }, [children, itemValue, registerItem, unregisterItem, extractText]);
 
   // Get font size based on size prop
   const getFontSize = useCallback(() => {
@@ -536,6 +595,10 @@ export const SelectItem = ({
 
   const handlePress = () => {
     if (!disabled) {
+      // Store the selected item text before closing the dropdown
+      // This ensures Select.Value can display the text even after items unmount
+      const text = extractText(children);
+      setSelectedItemText(text);
       onValueChange(itemValue);
     }
   };

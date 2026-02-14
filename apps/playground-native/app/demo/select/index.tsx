@@ -62,7 +62,7 @@ export default function SelectDemo() {
                   <Select.Trigger asChild>
                     <Button variant="solid" style={styles.trigger}>
                       <Button.Label>
-                        <Select.Value placeholder="Select a vegetable"  />
+                        <Select.Value  />
                       </Button.Label>
                     </Button>
                   </Select.Trigger>
