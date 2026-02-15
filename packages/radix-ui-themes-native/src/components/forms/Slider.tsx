@@ -617,6 +617,7 @@ const Slider = React.forwardRef<React.ComponentRef<typeof RNView>, SliderProps>(
           elevation: 3,
           transform: [{ translateX: thumbTranslateX }],
           opacity: disabled ? 0.5 : 1,
+          top: -sizeValues.trackHeight - 2,
         };
       },
       [getThumbTranslateX, sizeValues.thumbSize, grayScale, disabled]
@@ -751,7 +752,6 @@ const styles = StyleSheet.create({
   },
   thumb: {
     position: 'absolute',
-    top: -1,
     justifyContent: 'center',
     alignItems: 'center',
   },
