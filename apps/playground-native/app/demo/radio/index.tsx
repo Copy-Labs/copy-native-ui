@@ -65,9 +65,36 @@ export default function Radios() {
             <Flex direction={'column'} gap={12} padding={12}>
               <Heading>Alignment</Heading>
               <Flex align="flex-start" direction="column" gap={1}>
-                <Radio size={'1'} label={'Default'} value={'a'} color="gray" defaultChecked highContrast />
-                <Radio size={'1'} label={'Compact'} value={'b'} color="gray" defaultChecked highContrast />
+                <Radio
+                  size={'1'}
+                  label={'Default'}
+                  value={'a'}
+                  color="gray"
+                  defaultChecked
+                  highContrast
+                />
+                <Radio
+                  size={'1'}
+                  label={'Compact'}
+                  value={'b'}
+                  color="gray"
+                  defaultChecked
+                  highContrast
+                />
               </Flex>
+
+              <Card color={'gray'} radius={'large'} size={3} variant={'surface'}>
+                <Flex align={'center'} justify={'space-between'}>
+                  <Heading>Text Radio Card</Heading>
+                  <Radio
+                    size={'2'}
+                    value={'b'}
+                    variant={'surface'}
+                    color="blue"
+                    defaultChecked
+                  />
+                </Flex>
+              </Card>
 
               <Flex align="flex-start" direction="column" gap={2}>
                 <Radio label={'Default'} value={'a'} color="blue" defaultChecked />
