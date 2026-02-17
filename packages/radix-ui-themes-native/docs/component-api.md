@@ -282,20 +282,55 @@ import { Container } from '@radix-ui/themes-native';
 
 ### Inset
 
-Padding component for consistent spacing.
+Padding component for consistent spacing with overflow clipping support.
 
 ```tsx
 import { Inset } from '@radix-ui/themes-native';
 
 <Inset
+  asChild={false}
   children={undefined}
   style={undefined}
-  side="all" | "horizontal" | "vertical" | "top" | "bottom" | "left" | "right"
-  trim={1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}
+  side="all" | "x" | "y" | "top" | "bottom" | "left" | "right"
+  p={1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9}
+  clip="overflow" | "padding-box"
 >
   Content
 </Inset>
 ```
+
+**Props:**
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `asChild` | `boolean` | `false` | Merge props onto immediate child |
+| `side` | `'all' \| 'x' \| 'y' \| 'top' \| 'bottom' \| 'left' \| 'right'` | `'all'` | Side(s) to apply padding |
+| `p` | `1 \| 2 \| 3 \| 4 \| 5 \| 6 \| 7 \| 8 \| 9` | `4` | Padding size from theme spacing scale |
+| `clip` | `'overflow' \| 'padding-box'` | `undefined` | Clip overflow content |
+
+**Side Values:**
+- `all` - All four sides
+- `x` - Horizontal (left and right)
+- `y` - Vertical (top and bottom)
+- `top`, `bottom`, `left`, `right` - Individual sides
+
+**Clip Behavior:**
+- `overflow` - Sets `overflow: hidden` to clip content
+- `padding-box` - Clips content to padding box boundary
+
+**Example with Image:**
+```tsx
+<Card radius="large">
+  <Inset clip="overflow">
+    <Image source={{ uri: '...' }} style={{ width: '100%', height: 150 }} />
+  </Inset>
+  <Inset p={4}>
+    <Text>Content below image</Text>
+  </Inset>
+</Card>
+```
+
+> **Note:** The `trim` prop is deprecated. Use `p` instead.
 
 ## Typography Components
 
