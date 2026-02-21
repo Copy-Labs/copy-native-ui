@@ -1,0 +1,106 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://www.mintlify.com/docs/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Hidden pages
+
+> Hide pages from your navigation while keeping them accessible.
+
+Hidden pages don't appear in your site's navigation, but anyone who knows the URL can still access them. For example, if you create a hidden page like `guides/hidden-page.mdx`, visitors can reach it at `docs.yoursite.com/guides/hidden-page`.
+
+Use hidden pages for content you want users to access or reference as context for AI tools, but don't want listed in the navigation.
+
+If your content requires strict access control, you must configure [authentication](/deploy/authentication-setup).
+
+To restrict pages to specific user groups, set up [group-based access control](/deploy/authentication-setup#control-access-with-groups).
+
+See an [example of a hidden page](/organize/hidden-page-example).
+
+<Note>
+  Some navigation elements like sidebars, dropdowns, and tabs may appear empty or shift layout on hidden pages.
+</Note>
+
+## Hide a page
+
+To hide a page, set `hidden: true` in the page's [frontmatter](/organize/pages) or remove it from your `docs.json` navigation.
+
+### Set `hidden: true` in frontmatter
+
+Add `hidden: true` to a page's frontmatter to remove it from the rendered navigation while still including it in your `docs.json` configuration.
+
+```yaml  theme={null}
+---
+title: "My hidden page"
+hidden: true
+---
+```
+
+<Note>
+  Search engines cannot index hidden pages. When you set `hidden: true`, the page is automatically excluded from search engine indexing, sitemaps, and AI context. However, setting `noindex: true` does **not** hide a page from navigation. See [Disable indexing](/optimize/seo#disable-indexing) for more information.
+</Note>
+
+### Remove the page from navigation
+
+If you don't include a page in your `docs.json` navigation, you hide it. This method works well for pages that you don't want to appear in navigation at all.
+
+## Hide a group of pages
+
+To hide a group of pages, set the `hidden` property to `true` for the group in your `docs.json` file:
+
+```json highlight={4} theme={null}
+"groups": [
+  {
+    "group": "Getting started",
+    "hidden": true,
+    "pages": [
+      "index",
+      "quickstart"
+    ]
+  },
+  {
+    "group": "Guides",
+    "pages": [
+      "guides/hidden-page.mdx",
+      "guides/hidden-groups.mdx"
+    ]
+  }
+]
+```
+
+In this example, the `Getting started` group is hidden and the `Guides` group is visible.
+
+### Hide a tab
+
+To hide a tab, add the `hidden` property for the tab in your `docs.json` file:
+
+```json highlight={4} theme={null}
+"tabs": [
+  {
+    "tab": "Home",
+    "hidden": true,
+    "pages": [
+      "index",
+      "quickstart"
+    ]
+  }
+]
+```
+
+## Search, SEO, and AI indexing
+
+By default, hidden pages don't appear in indexing for search engines, documentation site search, or as AI assistant context. To include hidden pages in search results and assistant context, add the `seo` property to your `docs.json`:
+
+```json  theme={null}
+"seo": {
+    "indexing": "all"
+}
+```
+
+### Understanding hidden vs. noindex
+
+The relationship between `hidden` and `noindex` is one-directional:
+
+* **`hidden: true` → automatically applies `noindex`**: Hidden pages are automatically excluded from search engines, sitemaps, and AI context.
+* **`noindex: true` → does NOT apply `hidden`**: Pages with `noindex: true` remain visible in navigation. They only affect search engine indexing and AI context.
+
+To exclude a specific page from search engines while keeping it visible in navigation, add `noindex: true` to its frontmatter. To hide a page from navigation and search engines, use `hidden: true`.

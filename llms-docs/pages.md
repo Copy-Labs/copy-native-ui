@@ -1,0 +1,209 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://www.mintlify.com/docs/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Pages
+
+> Configure page metadata, titles, and frontmatter properties.
+
+Each page is a Markdown file. You can use either `.mdx` or `.md` file types for your pages. We recommend MDX, which combines Markdown with React components for rich, interactive documentation. Plain Markdown (`.md`) can expedite migration from other platforms, but switching to MDX enables more features.
+
+## Page metadata
+
+Every page begins with frontmatter, the YAML metadata enclosed by `---` at the top of a file. This metadata controls how your page appears and behaves.
+
+Use frontmatter to control:
+
+* Page titles and descriptions
+* Sidebar titles, icons, and tags
+* Page layouts
+* SEO meta tags
+* Custom metadata
+
+<ResponseField name="title" type="string" required>
+  The title of your page that appears in navigation and browser tabs.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  A brief description of what this page covers. Displays under the title and improves SEO.
+</ResponseField>
+
+<ResponseField name="sidebarTitle" type="string">
+  A short title that displays in the sidebar navigation.
+</ResponseField>
+
+<ResponseField name="icon" type="string">
+  The icon to display.
+
+Options:
+
+* [Font Awesome icon](https://fontawesome.com/icons) name
+* [Lucide icon](https://lucide.dev/icons) name
+* [Tabler icon](https://tabler.io/icons) name
+* URL to an externally hosted icon
+* Path to an icon file in your project
+  </ResponseField>
+
+<ResponseField name="iconType" type="string">
+  For [Font Awesome](https://fontawesome.com/icons) icons only. The style of the icon.
+
+Options: `regular`, `solid`, `light`, `thin`, `sharp-solid`, `duotone`, `brands`.
+</ResponseField>
+
+<ResponseField name="tag" type="string">
+  A tag that appears next to your page title in the sidebar.
+</ResponseField>
+
+<ResponseField name="hidden" type="boolean">
+  Set to `true` to remove the page from the sidebar navigation. Users can still access the page via its URL, but search engines do not index it. See [Hidden pages](/organize/hidden-pages) for details.
+</ResponseField>
+
+<ResponseField name="noindex" type="boolean">
+  Set to `true` to prevent search engines from indexing the page. See [Disable indexing](/optimize/seo#disable-indexing) for details. All pages with `hidden: true` in their frontmatter receive `noindex: true` automatically.
+</ResponseField>
+
+<ResponseField name="<custom>" type="string">
+  Any valid YAML frontmatter. For example, `product: "API"` or `version: "1.0.0"`.
+</ResponseField>
+
+```yaml Example YAML frontmatter wrap theme={null}
+---
+title: "About frontmatter"
+description: "Frontmatter is the metadata that controls how your page appears and behaves"
+sidebarTitle: "Frontmatter"
+icon: "book"
+tag: "NEW"
+---
+```
+
+## Page mode
+
+Control your page's layout with the `mode` setting.
+
+### Default
+
+If you do not define a mode, the page uses a standard layout with sidebar navigation and table of contents.
+
+```yaml  theme={null}
+---
+title: "Default page title"
+---
+```
+
+### Wide
+
+Wide mode hides the table of contents. Use this mode for pages without headings or if you want extra horizontal space. Every theme supports wide mode.
+
+```yaml  theme={null}
+---
+title: "Wide page title"
+mode: "wide"
+---
+```
+
+### Custom
+
+Custom mode provides a minimalist layout and removes all elements except for the top navbar. Treat custom mode as a blank canvas to build landing pages or unique layouts with minimal navigation. All themes support custom mode.
+
+```yaml  theme={null}
+---
+title: "Custom page title"
+mode: "custom"
+---
+```
+
+<Warning>
+  The `style` property on custom mode pages may cause a layout shift on page load. Prefer [Tailwind CSS or custom CSS](/customize/custom-scripts) to avoid this issue.
+</Warning>
+
+### Frame
+
+Frame mode provides a layout similar to custom mode but keeps the sidebar navigation. Use this mode to include custom HTML and components while preserving the default navigation experience. Only Aspen and Almond themes support frame mode.
+
+```yaml  theme={null}
+---
+title: "Frame page title"
+mode: "frame"
+---
+```
+
+### Center
+
+Center mode removes the sidebar and table of contents, and centers the content. Use center mode for changelogs or other pages where you want to place focus on the content. Mint and Linden themes support center mode.
+
+```yaml  theme={null}
+---
+title: "Center page title"
+mode: "center"
+---
+```
+
+## API pages
+
+To create an interactive API playground, add an API specification to your frontmatter by setting `api` or `openapi`.
+
+```yaml  theme={null}
+---
+openapi: "GET /endpoint"
+---
+```
+
+Learn more about building [API documentation](/api-playground/overview).
+
+## External links
+
+Link to external sites directly from your navigation with the `url` metadata.
+
+```yaml  theme={null}
+---
+title: "npm Package"
+url: "https://www.npmjs.com/package/mint"
+---
+```
+
+## Search engine optimization
+
+Mintlify automatically generates most SEO meta tags. You can set SEO meta tags manually to customize your approach to SEO, social sharing, and browser compatibility.
+
+<Note>
+  Always wrap meta tags with colons in quotes.
+</Note>
+
+```yaml  theme={null}
+---
+"twitter:image": "/images/social-preview.jpg"
+---
+```
+
+See [SEO](/optimize/seo) for the full list of SEO metadata options.
+
+## Internal search keywords
+
+Help users discover a specific page in search results by providing `keywords` in your metadata. These keywords don't appear in page content. If users search for the keywords, the page appears in the search results.
+
+```yaml  theme={null}
+---
+keywords: ['configuration', 'setup', 'getting started']
+---
+```
+
+## Last modified timestamp
+
+Show a "Last modified on \[date]" timestamp on all pages by enabling `metadata.timestamp` in your [global settings](/organize/settings#param-metadata).
+
+```json docs.json theme={null}
+"metadata": {
+  "timestamp": true
+}
+```
+
+To override the global timestamp setting for an individual page, use the `timestamp` frontmatter field. Use this field to show or hide timestamps on specific pages.
+
+```yaml  theme={null}
+---
+title: "Page title"
+timestamp: false
+---
+```
+
+If you set `timestamp: true`, the page always shows the timestamp even if the global setting is `false`. If you set `timestamp: false`, the page hides the timestamp even if the global setting is `true`.
