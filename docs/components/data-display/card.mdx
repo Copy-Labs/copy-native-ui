@@ -1,0 +1,149 @@
+---
+title: Card
+description: Card container component for grouping content.
+---
+
+# Card
+
+`Card` is a data display component for grouping related content in a styled container.
+
+## Import
+
+```tsx
+import { Card } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Card, Text, Heading, Flex } from '@radix-ui/themes-native';
+
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Card Title</Heading>
+    <Text>Card content goes here.</Text>
+  </Flex>
+</Card>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Card content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="variant" type="'elevated' | 'outlined' | 'flat'" default="'elevated'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4 | 5" default="3">
+    Size of the card padding.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'">
+    Border radius override.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Variants
+
+```tsx
+<Card variant="elevated">Elevated card</Card>
+<Card variant="outlined">Outlined card</Card>
+<Card variant="flat">Flat card</Card>
+```
+
+### Sizes
+
+```tsx
+<Card size={1}>Extra small padding</Card>
+<Card size={2}>Small padding</Card>
+<Card size={3}>Medium padding (default)</Card>
+<Card size={4}>Large padding</Card>
+<Card size={5}>Extra large padding</Card>
+```
+
+### With Color
+
+```tsx
+<Card color="blue">
+  <Text>Blue card</Text>
+</Card>
+```
+
+### Profile Card
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Flex direction="row" gap={3} align="center">
+      <Avatar
+        src="https://i.pravatar.cc/150"
+        fallback="JD"
+        size={5}
+      />
+      <Flex direction="column">
+        <Heading size={3}>John Doe</Heading>
+        <Text size={2} color="gray">Software Engineer</Text>
+      </Flex>
+    </Flex>
+    <Text>
+      Building beautiful mobile apps with React Native and Radix Themes.
+    </Text>
+    <Button>View Profile</Button>
+  </Flex>
+</Card>
+```
+
+### Product Card
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Inset clip="overflow">
+      <Image
+        source={{ uri: 'https://example.com/product.jpg' }}
+        style={{ width: '100%', height: 150 }}
+      />
+    </Inset>
+    <Flex direction="column" gap={2}>
+      <Flex direction="row" justify="between" align="center">
+        <Heading size={3}>Product Name</Heading>
+        <Badge color="green">New</Badge>
+      </Flex>
+      <Text size={2} color="gray">Product description goes here.</Text>
+      <Flex direction="row" justify="between" align="center">
+        <Text weight="bold" size={4}>$29.99</Text>
+        <Button size={1}>Add to Cart</Button>
+      </Flex>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+### Stats Card
+
+```tsx
+<Card>
+  <Flex direction="column" gap={2}>
+    <Text size={2} color="gray">Total Revenue</Text>
+    <Heading size={6}>$12,345</Heading>
+    <Flex direction="row" gap={1} align="center">
+      <Badge color="green" size={1}>+12%</Badge>
+      <Text size={1} color="gray">vs last month</Text>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+## Related
+
+- [Box](/components/layout/box) - Primitive container
+- [Flex](/components/layout/flex) - Flexbox layout
+- [Inset](/components/layout/inset) - Inset component

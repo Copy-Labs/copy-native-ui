@@ -1,0 +1,250 @@
+---
+title: Toast
+description: Toast notification component for displaying brief messages.
+---
+
+# Toast
+
+`Toast` is an overlay component for displaying brief, non-critical notifications that appear temporarily.
+
+## Import
+
+```tsx
+import { Toast } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Toast, Button, Text } from '@radix-ui/themes-native';
+
+function App() {
+  return (
+    <Toast.Provider>
+      <Toast.Root>
+        <Toast.Title>Success!</Toast.Title>
+        <Toast.Description>Your changes have been saved.</Toast.Description>
+        <Toast.Close />
+      </Toast.Root>
+
+      <Toast.Viewport />
+    </Toast.Provider>
+  );
+}
+```
+
+## Components
+
+### Toast.Provider
+
+The provider component that manages toast state.
+
+### Toast.Root
+
+Individual toast notification.
+
+### Toast.Title
+
+Title for the toast.
+
+### Toast.Description
+
+Description text for the toast.
+
+### Toast.Close
+
+Close button for the toast.
+
+### Toast.Viewport
+
+Container where toasts are rendered.
+
+## Props
+
+### Toast.Provider
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Toast components.
+  </Prop>
+  <Prop name="swipeDirection" type="'right' | 'left' | 'up' | 'down'">
+    Direction to swipe to dismiss.
+  </Prop>
+  <Prop name="duration" type="number" default="5000">
+    Duration in milliseconds.
+  </Prop>
+</PropTable>
+
+### Toast.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Toast content.
+  </Prop>
+  <Prop name="type" type="'foreground' | 'background'">
+    Toast type for accessibility.
+  </Prop>
+  <Prop name="duration" type="number">
+    Override provider duration.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Toast
+
+```tsx
+function ToastDemo() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Toast.Provider>
+      <Button onPress={() => setOpen(true)}>Show Toast</Button>
+
+      <Toast.Root open={open} onOpenChange={setOpen}>
+        <Toast.Title>Notification</Toast.Title>
+        <Toast.Description>This is a toast message.</Toast.Description>
+      </Toast.Root>
+
+      <Toast.Viewport />
+    </Toast.Provider>
+  );
+}
+```
+
+### Success Toast
+
+```tsx
+<Toast.Root>
+  <Flex direction="row" gap={2} align="center">
+    <Icon name="check-circle" color="green" />
+    <Flex direction="column">
+      <Toast.Title>Success</Toast.Title>
+      <Toast.Description>Your file has been uploaded.</Toast.Description>
+    </Flex>
+  </Flex>
+</Toast.Root>
+```
+
+### Error Toast
+
+```tsx
+<Toast.Root>
+  <Flex direction="row" gap={2} align="center">
+    <Icon name="x-circle" color="red" />
+    <Flex direction="column">
+      <Toast.Title>Error</Toast.Title>
+      <Toast.Description>Failed to save changes.</Toast.Description>
+    </Flex>
+  </Flex>
+  <Toast.Close>
+    <IconButton size={1} variant="ghost">
+      <Icon name="x" />
+    </IconButton>
+  </Toast.Close>
+</Toast.Root>
+```
+
+### With Action
+
+```tsx
+<Toast.Root>
+  <Flex direction="row" gap={3} align="center" justify="between">
+    <Flex direction="column">
+      <Toast.Title>Item Deleted</Toast.Title>
+      <Toast.Description>Undo to restore the item.</Toast.Description>
+    </Flex>
+    <Toast.Close>
+      <Button size={1} variant="soft">Undo</Button>
+    </Toast.Close>
+  </Flex>
+</Toast.Root>
+```
+
+### Toast Hook
+
+```tsx
+import { useToast } from '@radix-ui/themes-native';
+
+function SaveButton() {
+  const toast = useToast();
+
+  const handleSave = async () => {
+    try {
+      await saveData();
+      toast.success('Changes saved successfully!');
+    } catch (error) {
+      toast.error('Failed to save changes.');
+    }
+  };
+
+  return <Button onPress={handleSave}>Save</Button>;
+}
+```
+
+### Multiple Toasts
+
+```tsx
+function ToastManager() {
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (message, type = 'info') => {
+    const id = Date.now();
+    setToasts(prev => [...prev, { id, message, type }]);
+
+    setTimeout(() => {
+      setToasts(prev => prev.filter(t => t.id !== id));
+    }, 5000);
+  };
+
+  return (
+    <Toast.Provider>
+      <Flex gap={2}>
+        <Button onPress={() => addToast('Info message', 'info')}>
+          Info
+        </Button>
+        <Button onPress={() => addToast('Success!', 'success')} color="green">
+          Success
+        </Button>
+        <Button onPress={() => addToast('Error occurred', 'error')} color="red">
+          Error
+        </Button>
+      </Flex>
+
+      {toasts.map(toast => (
+        <Toast.Root key={toast.id}>
+          <Toast.Description>{toast.message}</Toast.Description>
+        </Toast.Root>
+      ))}
+
+      <Toast.Viewport />
+    </Toast.Provider>
+  );
+}
+```
+
+### Persistent Toast
+
+```tsx
+<Toast.Root duration={Infinity}>
+  <Flex direction="column">
+    <Toast.Title>Update Available</Toast.Title>
+    <Toast.Description>A new version is ready to install.</Toast.Description>
+  </Flex>
+  <Flex gap={2}>
+    <Button size={1} variant="soft">Later</Button>
+    <Button size={1}>Update Now</Button>
+  </Flex>
+</Toast.Root>
+```
+
+## Related
+
+- [Callout](/components/data-display/callout) - Callout component
+- [Dialog](/components/overlays/dialog) - Dialog component

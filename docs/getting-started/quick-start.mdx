@@ -1,0 +1,228 @@
+---
+title: Quick Start
+description: Get up and running with Radix Themes Native in minutes.
+---
+
+# Quick Start
+
+Learn how to set up Radix Themes Native in your React Native or Expo project.
+
+## 1. Wrap Your App with ThemeProvider
+
+The `ThemeProvider` component provides theme context to all child components. Wrap your root component:
+
+```tsx
+// App.tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      {/* Your app content */}
+    </ThemeProvider>
+  );
+}
+```
+
+## 2. Use Components
+
+Import and use any component from the library:
+
+```tsx
+import {
+  Button,
+  Card,
+  Text,
+  Heading,
+  Flex,
+  TextField,
+  Switch
+} from '@radix-ui/themes-native';
+
+function Example() {
+  return (
+    <Card>
+      <Flex direction="column" gap={3}>
+        <Heading size={4}>Welcome</Heading>
+        <Text>Build beautiful mobile apps with Radix Themes Native.</Text>
+        <TextField placeholder="Enter your name" />
+        <Button onPress={() => console.log('Pressed!')}>
+          Get Started
+        </Button>
+      </Flex>
+    </Card>
+  );
+}
+```
+
+## 3. Customize the Theme
+
+Configure the theme with your preferred options:
+
+```tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+export default function App() {
+  return (
+    <ThemeProvider
+      mode="light"           // 'light' | 'dark' | undefined (follows device)
+      accentColor="indigo"   // Accent color for components
+      grayColor="mauve"      // Gray scale variant
+      radius="medium"        // Border radius scale
+      scaling={1}            // Scale factor for all sizes
+    >
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+```
+
+## Complete Example
+
+Here's a complete example with multiple components:
+
+```tsx
+import React, { useState } from 'react';
+import {
+  ThemeProvider,
+  Button,
+  Card,
+  Text,
+  Heading,
+  Flex,
+  TextField,
+  Switch,
+  Badge,
+  Avatar,
+  Separator
+} from '@radix-ui/themes-native';
+import { ScrollView } from 'react-native';
+
+function ProfileCard() {
+  const [notifications, setNotifications] = useState(true);
+
+  return (
+    <Card>
+      <Flex direction="column" gap={3}>
+        <Flex direction="row" align="center" gap={3}>
+          <Avatar
+            src="https://i.pravatar.cc/150"
+            alt="User avatar"
+            fallback="JD"
+          />
+          <Flex direction="column">
+            <Heading size={3}>John Doe</Heading>
+            <Text size={2} color="gray">
+              Software Engineer
+            </Text>
+          </Flex>
+        </Flex>
+
+        <Separator />
+
+        <Flex direction="row" justify="between" align="center">
+          <Text>Notifications</Text>
+          <Switch
+            checked={notifications}
+            onCheckedChange={setNotifications}
+          />
+        </Flex>
+
+        <Flex direction="row" gap={2}>
+          <Badge color="green">Active</Badge>
+          <Badge color="blue" variant="soft">Pro</Badge>
+        </Flex>
+
+        <Button>View Profile</Button>
+      </Flex>
+    </Card>
+  );
+}
+
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <Card>
+      <Flex direction="column" gap={3}>
+        <Heading size={4}>Sign In</Heading>
+
+        <TextField
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+
+        <TextField
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+
+        <Button onPress={() => console.log('Login')}>
+          Sign In
+        </Button>
+
+        <Text size={2} color="gray" align="center">
+          Don't have an account? Sign up
+        </Text>
+      </Flex>
+    </Card>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider accentColor="indigo">
+      <ScrollView style={{ flex: 1, padding: 16 }}>
+        <Flex direction="column" gap={4}>
+          <ProfileCard />
+          <LoginForm />
+        </Flex>
+      </ScrollView>
+    </ThemeProvider>
+  );
+}
+```
+
+## Using Theme Hooks
+
+Access theme values and controls with hooks:
+
+```tsx
+import { useTheme, useThemeMode, useThemeActions } from '@radix-ui/themes-native';
+
+function ThemeToggle() {
+  const theme = useTheme();
+  const mode = useThemeMode();
+  const { setMode, toggleMode } = useThemeActions();
+
+  return (
+    <Button onPress={toggleMode}>
+      Switch to {mode === 'light' ? 'dark' : 'light'} mode
+    </Button>
+  );
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Theming" href="/theming/overview" icon="palette">
+    Learn how to customize colors, typography, and spacing.
+  </Card>
+
+  <Card title="Components" href="/components/layout/box" icon="layout">
+    Explore all available components and their APIs.
+  </Card>
+
+  <Card title="Migration" href="/getting-started/migration" icon="arrow-right">
+    Migrating from web Radix Themes? Learn the key differences.
+  </Card>
+
+  <Card title="Examples" href="/examples/login-form" icon="code-2">
+    See real-world examples and patterns.
+  </Card>
+</CardGroup>

@@ -1,0 +1,189 @@
+---
+title: Spacing
+description: Learn about the spacing system in Radix Themes Native.
+---
+
+# Spacing
+
+Radix Themes Native uses a consistent spacing scale throughout all components. The spacing scale is based on a 4px grid system.
+
+## Spacing Scale
+
+| Step | Value | Pixels |
+|------|-------|--------|
+| 0 | 0 | 0px |
+| 1 | 4 | 4px |
+| 2 | 8 | 8px |
+| 3 | 12 | 12px |
+| 4 | 16 | 16px |
+| 5 | 20 | 20px |
+| 6 | 24 | 24px |
+| 7 | 32 | 32px |
+| 8 | 40 | 40px |
+| 9 | 48 | 48px |
+| 10 | 64 | 64px |
+| 11 | 80 | 80px |
+| 12 | 96 | 96px |
+| 13 | 128 | 128px |
+
+## Using Spacing
+
+### In Components
+
+Most layout components accept spacing props:
+
+```tsx
+import { Box, Flex, Card } from '@radix-ui/themes-native';
+
+// Padding
+<Box padding={4}>Content with 16px padding</Box>
+<Box p={4}>Shorthand for padding</Box>
+
+// Margin
+<Box margin={4}>Content with 16px margin</Box>
+<Box m={4}>Shorthand for margin</Box>
+
+// Gap (for Flex and Grid)
+<Flex gap={3}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+</Flex>
+```
+
+### Directional Spacing
+
+Control spacing on individual sides:
+
+```tsx
+// Padding
+<Box paddingTop={4}>Top padding only</Box>
+<Box paddingBottom={4}>Bottom padding only</Box>
+<Box paddingLeft={4}>Left padding only</Box>
+<Box paddingRight={4}>Right padding only</Box>
+<Box paddingHorizontal={4}>Horizontal padding</Box>
+<Box paddingVertical={4}>Vertical padding</Box>
+
+// Shorthands
+<Box pt={4}>Top padding</Box>
+<Box pb={4}>Bottom padding</Box>
+<Box pl={4}>Left padding</Box>
+<Box pr={4}>Right padding</Box>
+<Box px={4}>Horizontal padding</Box>
+<Box py={4}>Vertical padding</Box>
+
+// Margin (same pattern)
+<Box marginTop={4} />
+<Box marginBottom={4} />
+<Box marginHorizontal={4} />
+<Box marginVertical={4} />
+```
+
+### Accessing Spacing Values
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function CustomComponent() {
+  const theme = useTheme();
+
+  const spacing4 = theme.space[4]; // 16
+  const spacing6 = theme.space[6]; // 24
+
+  return (
+    <View style={{
+      padding: spacing4,
+      marginBottom: spacing6
+    }}>
+      <Text>Custom spaced content</Text>
+    </View>
+  );
+}
+```
+
+## Common Patterns
+
+### Card with Content
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={4}>Card Title</Heading>
+    <Text>Card content goes here.</Text>
+    <Button>Action</Button>
+  </Flex>
+</Card>
+```
+
+### Form Layout
+
+```tsx
+<Flex direction="column" gap={4}>
+  <Flex direction="column" gap={2}>
+    <Text weight="medium">Email</Text>
+    <TextField placeholder="Enter email" />
+  </Flex>
+
+  <Flex direction="column" gap={2}>
+    <Text weight="medium">Password</Text>
+    <TextField placeholder="Enter password" secureTextEntry />
+  </Flex>
+
+  <Button>Sign In</Button>
+</Flex>
+```
+
+### List Items
+
+```tsx
+<Flex direction="column" gap={2}>
+  {items.map(item => (
+    <Flex
+      key={item.id}
+      padding={3}
+      style={{ backgroundColor: 'gray.2' }}
+    >
+      <Text>{item.name}</Text>
+    </Flex>
+  ))}
+</Flex>
+```
+
+## Radius Scale
+
+Border radius also follows a scale:
+
+| Step | Value | Pixels |
+|------|-------|--------|
+| 0 | 0 | 0px |
+| 1 | 4 | 4px |
+| 2 | 6 | 6px |
+| 3 | 8 | 8px |
+| 4 | 12 | 12px |
+| 5 | 16 | 16px |
+| 6 | 24 | 24px |
+| 7 | 9999 | Full |
+
+### Using Radius
+
+```tsx
+<Box borderRadius={2}>Slightly rounded</Box>
+<Box borderRadius={4}>More rounded</Box>
+<Box borderRadius="full">Fully rounded (pill shape)</Box>
+
+// Or use the radius prop on supported components
+<Card radius="large">Rounded card</Card>
+<Button radius="full">Pill button</Button>
+```
+
+## Best Practices
+
+1. **Use scale values** - Always use scale values instead of arbitrary numbers
+2. **Be consistent** - Use the same spacing values for similar elements
+3. **Consider touch targets** - Ensure interactive elements have adequate spacing (min 44px)
+4. **Group related items** - Use smaller gaps for related items, larger for sections
+
+## Related
+
+- [Box Component](/components/layout/box)
+- [Flex Component](/components/layout/flex)
+- [ThemeProvider](/theming/theme-provider)

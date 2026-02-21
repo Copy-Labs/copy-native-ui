@@ -1,0 +1,229 @@
+---
+title: Theming Overview
+description: Learn about the theming system in Radix Themes Native.
+---
+
+# Theming Overview
+
+Radix Themes Native provides a powerful theming system that allows you to customize the look and feel of your entire application.
+
+## Theme Provider
+
+The `ThemeProvider` component is the root component that provides theme context to all child components.
+
+```tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      {/* Your app content */}
+    </ThemeProvider>
+  );
+}
+```
+
+## Theme Configuration
+
+Configure the theme with the following options:
+
+```tsx
+<ThemeProvider
+  mode="light"           // 'light' | 'dark' | undefined
+  forcedMode="dark"      // Force specific mode
+  accentColor="indigo"   // Accent color
+  grayColor="mauve"      // Gray scale variant
+  radius="medium"        // Border radius scale
+  scaling={1}            // Scale factor
+>
+  {children}
+</ThemeProvider>
+```
+
+## Theme Options
+
+### Accent Color
+
+Choose from 25+ accent colors for your components:
+
+```tsx
+<ThemeProvider accentColor="indigo">
+  {/* All components will use indigo as accent */}
+</ThemeProvider>
+```
+
+Available colors: `amber`, `blue`, `bronze`, `brown`, `crimson`, `cyan`, `gold`, `grass`, `green`, `indigo`, `iris`, `jade`, `lime`, `mint`, `orange`, `pink`, `plum`, `purple`, `red`, `ruby`, `sky`, `teal`, `tomato`, `violet`, `yellow`
+
+### Gray Scale
+
+Choose from 6 gray scale variants:
+
+```tsx
+<ThemeProvider grayColor="mauve">
+  {/* Neutral colors will use mauve scale */}
+</ThemeProvider>
+```
+
+Available variants: `gray`, `mauve`, `olive`, `sage`, `sand`, `slate`
+
+### Border Radius
+
+Control the roundness of components:
+
+```tsx
+<ThemeProvider radius="medium">
+  {/* Components will have medium border radius */}
+</ThemeProvider>
+```
+
+Available values: `none`, `small`, `medium`, `large`, `full`
+
+### Scaling
+
+Adjust the overall scale of components:
+
+```tsx
+<ThemeProvider scaling={1.1}>
+  {/* All components will be 10% larger */}
+</ThemeProvider>
+```
+
+## Theme Modes
+
+### Light Mode
+
+```tsx
+<ThemeProvider mode="light">
+  {/* App will use light theme */}
+</ThemeProvider>
+```
+
+### Dark Mode
+
+```tsx
+<ThemeProvider mode="dark">
+  {/* App will use dark theme */}
+</ThemeProvider>
+```
+
+### System Default
+
+When `mode` is undefined, the theme follows the device's color scheme:
+
+```tsx
+<ThemeProvider>
+  {/* Theme will follow device settings */}
+</ThemeProvider>
+```
+
+### Forced Mode
+
+Use `forcedMode` to override device settings:
+
+```tsx
+<ThemeProvider forcedMode="dark">
+  {/* Always dark, ignores device settings */}
+</ThemeProvider>
+```
+
+## Accessing Theme Values
+
+### useTheme Hook
+
+Access the full theme object:
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const theme = useTheme();
+
+  return (
+    <View style={{
+      backgroundColor: theme.colors.gray[2],
+      padding: theme.space[4]
+    }}>
+      <Text>Themed content</Text>
+    </View>
+  );
+}
+```
+
+### useThemeMode Hook
+
+Get the current theme mode:
+
+```tsx
+import { useThemeMode } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const mode = useThemeMode();
+
+  return (
+    <Text>Current mode: {mode}</Text>
+  );
+}
+```
+
+### useThemeActions Hook
+
+Get theme control functions:
+
+```tsx
+import { useThemeActions } from '@radix-ui/themes-native';
+
+function ThemeToggle() {
+  const { setMode, toggleMode, mode } = useThemeActions();
+
+  return (
+    <Button onPress={toggleMode}>
+      Switch to {mode === 'light' ? 'dark' : 'light'} mode
+    </Button>
+  );
+}
+```
+
+## Theme Structure
+
+The theme object contains:
+
+```tsx
+interface Theme {
+  colors: {
+    gray: ColorScale;
+    blue: ColorScale;
+    // ... all color scales
+    blackAlpha: AlphaColorScale;
+    whiteAlpha: AlphaColorScale;
+  };
+  space: number[];
+  radii: Record<number, number>;
+  fontSizes: Record<number, TypographyValue>;
+  fontWeights: Record<string, string>;
+  fonts: {
+    heading: FontConfig;
+    body: FontConfig;
+    // ... other font configs
+  };
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Colors" href="/theming/colors" icon="palette">
+    Learn about the color system and available color scales.
+  </Card>
+
+  <Card title="Typography" href="/theming/typography" icon="type">
+    Explore the typography system and font scales.
+  </Card>
+
+  <Card title="Spacing" href="/theming/spacing" icon="move">
+    Understand the spacing scale and how to use it.
+  </Card>
+
+  <Card title="Dark Mode" href="/theming/dark-mode" icon="moon">
+    Implement dark mode in your application.
+  </Card>
+</CardGroup>

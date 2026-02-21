@@ -1,0 +1,156 @@
+---
+title: Text
+description: Versatile text component with size, weight, and color props.
+---
+
+# Text
+
+`Text` is the primary typography component for rendering text content with consistent styling.
+
+## Import
+
+```tsx
+import { Text } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Text } from '@radix-ui/themes-native';
+
+<Text size={3}>Hello, World!</Text>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Text content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="asChild" type="boolean" default="false">
+    Merge props onto immediate child.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9" default="3">
+    Font size from theme scale.
+  </Prop>
+  <Prop name="weight" type="'light' | 'regular' | 'medium' | 'bold'" default="'regular'">
+    Font weight.
+  </Prop>
+  <Prop name="align" type="'left' | 'center' | 'right'">
+    Text alignment.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color (e.g., 'gray', 'blue', 'tomato').
+  </Prop>
+  <Prop name="truncate" type="boolean | 'character' | 'token'">
+    Truncate text with ellipsis.
+  </Prop>
+  <Prop name="numberOfLines" type="number">
+    Maximum number of lines.
+  </Prop>
+  <Prop name="fontFamily" type="string">
+    Custom font family.
+  </Prop>
+  <Prop name="fontStyle" type="'normal' | 'italic'">
+    Font style.
+  </Prop>
+  <Prop name="lineHeight" type="number">
+    Custom line height.
+  </Prop>
+  <Prop name="letterSpacing" type="number">
+    Custom letter spacing.
+  </Prop>
+  <Prop name="textDecorationLine" type="'none' | 'underline' | 'line-through' | 'underline line-through'">
+    Text decoration.
+  </Prop>
+  <Prop name="opacity" type="number">
+    Text opacity (0-1).
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Sizes
+
+```tsx
+<Text size={1}>Size 1 - Smallest</Text>
+<Text size={2}>Size 2</Text>
+<Text size={3}>Size 3 - Default</Text>
+<Text size={4}>Size 4</Text>
+<Text size={5}>Size 5</Text>
+<Text size={6}>Size 6</Text>
+<Text size={7}>Size 7</Text>
+<Text size={8}>Size 8</Text>
+<Text size={9}>Size 9 - Largest</Text>
+```
+
+### Weights
+
+```tsx
+<Text weight="light">Light weight</Text>
+<Text weight="regular">Regular weight</Text>
+<Text weight="medium">Medium weight</Text>
+<Text weight="bold">Bold weight</Text>
+```
+
+### Colors
+
+```tsx
+<Text color="gray">Gray text</Text>
+<Text color="blue">Blue text</Text>
+<Text color="red">Red text</Text>
+<Text color="green">Green text</Text>
+```
+
+### Alignment
+
+```tsx
+<Text align="left">Left aligned</Text>
+<Text align="center">Center aligned</Text>
+<Text align="right">Right aligned</Text>
+```
+
+### Truncation
+
+```tsx
+<Text truncate>
+  This is a very long text that will be truncated with ellipsis...
+</Text>
+
+<Text numberOfLines={2}>
+  This text will be limited to two lines and truncated if it exceeds that...
+</Text>
+```
+
+### Decorations
+
+```tsx
+<Text textDecorationLine="underline">Underlined text</Text>
+<Text textDecorationLine="line-through">Strikethrough text</Text>
+```
+
+### Combined Styles
+
+```tsx
+<Text size={4} weight="bold" color="blue" align="center">
+  Styled text
+</Text>
+```
+
+### With Icon
+
+```tsx
+<Flex align="center" gap={2}>
+  <Icon name="info" />
+  <Text>Text with icon</Text>
+</Flex>
+```
+
+## Related
+
+- [Heading](/components/typography/heading) - Heading component
+- [Strong](/components/typography/strong) - Bold text
+- [Em](/components/typography/em) - Italic text

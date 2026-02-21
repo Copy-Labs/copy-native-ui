@@ -1,0 +1,202 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "theme": "venus",
+  "name": "Radix Themes Native",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#6366f1",
+    "light": "#818cf8",
+    "dark": "#4f46e5",
+    "anchors": {
+      "from": "#6366f1",
+      "to": "#4f46e5"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/Copy-Labs/radix-ui-native-kilo"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "npm",
+    "url": "https://www.npmjs.com/package/@radix-ui/themes-native"
+  },
+  "tabs": [
+    {
+      "name": "Getting Started",
+      "url": "getting-started"
+    },
+    {
+      "name": "Components",
+      "url": "components"
+    },
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    },
+    {
+      "name": "Guides",
+      "url": "guides"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/Copy-Labs/radix-ui-native-kilo"
+    },
+    {
+      "name": "npm",
+      "icon": "npm",
+      "url": "https://www.npmjs.com/package/@radix-ui/themes-native"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Introduction",
+      "pages": [
+        "getting-started/introduction",
+        "getting-started/installation",
+        "getting-started/quick-start",
+        "getting-started/migration"
+      ]
+    },
+    {
+      "group": "Theming",
+      "pages": [
+        "theming/overview",
+        "theming/theme-provider",
+        "theming/colors",
+        "theming/typography",
+        "theming/spacing",
+        "theming/dark-mode"
+      ]
+    },
+    {
+      "group": "Layout",
+      "pages": [
+        "components/layout/box",
+        "components/layout/flex",
+        "components/layout/grid",
+        "components/layout/container",
+        "components/layout/inset"
+      ]
+    },
+    {
+      "group": "Typography",
+      "pages": [
+        "components/typography/text",
+        "components/typography/heading",
+        "components/typography/strong",
+        "components/typography/em",
+        "components/typography/code",
+        "components/typography/kbd",
+        "components/typography/blockquote",
+        "components/typography/link"
+      ]
+    },
+    {
+      "group": "Forms",
+      "pages": [
+        "components/forms/button",
+        "components/forms/icon-button",
+        "components/forms/text-field",
+        "components/forms/text-area",
+        "components/forms/checkbox",
+        "components/forms/checkbox-group",
+        "components/forms/checkbox-cards",
+        "components/forms/radio",
+        "components/forms/radio-group",
+        "components/forms/radio-cards",
+        "components/forms/switch",
+        "components/forms/select",
+        "components/forms/slider"
+      ]
+    },
+    {
+      "group": "Data Display",
+      "pages": [
+        "components/data-display/avatar",
+        "components/data-display/badge",
+        "components/data-display/callout",
+        "components/data-display/card",
+        "components/data-display/data-list",
+        "components/data-display/fancy-list",
+        "components/data-display/progress",
+        "components/data-display/spinner",
+        "components/data-display/table"
+      ]
+    },
+    {
+      "group": "Navigation",
+      "pages": [
+        "components/navigation/tabs",
+        "components/navigation/tab-nav",
+        "components/navigation/segmented-control"
+      ]
+    },
+    {
+      "group": "Overlays",
+      "pages": [
+        "components/overlays/dialog",
+        "components/overlays/alert-dialog",
+        "components/overlays/popover",
+        "components/overlays/tooltip",
+        "components/overlays/dropdown-menu",
+        "components/overlays/context-menu",
+        "components/overlays/toast",
+        "components/overlays/portal"
+      ]
+    },
+    {
+      "group": "Disclosure",
+      "pages": ["components/disclosure/accordion"]
+    },
+    {
+      "group": "Utilities",
+      "pages": [
+        "components/utilities/aspect-ratio",
+        "components/utilities/scroll-area",
+        "components/utilities/visually-hidden",
+        "components/utilities/slot"
+      ]
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+        "api-reference/theme-provider",
+        "api-reference/hooks",
+        "api-reference/color-helpers",
+        "api-reference/primitives"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "guides/styling",
+        "guides/accessibility",
+        "guides/forms",
+        "guides/compound-components",
+        "guides/performance"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "examples/login-form",
+        "examples/settings-page",
+        "examples/profile-card",
+        "examples/dashboard"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "github": "https://github.com/Copy-Labs/copy-native-ui",
+    "x": "https://x.com/thecopylabs"
+  }
+}

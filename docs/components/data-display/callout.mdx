@@ -1,0 +1,118 @@
+---
+title: Callout
+description: Highlighted message block component.
+---
+
+# Callout
+
+`Callout` is a data display component for rendering highlighted message blocks.
+
+## Import
+
+```tsx
+import { Callout } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Callout } from '@radix-ui/themes-native';
+
+<Callout>
+  This is an important message.
+</Callout>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Callout content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="variant" type="'soft' | 'outline' | 'surface'" default="'soft'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the callout.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="icon" type="ReactNode">
+    Icon to display.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Callout
+
+```tsx
+<Callout>
+  This is an important message.
+</Callout>
+```
+
+### With Color
+
+```tsx
+<Callout color="blue">
+  This is an informational message.
+</Callout>
+
+<Callout color="red">
+  This is an error message.
+</Callout>
+
+<Callout color="green">
+  This is a success message.
+</Callout>
+```
+
+### Variants
+
+```tsx
+<Callout variant="soft">Soft callout</Callout>
+<Callout variant="outline">Outline callout</Callout>
+<Callout variant="surface">Surface callout</Callout>
+```
+
+### With Icon
+
+```tsx
+<Callout color="yellow" icon={<Icon name="warning" />}>
+  Warning: This action cannot be undone.
+</Callout>
+```
+
+### Sizes
+
+```tsx
+<Callout size={1}>Small callout</Callout>
+<Callout size={2}>Medium callout (default)</Callout>
+<Callout size={3}>Large callout</Callout>
+```
+
+### Form Error
+
+```tsx
+<Callout color="red" variant="outline">
+  <Flex direction="column" gap={2}>
+    <Text weight="medium">Form Errors</Text>
+    <Text>Please fix the following issues:</Text>
+    <Text>- Email is required</Text>
+    <Text>- Password must be at least 8 characters</Text>
+  </Flex>
+</Callout>
+```
+
+## Related
+
+- [Card](/components/data-display/card) - Card component
+- [Badge](/components/data-display/badge) - Badge component

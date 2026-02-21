@@ -1,0 +1,136 @@
+---
+title: CheckboxCards
+description: Card-style checkbox selection component.
+---
+
+# CheckboxCards
+
+`CheckboxCards` provides a card-style interface for selecting multiple options.
+
+## Import
+
+```tsx
+import { CheckboxCards } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { CheckboxCards } from '@radix-ui/themes-native';
+
+<CheckboxCards.Root value={selected} onValueChange={setSelected}>
+  <CheckboxCards.Item value="1">
+    <Flex direction="column">
+      <Text weight="medium">Option 1</Text>
+      <Text size={2} color="gray">Description here</Text>
+    </Flex>
+  </CheckboxCards.Item>
+  <CheckboxCards.Item value="2">
+    <Flex direction="column">
+      <Text weight="medium">Option 2</Text>
+      <Text size={2} color="gray">Description here</Text>
+    </Flex>
+  </CheckboxCards.Item>
+</CheckboxCards.Root>
+```
+
+## Props
+
+### CheckboxCards.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    CheckboxCard items.
+  </Prop>
+  <Prop name="value" type="string[]">
+    Array of selected values.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string[]) => void">
+    Called when selection changes.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether all items are disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the cards.
+  </Prop>
+  <Prop name="columns" type="number" default="1">
+    Number of columns.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+### CheckboxCards.Item
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Card content.
+  </Prop>
+  <Prop name="value" type="string" required>
+    Unique value for this item.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether this item is disabled.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Cards
+
+```tsx
+<CheckboxCards.Root value={selected} onValueChange={setSelected}>
+  <CheckboxCards.Item value="email">
+    <Text>Email notifications</Text>
+  </CheckboxCards.Item>
+  <CheckboxCards.Item value="sms">
+    <Text>SMS notifications</Text>
+  </CheckboxCards.Item>
+  <CheckboxCards.Item value="push">
+    <Text>Push notifications</Text>
+  </CheckboxCards.Item>
+</CheckboxCards.Root>
+```
+
+### With Descriptions
+
+```tsx
+<CheckboxCards.Root value={selected} onValueChange={setSelected}>
+  <CheckboxCards.Item value="starter">
+    <Flex direction="column" gap={1}>
+      <Text weight="medium">Starter Plan</Text>
+      <Text size={2} color="gray">Perfect for individuals</Text>
+      <Text size={3} weight="bold">$9/month</Text>
+    </Flex>
+  </CheckboxCards.Item>
+  <CheckboxCards.Item value="pro">
+    <Flex direction="column" gap={1}>
+      <Text weight="medium">Pro Plan</Text>
+      <Text size={2} color="gray">Best for small teams</Text>
+      <Text size={3} weight="bold">$29/month</Text>
+    </Flex>
+  </CheckboxCards.Item>
+</CheckboxCards.Root>
+```
+
+### Grid Layout
+
+```tsx
+<CheckboxCards.Root columns={2} value={selected} onValueChange={setSelected}>
+  <CheckboxCards.Item value="1">Option 1</CheckboxCards.Item>
+  <CheckboxCards.Item value="2">Option 2</CheckboxCards.Item>
+  <CheckboxCards.Item value="3">Option 3</CheckboxCards.Item>
+  <CheckboxCards.Item value="4">Option 4</CheckboxCards.Item>
+</CheckboxCards.Root>
+```
+
+## Related
+
+- [Checkbox](/components/forms/checkbox) - Individual checkbox
+- [CheckboxGroup](/components/forms/checkbox-group) - Checkbox group
+- [RadioCards](/components/forms/radio-cards) - Card-style radio selection

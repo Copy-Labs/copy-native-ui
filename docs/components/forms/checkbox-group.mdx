@@ -1,0 +1,106 @@
+---
+title: CheckboxGroup
+description: Group of checkboxes with shared state management.
+---
+
+# CheckboxGroup
+
+`CheckboxGroup` is a component for managing a group of related checkboxes.
+
+## Import
+
+```tsx
+import { CheckboxGroup } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { CheckboxGroup } from '@radix-ui/themes-native';
+
+<CheckboxGroup
+  value={selected}
+  onValueChange={setSelected}
+>
+  <Checkbox value="apple">Apple</Checkbox>
+  <Checkbox value="banana">Banana</Checkbox>
+  <Checkbox value="orange">Orange</Checkbox>
+</CheckboxGroup>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Checkbox children.
+  </Prop>
+  <Prop name="value" type="string[]">
+    Array of selected values.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string[]) => void">
+    Called when selection changes.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether all checkboxes are disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color for all checkboxes.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of all checkboxes.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Group
+
+```tsx
+const [selected, setSelected] = useState(['apple']);
+
+<CheckboxGroup value={selected} onValueChange={setSelected}>
+  <Checkbox value="apple">Apple</Checkbox>
+  <Checkbox value="banana">Banana</Checkbox>
+  <Checkbox value="orange">Orange</Checkbox>
+</CheckboxGroup>
+```
+
+### With Label
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Text weight="medium">Select fruits:</Text>
+  <CheckboxGroup value={selected} onValueChange={setSelected}>
+    <Checkbox value="apple">Apple</Checkbox>
+    <Checkbox value="banana">Banana</Checkbox>
+    <Checkbox value="orange">Orange</Checkbox>
+  </CheckboxGroup>
+</Flex>
+```
+
+### Disabled Group
+
+```tsx
+<CheckboxGroup disabled value={selected} onValueChange={setSelected}>
+  <Checkbox value="1">Option 1</Checkbox>
+  <Checkbox value="2">Option 2</Checkbox>
+</CheckboxGroup>
+```
+
+### With Color
+
+```tsx
+<CheckboxGroup color="green" value={selected} onValueChange={setSelected}>
+  <Checkbox value="1">Option 1</Checkbox>
+  <Checkbox value="2">Option 2</Checkbox>
+</CheckboxGroup>
+```
+
+## Related
+
+- [Checkbox](/components/forms/checkbox) - Individual checkbox
+- [CheckboxCards](/components/forms/checkbox-cards) - Card-style checkboxes
+- [RadioGroup](/components/forms/radio-group) - Radio button group

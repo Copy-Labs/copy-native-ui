@@ -1,0 +1,224 @@
+---
+title: DataList
+description: Structured data display component for key-value pairs.
+---
+
+# DataList
+
+`DataList` is a data display component for rendering structured key-value pairs in a consistent format.
+
+## Import
+
+```tsx
+import { DataList } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { DataList } from '@radix-ui/themes-native';
+
+<DataList>
+  <DataList.Item>
+    <DataList.Label>Name</DataList.Label>
+    <DataList.Value>John Doe</DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>Email</DataList.Label>
+    <DataList.Value>john@example.com</DataList.Value>
+  </DataList.Item>
+</DataList>
+```
+
+## Components
+
+### DataList.Root
+
+The root container component.
+
+### DataList.Item
+
+Individual item row.
+
+### DataList.Label
+
+Label for the data item.
+
+### DataList.Value
+
+Value for the data item.
+
+## Props
+
+### DataList.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    DataList content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the data list.
+  </Prop>
+</PropTable>
+
+### DataList.Item
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Item content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end'" default="'start'">
+    Vertical alignment.
+  </Prop>
+</PropTable>
+
+### DataList.Label
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Label content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Label color.
+  </Prop>
+  <Prop name="weight" type="'light' | 'regular' | 'medium' | 'bold'">
+    Font weight.
+  </Prop>
+</PropTable>
+
+### DataList.Value
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Value content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Value color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic DataList
+
+```tsx
+<DataList>
+  <DataList.Item>
+    <DataList.Label>Status</DataList.Label>
+    <DataList.Value>Active</DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>Role</DataList.Label>
+    <DataList.Value>Administrator</DataList.Value>
+  </DataList.Item>
+</DataList>
+```
+
+### Sizes
+
+```tsx
+<DataList size={1}>
+  <DataList.Item>
+    <DataList.Label>Small</DataList.Label>
+    <DataList.Value>Value</DataList.Value>
+  </DataList.Item>
+</DataList>
+
+<DataList size={2}>
+  <DataList.Item>
+    <DataList.Label>Medium</DataList.Label>
+    <DataList.Value>Value</DataList.Value>
+  </DataList.Item>
+</DataList>
+
+<DataList size={3}>
+  <DataList.Item>
+    <DataList.Label>Large</DataList.Label>
+    <DataList.Value>Value</DataList.Value>
+  </DataList.Item>
+</DataList>
+```
+
+### With Badge
+
+```tsx
+<DataList>
+  <DataList.Item>
+    <DataList.Label>Status</DataList.Label>
+    <DataList.Value>
+      <Badge color="green">Active</Badge>
+    </DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>Plan</DataList.Label>
+    <DataList.Value>
+      <Badge color="blue">Pro</Badge>
+    </DataList.Value>
+  </DataList.Item>
+</DataList>
+```
+
+### User Profile
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Account Details</Heading>
+    <DataList>
+      <DataList.Item>
+        <DataList.Label>Full Name</DataList.Label>
+        <DataList.Value>John Doe</DataList.Value>
+      </DataList.Item>
+      <DataList.Item>
+        <DataList.Label>Email</DataList.Label>
+        <DataList.Value>john@example.com</DataList.Value>
+      </DataList.Item>
+      <DataList.Item>
+        <DataList.Label>Phone</DataList.Label>
+        <DataList.Value>+1 (555) 123-4567</DataList.Value>
+      </DataList.Item>
+      <DataList.Item>
+        <DataList.Label>Member Since</DataList.Label>
+        <DataList.Value>January 2024</DataList.Value>
+      </DataList.Item>
+    </DataList>
+  </Flex>
+</Card>
+```
+
+### With Truncated Values
+
+```tsx
+<DataList>
+  <DataList.Item>
+    <DataList.Label>API Key</DataList.Label>
+    <DataList.Value>
+      <Text truncate>sk-1234567890abcdefghijklmnopqrstuvwxyz</Text>
+    </DataList.Value>
+  </DataList.Item>
+  <DataList.Item>
+    <DataList.Label>Webhook URL</DataList.Label>
+    <DataList.Value>
+      <Text truncate>https://api.example.com/webhooks/very-long-endpoint</Text>
+    </DataList.Value>
+  </DataList.Item>
+</DataList>
+```
+
+## Related
+
+- [Card](/components/data-display/card) - Card component
+- [Flex](/components/layout/flex) - Flexbox layout
+- [Badge](/components/data-display/badge) - Badge component

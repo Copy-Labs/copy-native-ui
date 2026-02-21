@@ -1,0 +1,197 @@
+---
+title: SegmentedControl
+description: Segmented control component for mutually exclusive options.
+---
+
+# SegmentedControl
+
+`SegmentedControl` is a navigation component for selecting between mutually exclusive options, similar to a radio group but with a horizontal button-like appearance.
+
+## Import
+
+```tsx
+import { SegmentedControl } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { SegmentedControl } from '@radix-ui/themes-native';
+
+<SegmentedControl.Root defaultValue="day">
+  <SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+  <SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+  <SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+## Components
+
+### SegmentedControl.Root
+
+The root container component that manages selection state.
+
+### SegmentedControl.Item
+
+Individual option item.
+
+## Props
+
+### SegmentedControl.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Segmented control items.
+  </Prop>
+  <Prop name="defaultValue" type="string">
+    Initial selected value (uncontrolled).
+  </Prop>
+  <Prop name="value" type="string">
+    Controlled selected value.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string) => void">
+    Callback when selection changes.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the control.
+  </Prop>
+  <Prop name="color" type="string" default="'accent'">
+    Color of the selected item.
+  </Prop>
+</PropTable>
+
+### SegmentedControl.Item
+
+<PropTable>
+  <Prop name="value" type="string" required>
+    Unique value for this item.
+  </Prop>
+  <Prop name="children" type="ReactNode">
+    Item content.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the item is disabled.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Segmented Control
+
+```tsx
+<SegmentedControl.Root defaultValue="list">
+  <SegmentedControl.Item value="list">List</SegmentedControl.Item>
+  <SegmentedControl.Item value="grid">Grid</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+### Sizes
+
+```tsx
+<SegmentedControl.Root size={1} defaultValue="option1">
+  <SegmentedControl.Item value="option1">Small</SegmentedControl.Item>
+  <SegmentedControl.Item value="option2">Small</SegmentedControl.Item>
+</SegmentedControl.Root>
+
+<SegmentedControl.Root size={2} defaultValue="option1">
+  <SegmentedControl.Item value="option1">Medium</SegmentedControl.Item>
+  <SegmentedControl.Item value="option2">Medium</SegmentedControl.Item>
+</SegmentedControl.Root>
+
+<SegmentedControl.Root size={3} defaultValue="option1">
+  <SegmentedControl.Item value="option1">Large</SegmentedControl.Item>
+  <SegmentedControl.Item value="option2">Large</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+### Colors
+
+```tsx
+<SegmentedControl.Root color="blue" defaultValue="option1">
+  <SegmentedControl.Item value="option1">Blue</SegmentedControl.Item>
+  <SegmentedControl.Item value="option2">Blue</SegmentedControl.Item>
+</SegmentedControl.Root>
+
+<SegmentedControl.Root color="green" defaultValue="option1">
+  <SegmentedControl.Item value="option1">Green</SegmentedControl.Item>
+  <SegmentedControl.Item value="option2">Green</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+### Controlled
+
+```tsx
+function ControlledSegmentedControl() {
+  const [view, setView] = useState('list');
+
+  return (
+    <Flex direction="column" gap={3}>
+      <SegmentedControl.Root value={view} onValueChange={setView}>
+        <SegmentedControl.Item value="list">List</SegmentedControl.Item>
+        <SegmentedControl.Item value="grid">Grid</SegmentedControl.Item>
+        <SegmentedControl.Item value="table">Table</SegmentedControl.Item>
+      </SegmentedControl.Root>
+
+      {view === 'list' && <ListView />}
+      {view === 'grid' && <GridView />}
+      {view === 'table' && <TableView />}
+    </Flex>
+  );
+}
+```
+
+### With Disabled Item
+
+```tsx
+<SegmentedControl.Root defaultValue="enabled">
+  <SegmentedControl.Item value="enabled">Enabled</SegmentedControl.Item>
+  <SegmentedControl.Item value="disabled" disabled>
+    Disabled
+  </SegmentedControl.Item>
+  <SegmentedControl.Item value="another">Another</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+### Time Range Selector
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Analytics</Heading>
+    <SegmentedControl.Root defaultValue="7d">
+      <SegmentedControl.Item value="24h">24h</SegmentedControl.Item>
+      <SegmentedControl.Item value="7d">7d</SegmentedControl.Item>
+      <SegmentedControl.Item value="30d">30d</SegmentedControl.Item>
+      <SegmentedControl.Item value="90d">90d</SegmentedControl.Item>
+    </SegmentedControl.Root>
+    <Text>Showing data for the last 7 days</Text>
+  </Flex>
+</Card>
+```
+
+### View Toggle
+
+```tsx
+<Flex direction="row" justify="between" align="center">
+  <Heading size={3}>Products</Heading>
+  <SegmentedControl.Root defaultValue="grid">
+    <SegmentedControl.Item value="list">
+      <Icon name="list" />
+    </SegmentedControl.Item>
+    <SegmentedControl.Item value="grid">
+      <Icon name="grid" />
+    </SegmentedControl.Item>
+  </SegmentedControl.Root>
+</Flex>
+```
+
+## Related
+
+- [Tabs](/components/navigation/tabs) - Tabs component
+- [RadioGroup](/components/forms/radio-group) - Radio group component

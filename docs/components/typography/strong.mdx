@@ -1,0 +1,78 @@
+---
+title: Strong
+description: Bold text component for emphasis.
+---
+
+# Strong
+
+`Strong` is a typography component for rendering bold text for emphasis.
+
+## Import
+
+```tsx
+import { Strong } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Text, Strong } from '@radix-ui/themes-native';
+
+<Text>
+  This is <Strong>important</Strong> text.
+</Text>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Text content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Inline Emphasis
+
+```tsx
+<Text>
+  This is <Strong>bold</Strong> text inline.
+</Text>
+```
+
+### With Color
+
+```tsx
+<Text>
+  Warning: <Strong color="red">This action cannot be undone.</Strong>
+</Text>
+```
+
+### In Heading
+
+```tsx
+<Heading size={4}>
+  Welcome to <Strong>Radix Themes Native</Strong>
+</Heading>
+```
+
+### Multiple Emphasis
+
+```tsx
+<Text>
+  The <Strong>quick</Strong> brown fox jumps over the <Strong>lazy</Strong> dog.
+</Text>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Em](/components/typography/em) - Italic text
+- [Heading](/components/typography/heading) - Heading component

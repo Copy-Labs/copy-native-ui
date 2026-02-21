@@ -1,0 +1,226 @@
+---
+title: ScrollArea
+description: Custom scrollable container component.
+---
+
+# ScrollArea
+
+`ScrollArea` is a utility component for creating custom scrollable containers with consistent styling.
+
+## Import
+
+```tsx
+import { ScrollArea } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { ScrollArea, Text, Flex } from '@radix-ui/themes-native';
+
+<ScrollArea style={{ height: 200 }}>
+  <Flex direction="column" gap={2}>
+    <Text>Item 1</Text>
+    <Text>Item 2</Text>
+    <Text>Item 3</Text>
+    {/* More items... */}
+  </Flex>
+</ScrollArea>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Scrollable content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles (must include height or flex).
+  </Prop>
+  <Prop name="scrollbars" type="'vertical' | 'horizontal' | 'both' | 'none'" default="'vertical'">
+    Which scrollbars to show.
+  </Prop>
+  <Prop name="scrollHideDelay" type="number" default="600">
+    Delay before hiding scrollbars (ms).
+  </Prop>
+  <Prop name="onScroll" type="(event: ScrollEvent) => void">
+    Scroll event handler.
+  </Prop>
+  <Prop name="showsVerticalScrollIndicator" type="boolean" default="true">
+    Show vertical scroll indicator.
+  </Prop>
+  <Prop name="showsHorizontalScrollIndicator" type="boolean" default="true">
+    Show horizontal scroll indicator.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic ScrollArea
+
+```tsx
+<ScrollArea style={{ height: 200 }}>
+  <Flex direction="column" gap={2} p={3}>
+    {items.map(item => (
+      <Card key={item.id}>
+        <Text>{item.title}</Text>
+      </Card>
+    ))}
+  </Flex>
+</ScrollArea>
+```
+
+### Horizontal Scroll
+
+```tsx
+<ScrollArea scrollbars="horizontal" style={{ width: '100%' }}>
+  <Flex direction="row" gap={3} p={3}>
+    {images.map(image => (
+      <AspectRatio ratio={1} key={image.id} style={{ width: 150 }}>
+        <Image source={{ uri: image.url }} />
+      </AspectRatio>
+    ))}
+  </Flex>
+</ScrollArea>
+```
+
+### Both Scroll Directions
+
+```tsx
+<ScrollArea scrollbars="both" style={{ height: 300, width: '100%' }}>
+  <Box style={{ width: 800 }}>
+    <Table.Root>
+      {/* Wide table content */}
+    </Table.Root>
+  </Box>
+</ScrollArea>
+```
+
+### Chat Messages
+
+```tsx
+<Card style={{ height: 400 }}>
+  <Flex direction="column" style={{ height: '100%' }}>
+    <ScrollArea style={{ flex: 1 }}>
+      <Flex direction="column" gap={2} p={3}>
+        {messages.map(message => (
+          <Flex
+            key={message.id}
+            direction="column"
+            gap={1}
+            align={message.isMe ? 'flex-end' : 'flex-start'}
+          >
+            <Text size={1} color="gray">{message.sender}</Text>
+            <Card size={1} style={{ maxWidth: '80%' }}>
+              <Text>{message.text}</Text>
+            </Card>
+          </Flex>
+        ))}
+      </Flex>
+    </ScrollArea>
+
+    <Flex direction="row" gap={2} p={2}>
+      <TextField style={{ flex: 1 }} placeholder="Type a message..." />
+      <Button>Send</Button>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+### File List
+
+```tsx
+<Card>
+  <Flex direction="column" gap={2}>
+    <Heading size={3}>Files</Heading>
+    <ScrollArea style={{ height: 250 }}>
+      <Flex direction="column" gap={1}>
+        {files.map(file => (
+          <Flex
+            key={file.id}
+            direction="row"
+            gap={2}
+            align="center"
+            p={2}
+          >
+            <Icon name="file" />
+            <Flex direction="column" style={{ flex: 1 }}>
+              <Text size={2}>{file.name}</Text>
+              <Text size={1} color="gray">{file.size}</Text>
+            </Flex>
+            <IconButton size={1} variant="ghost">
+              <Icon name="download" />
+            </IconButton>
+          </Flex>
+        ))}
+      </Flex>
+    </ScrollArea>
+  </Flex>
+</Card>
+```
+
+### Log Viewer
+
+```tsx
+<Card>
+  <Flex direction="column" gap={2}>
+    <Flex direction="row" justify="between" align="center">
+      <Heading size={3}>Logs</Heading>
+      <Button size={1} variant="soft">Clear</Button>
+    </Flex>
+    <ScrollArea
+      style={{ height: 200 }}
+      showsVerticalScrollIndicator={true}
+    >
+      <Box p={2} style={{ backgroundColor: 'gray.2' }}>
+        {logs.map((log, index) => (
+          <Text
+            key={index}
+            size={1}
+            style={{ fontFamily: 'monospace' }}
+          >
+            {log}
+          </Text>
+        ))}
+      </Box>
+    </ScrollArea>
+  </Flex>
+</Card>
+```
+
+### Nested ScrollAreas
+
+```tsx
+<Flex direction="row" gap={3} style={{ height: 400 }}>
+  <Card style={{ flex: 1 }}>
+    <Heading size={3}>Categories</Heading>
+    <ScrollArea style={{ flex: 1 }}>
+      <Flex direction="column" gap={1}>
+        {categories.map(cat => (
+          <Button key={cat.id} variant="ghost" justify="start">
+            {cat.name}
+          </Button>
+        ))}
+      </Flex>
+    </ScrollArea>
+  </Card>
+
+  <Card style={{ flex: 2 }}>
+    <Heading size={3}>Products</Heading>
+    <ScrollArea style={{ flex: 1 }}>
+      <Flex direction="column" gap={2}>
+        {products.map(product => (
+          <Card key={product.id}>
+            <Text>{product.name}</Text>
+          </Card>
+        ))}
+      </Flex>
+    </ScrollArea>
+  </Card>
+</Flex>
+```
+
+## Related
+
+- [Box](/components/layout/box) - Box component
+- [Flex](/components/layout/flex) - Flexbox layout

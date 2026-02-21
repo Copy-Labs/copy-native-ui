@@ -1,0 +1,157 @@
+---
+title: Select
+description: Dropdown select component for single selections.
+---
+
+# Select
+
+`Select` is a form component for selecting a single option from a dropdown list.
+
+## Import
+
+```tsx
+import { Select } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Select } from '@radix-ui/themes-native';
+
+<Select
+  value={selected}
+  onValueChange={setSelected}
+  items={[
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+  ]}
+  placeholder="Select an option"
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="value" type="string">
+    Currently selected value.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string) => void">
+    Called when selection changes.
+  </Prop>
+  <Prop name="items" type="Array<{ label: string; value: string }>" required>
+    Options to display.
+  </Prop>
+  <Prop name="placeholder" type="string">
+    Placeholder text when no selection.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the select is disabled.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the select.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="variant" type="'classic' | 'surface' | 'soft'" default="'surface'">
+    Visual style variant.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Select
+
+```tsx
+<Select
+  value={country}
+  onValueChange={setCountry}
+  items={[
+    { label: 'United States', value: 'us' },
+    { label: 'Canada', value: 'ca' },
+    { label: 'United Kingdom', value: 'uk' },
+  ]}
+  placeholder="Select country"
+/>
+```
+
+### With Placeholder
+
+```tsx
+<Select
+  placeholder="Choose an option..."
+  items={items}
+  value={value}
+  onValueChange={setValue}
+/>
+```
+
+### Sizes
+
+```tsx
+<Select size={1} placeholder="Small" items={items} />
+<Select size={2} placeholder="Medium (default)" items={items} />
+<Select size={3} placeholder="Large" items={items} />
+```
+
+### Variants
+
+```tsx
+<Select variant="classic" placeholder="Classic" items={items} />
+<Select variant="surface" placeholder="Surface" items={items} />
+<Select variant="soft" placeholder="Soft" items={items} />
+```
+
+### With Color
+
+```tsx
+<Select
+  color="blue"
+  placeholder="Blue select"
+  items={items}
+  value={value}
+  onValueChange={setValue}
+/>
+```
+
+### Disabled
+
+```tsx
+<Select
+  disabled
+  placeholder="Disabled select"
+  items={items}
+/>
+```
+
+### Form Example
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Select
+    placeholder="Select country"
+    items={countries}
+    value={country}
+    onValueChange={setCountry}
+  />
+  <Select
+    placeholder="Select city"
+    items={cities}
+    value={city}
+    onValueChange={setCity}
+  />
+  <Button>Submit</Button>
+</Flex>
+```
+
+## Related
+
+- [RadioGroup](/components/forms/radio-group) - Radio button group
+- [TextField](/components/forms/text-field) - Text input

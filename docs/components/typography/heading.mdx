@@ -1,0 +1,123 @@
+---
+title: Heading
+description: Semantic heading component for section titles.
+---
+
+# Heading
+
+`Heading` is a typography component for rendering section headings with appropriate sizing.
+
+## Import
+
+```tsx
+import { Heading } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Heading } from '@radix-ui/themes-native';
+
+<Heading size={4}>Section Title</Heading>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Heading content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="asChild" type="boolean" default="false">
+    Merge props onto immediate child.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4 | 5" default="3">
+    Heading size.
+  </Prop>
+  <Prop name="weight" type="'light' | 'regular' | 'medium' | 'bold'" default="'bold'">
+    Font weight.
+  </Prop>
+  <Prop name="align" type="'left' | 'center' | 'right'">
+    Text alignment.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+  <Prop name="truncate" type="boolean">
+    Truncate with ellipsis.
+  </Prop>
+  <Prop name="numberOfLines" type="number">
+    Maximum number of lines.
+  </Prop>
+  <Prop name="fontFamily" type="string">
+    Custom font family.
+  </Prop>
+  <Prop name="opacity" type="number">
+    Text opacity (0-1).
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Sizes
+
+```tsx
+<Heading size={1}>Heading 1 - Largest</Heading>
+<Heading size={2}>Heading 2</Heading>
+<Heading size={3}>Heading 3 - Default</Heading>
+<Heading size={4}>Heading 4</Heading>
+<Heading size={5}>Heading 5 - Smallest</Heading>
+```
+
+### Weights
+
+```tsx
+<Heading weight="light">Light heading</Heading>
+<Heading weight="regular">Regular heading</Heading>
+<Heading weight="medium">Medium heading</Heading>
+<Heading weight="bold">Bold heading (default)</Heading>
+```
+
+### Colors
+
+```tsx
+<Heading color="gray">Gray heading</Heading>
+<Heading color="blue">Blue heading</Heading>
+<Heading color="indigo">Indigo heading</Heading>
+```
+
+### Alignment
+
+```tsx
+<Heading align="left">Left aligned</Heading>
+<Heading align="center">Center aligned</Heading>
+<Heading align="right">Right aligned</Heading>
+```
+
+### Page Header
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Heading size={5}>Page Title</Heading>
+  <Text color="gray">Page description goes here.</Text>
+</Flex>
+```
+
+### Card Header
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Card Title</Heading>
+    <Text>Card content goes here.</Text>
+  </Flex>
+</Card>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Strong](/components/typography/strong) - Bold text
+- [Flex](/components/layout/flex) - Layout component

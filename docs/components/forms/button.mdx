@@ -1,0 +1,226 @@
+---
+title: Button
+description: Interactive button component with multiple variants for React Native.
+---
+
+# Button
+
+`Button` is an interactive component that triggers actions when pressed. It comes with multiple variants to suit different visual hierarchies.
+
+## Import
+
+```tsx
+import { Button } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Button } from '@radix-ui/themes-native';
+
+<Button onPress={() => console.log('Pressed!')}>
+  Click me
+</Button>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Button content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="variant" type="'classic' | 'solid' | 'soft' | 'outline' | 'ghost'" default="'classic'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the button.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color name (e.g., 'blue', 'green', 'tomato').
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the button is disabled.
+  </Prop>
+  <Prop name="loading" type="boolean" default="false">
+    Shows loading spinner.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="onPress" type="(event: GestureResponderEvent) => void">
+    Called when button is pressed.
+  </Prop>
+  <Prop name="width" type="number | string">
+    Width of the button.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'">
+    Border radius override.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label for screen readers.
+  </Prop>
+</PropTable>
+
+## Variants
+
+### Classic (Default)
+
+```tsx
+<Button variant="classic">Classic</Button>
+```
+
+Solid background with the accent color. Best for primary actions.
+
+### Solid
+
+```tsx
+<Button variant="solid">Solid</Button>
+```
+
+Similar to classic but with a slightly different appearance.
+
+### Soft
+
+```tsx
+<Button variant="soft">Soft</Button>
+```
+
+Subtle background with colored text. Good for secondary actions.
+
+### Outline
+
+```tsx
+<Button variant="outline">Outline</Button>
+```
+
+Transparent background with colored border. For tertiary actions.
+
+### Ghost
+
+```tsx
+<Button variant="ghost">Ghost</Button>
+```
+
+No background or border. For minimal visual weight.
+
+## Sizes
+
+```tsx
+<Button size={1}>Small</Button>
+<Button size={2}>Medium (Default)</Button>
+<Button size={3}>Large</Button>
+```
+
+## Colors
+
+```tsx
+<Button color="blue">Blue</Button>
+<Button color="green">Green</Button>
+<Button color="red">Red</Button>
+<Button color="tomato">Tomato</Button>
+```
+
+## States
+
+### Disabled
+
+```tsx
+<Button disabled>Disabled</Button>
+```
+
+### Loading
+
+```tsx
+<Button loading>Loading</Button>
+```
+
+## High Contrast
+
+```tsx
+<Button highContrast>High Contrast</Button>
+<Button variant="soft" highContrast>Soft High Contrast</Button>
+```
+
+## Examples
+
+### Primary Action
+
+```tsx
+<Button variant="classic" onPress={handleSubmit}>
+  Submit
+</Button>
+```
+
+### Secondary Action
+
+```tsx
+<Flex direction="row" gap={2}>
+  <Button variant="soft" onPress={handleCancel}>
+    Cancel
+  </Button>
+  <Button variant="classic" onPress={handleConfirm}>
+    Confirm
+  </Button>
+</Flex>
+```
+
+### Destructive Action
+
+```tsx
+<Button color="red" onPress={handleDelete}>
+  Delete
+</Button>
+```
+
+### Full Width
+
+```tsx
+<Button width="100%" onPress={handleLogin}>
+  Sign In
+</Button>
+```
+
+### With Loading State
+
+```tsx
+function SubmitButton() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setLoading(true);
+    await submitForm();
+    setLoading(false);
+  };
+
+  return (
+    <Button loading={loading} onPress={handleSubmit}>
+      Submit
+    </Button>
+  );
+}
+```
+
+### Button Group
+
+```tsx
+<Flex direction="row" gap={2}>
+  <Button variant="outline">Back</Button>
+  <Button flex={1}>Continue</Button>
+</Flex>
+```
+
+## Accessibility
+
+- Uses native `accessibilityRole="button"`
+- Supports `accessibilityLabel` prop
+- Disabled state is communicated to screen readers
+- Loading state is announced
+
+## Related
+
+- [IconButton](/components/forms/icon-button) - Button optimized for icons
+- [Badge](/components/data-display/badge) - Status badge component
+- [Theming](/theming/overview) - Customize button colors

@@ -1,0 +1,245 @@
+---
+title: Tabs
+description: Tab navigation component for organizing content into sections.
+---
+
+# Tabs
+
+`Tabs` is a navigation component for organizing content into switchable sections.
+
+## Import
+
+```tsx
+import { Tabs } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Tabs, Text, Flex } from '@radix-ui/themes-native';
+
+<Tabs.Root defaultValue="account">
+  <Tabs.List>
+    <Tabs.Trigger value="account">Account</Tabs.Trigger>
+    <Tabs.Trigger value="documents">Documents</Tabs.Trigger>
+    <Tabs.Trigger value="settings">Settings</Tabs.Trigger>
+  </Tabs.List>
+
+  <Tabs.Content value="account">
+    <Text>Account settings content</Text>
+  </Tabs.Content>
+
+  <Tabs.Content value="documents">
+    <Text>Documents content</Text>
+  </Tabs.Content>
+
+  <Tabs.Content value="settings">
+    <Text>Settings content</Text>
+  </Tabs.Content>
+</Tabs.Root>
+```
+
+## Components
+
+### Tabs.Root
+
+The root container component that manages tab state.
+
+### Tabs.List
+
+Container for tab triggers.
+
+### Tabs.Trigger
+
+Individual tab button.
+
+### Tabs.Content
+
+Content panel for each tab.
+
+## Props
+
+### Tabs.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Tabs content.
+  </Prop>
+  <Prop name="defaultValue" type="string">
+    Initial selected tab value (uncontrolled).
+  </Prop>
+  <Prop name="value" type="string">
+    Controlled selected tab value.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string) => void">
+    Callback when tab changes.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### Tabs.List
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Tab triggers.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### Tabs.Trigger
+
+<PropTable>
+  <Prop name="value" type="string" required>
+    Unique value for this tab.
+  </Prop>
+  <Prop name="children" type="ReactNode">
+    Trigger content.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the tab is disabled.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### Tabs.Content
+
+<PropTable>
+  <Prop name="value" type="string" required>
+    Value matching the trigger.
+  </Prop>
+  <Prop name="children" type="ReactNode">
+    Content to display.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Tabs
+
+```tsx
+<Tabs.Root defaultValue="overview">
+  <Tabs.List>
+    <Tabs.Trigger value="overview">Overview</Tabs.Trigger>
+    <Tabs.Trigger value="analytics">Analytics</Tabs.Trigger>
+    <Tabs.Trigger value="reports">Reports</Tabs.Trigger>
+  </Tabs.List>
+
+  <Tabs.Content value="overview">
+    <Text>Overview content here</Text>
+  </Tabs.Content>
+
+  <Tabs.Content value="analytics">
+    <Text>Analytics content here</Text>
+  </Tabs.Content>
+
+  <Tabs.Content value="reports">
+    <Text>Reports content here</Text>
+  </Tabs.Content>
+</Tabs.Root>
+```
+
+### Controlled Tabs
+
+```tsx
+function ControlledTabs() {
+  const [value, setValue] = useState('tab1');
+
+  return (
+    <Tabs.Root value={value} onValueChange={setValue}>
+      <Tabs.List>
+        <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+        <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+      </Tabs.List>
+
+      <Tabs.Content value="tab1">
+        <Text>Content 1</Text>
+      </Tabs.Content>
+
+      <Tabs.Content value="tab2">
+        <Text>Content 2</Text>
+      </Tabs.Content>
+    </Tabs.Root>
+  );
+}
+```
+
+### With Disabled Tab
+
+```tsx
+<Tabs.Root defaultValue="active">
+  <Tabs.List>
+    <Tabs.Trigger value="active">Active</Tabs.Trigger>
+    <Tabs.Trigger value="disabled" disabled>
+      Disabled
+    </Tabs.Trigger>
+    <Tabs.Trigger value="another">Another</Tabs.Trigger>
+  </Tabs.List>
+
+  <Tabs.Content value="active">
+    <Text>Active content</Text>
+  </Tabs.Content>
+
+  <Tabs.Content value="another">
+    <Text>Another content</Text>
+  </Tabs.Content>
+</Tabs.Root>
+```
+
+### Settings Tabs
+
+```tsx
+<Card>
+  <Tabs.Root defaultValue="general">
+    <Tabs.List>
+      <Tabs.Trigger value="general">General</Tabs.Trigger>
+      <Tabs.Trigger value="security">Security</Tabs.Trigger>
+      <Tabs.Trigger value="notifications">Notifications</Tabs.Trigger>
+    </Tabs.List>
+
+    <Tabs.Content value="general">
+      <Flex direction="column" gap={3}>
+        <Heading size={3}>General Settings</Heading>
+        <TextField placeholder="Display name" />
+        <TextField placeholder="Email" />
+        <Button>Save Changes</Button>
+      </Flex>
+    </Tabs.Content>
+
+    <Tabs.Content value="security">
+      <Flex direction="column" gap={3}>
+        <Heading size={3}>Security Settings</Heading>
+        <Button>Change Password</Button>
+        <Button>Enable 2FA</Button>
+      </Flex>
+    </Tabs.Content>
+
+    <Tabs.Content value="notifications">
+      <Flex direction="column" gap={3}>
+        <Heading size={3}>Notification Preferences</Heading>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Email notifications</Text>
+          <Switch />
+        </Flex>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Push notifications</Text>
+          <Switch />
+        </Flex>
+      </Flex>
+    </Tabs.Content>
+  </Tabs.Root>
+</Card>
+```
+
+## Related
+
+- [SegmentedControl](/components/navigation/segmented-control) - Segmented control component
+- [Card](/components/data-display/card) - Card component

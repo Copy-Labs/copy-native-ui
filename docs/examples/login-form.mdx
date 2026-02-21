@@ -1,0 +1,226 @@
+---
+title: Login Form Example
+description: Complete login form example with validation.
+---
+
+# Login Form Example
+
+A complete login form example with validation, error handling, and loading states.
+
+## Complete Example
+
+```tsx
+import { useState } from 'react';
+import {
+  Flex,
+  Text,
+  Heading,
+  TextField,
+  Button,
+  Card,
+  Checkbox,
+  Spinner,
+  Callout
+} from '@radix-ui/themes-native';
+
+interface LoginFormProps {
+  onLogin: (email: string, password: string) => Promise<void>;
+  onForgotPassword: () => void;
+  onSignUp: () => void;
+}
+
+export function LoginForm({ onLogin, onForgotPassword, onSignUp }: LoginFormProps) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!email) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = 'Please enter a valid email';
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      await onLogin(email, password);
+    } catch (err) {
+      setError('Invalid email or password. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Card size={4} style={{ maxWidth: 400, width: '100%' }}>
+      <Flex direction="column" gap={4}>
+        {/* Header */}
+        <Flex direction="column" gap={1} align="center">
+          <Heading size={5}>Welcome back</Heading>
+          <Text color="gray" size={2}>
+            Sign in to your account
+          </Text>
+        </Flex>
+
+        {/* Error Alert */}
+        {error && (
+          <Callout color="red" variant="soft">
+            <Text size={2}>{error}</Text>
+          </Callout>
+        )}
+
+        {/* Form */}
+        <Flex direction="column" gap={3}>
+          {/* Email Field */}
+          <Flex direction="column" gap={1}>
+            <Text size={2} weight="medium">
+              Email
+            </Text>
+            <TextField
+              placeholder="Enter your email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+              style={errors.email ? { borderColor: 'red' } : undefined}
+            />
+            {errors.email && (
+              <Text color="red" size={1}>
+                {errors.email}
+              </Text>
+            )}
+          </Flex>
+
+          {/* Password Field */}
+          <Flex direction="column" gap={1}>
+            <Text size={2} weight="medium">
+              Password
+            </Text>
+            <TextField
+              placeholder="Enter your password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+              autoComplete="password"
+              style={errors.password ? { borderColor: 'red' } : undefined}
+            />
+            {errors.password && (
+              <Text color="red" size={1}>
+                {errors.password}
+              </Text>
+            )}
+          </Flex>
+
+          {/* Remember Me & Forgot Password */}
+          <Flex direction="row" justify="between" align="center">
+            <Checkbox
+              checked={rememberMe}
+              onCheckedChange={setRememberMe}
+            >
+              <Text size={2}>Remember me</Text>
+            </Checkbox>
+            <Button
+              variant="ghost"
+              size={1}
+              onPress={onForgotPassword}
+            >
+              Forgot password?
+            </Button>
+          </Flex>
+
+          {/* Submit Button */}
+          <Button
+            size={3}
+            onPress={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? (
+              <Flex direction="row" gap={2} align="center">
+                <Spinner size={1} />
+                <Text>Signing in...</Text>
+              </Flex>
+            ) : (
+              'Sign In'
+            )}
+          </Button>
+        </Flex>
+
+        {/* Sign Up Link */}
+        <Flex direction="row" justify="center" gap={1}>
+          <Text size={2} color="gray">
+            Don't have an account?
+          </Text>
+          <Button variant="ghost" size={1} onPress={onSignUp}>
+            Sign up
+          </Button>
+        </Flex>
+      </Flex>
+    </Card>
+  );
+}
+```
+
+## Usage
+
+```tsx
+function App() {
+  const handleLogin = async (email: string, password: string) => {
+    // Call your authentication API
+    console.log('Login:', { email, password });
+  };
+
+  return (
+    <ThemeProvider>
+      <Flex
+        flex={1}
+        justify="center"
+        align="center"
+        p={4}
+      >
+        <LoginForm
+          onLogin={handleLogin}
+          onForgotPassword={() => console.log('Forgot password')}
+          onSignUp={() => console.log('Sign up')}
+        />
+      </Flex>
+    </ThemeProvider>
+  );
+}
+```
+
+## Features
+
+- **Form Validation**: Email format and password length validation
+- **Error Handling**: Display API errors and validation errors
+- **Loading State**: Shows spinner during authentication
+- **Remember Me**: Checkbox for persistent login
+- **Forgot Password**: Link to password recovery
+- **Sign Up Link**: Link to registration
+
+## Related
+
+- [Forms Guide](/guides/forms) - Forms best practices
+- [TextField](/components/forms/text-field) - TextField component
+- [Button](/components/forms/button) - Button component
+- [Checkbox](/components/forms/checkbox) - Checkbox component

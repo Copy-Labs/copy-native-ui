@@ -1,0 +1,106 @@
+---
+title: Blockquote
+description: Quote block component for displaying quotations.
+---
+
+# Blockquote
+
+`Blockquote` is a typography component for rendering quoted content with distinctive styling.
+
+## Import
+
+```tsx
+import { Blockquote } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Blockquote } from '@radix-ui/themes-native';
+
+<Blockquote>
+  The only way to do great work is to love what you do.
+</Blockquote>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Quote content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="textStyle" type="StyleProp<TextStyle>">
+    Custom text styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+  <Prop name="borderColor" type="string">
+    Left border color.
+  </Prop>
+  <Prop name="quoteColor" type="string">
+    Quote mark color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Quote
+
+```tsx
+<Blockquote>
+  Design is not just what it looks like and feels like. Design is how it works.
+</Blockquote>
+```
+
+### With Attribution
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Blockquote>
+    The only way to do great work is to love what you do.
+  </Blockquote>
+  <Text size={2} color="gray">— Steve Jobs</Text>
+</Flex>
+```
+
+### Colored Quote
+
+```tsx
+<Blockquote borderColor="blue" quoteColor="blue">
+  Innovation distinguishes between a leader and a follower.
+</Blockquote>
+```
+
+### In Card
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Quote of the Day</Heading>
+    <Blockquote>
+      Stay hungry, stay foolish.
+    </Blockquote>
+    <Text size={2} color="gray">— Steve Jobs</Text>
+  </Flex>
+</Card>
+```
+
+### Long Quote
+
+```tsx
+<Blockquote>
+  We're here to put a dent in the universe. Otherwise why else even be here?
+  Living is about making things happen. It's about creating something that
+  makes a difference.
+</Blockquote>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Em](/components/typography/em) - Italic text
+- [Card](/components/data-display/card) - Card component

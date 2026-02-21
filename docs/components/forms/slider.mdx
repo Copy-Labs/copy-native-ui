@@ -1,0 +1,157 @@
+---
+title: Slider
+description: Range slider component for numeric value selection.
+---
+
+# Slider
+
+`Slider` is a form component for selecting numeric values within a range.
+
+## Import
+
+```tsx
+import { Slider } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Slider } from '@radix-ui/themes-native';
+
+<Slider
+  value={[volume]}
+  onValueChange={([v]) => setVolume(v)}
+  min={0}
+  max={100}
+  step={1}
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="value" type="[number] | [number, number]">
+    Current value(s) - single or range.
+  </Prop>
+  <Prop name="onValueChange" type="(value: number[]) => void">
+    Called when value changes.
+  </Prop>
+  <Prop name="defaultValue" type="[number] | [number, number]">
+    Default value (uncontrolled).
+  </Prop>
+  <Prop name="min" type="number" default="0">
+    Minimum value.
+  </Prop>
+  <Prop name="max" type="number" default="100">
+    Maximum value.
+  </Prop>
+  <Prop name="step" type="number" default="1">
+    Step increment.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the slider is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="size" type="'small' | 'medium' | 'large'" default="'medium'">
+    Size of the slider.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Slider
+
+```tsx
+<Slider
+  value={[value]}
+  onValueChange={([v]) => setValue(v)}
+/>
+```
+
+### With Range
+
+```tsx
+<Slider
+  value={[min, max]}
+  onValueChange={([min, max]) => setRange(min, max)}
+  min={0}
+  max={1000}
+  step={10}
+/>
+```
+
+### Volume Control
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Flex justify="between">
+    <Text>Volume</Text>
+    <Text>{volume}%</Text>
+  </Flex>
+  <Slider
+    value={[volume]}
+    onValueChange={([v]) => setVolume(v)}
+    color="blue"
+  />
+</Flex>
+```
+
+### Price Range Filter
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Price Range</Heading>
+    <Flex justify="between">
+      <Text>${priceRange[0]}</Text>
+      <Text>${priceRange[1]}</Text>
+    </Flex>
+    <Slider
+      value={priceRange}
+      onValueChange={setPriceRange}
+      min={0}
+      max={1000}
+      step={50}
+    />
+  </Flex>
+</Card>
+```
+
+### Sizes
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Slider size="small" defaultValue={[50]} />
+  <Slider size="medium" defaultValue={[50]} />
+  <Slider size="large" defaultValue={[50]} />
+</Flex>
+```
+
+### With Color
+
+```tsx
+<Slider
+  color="green"
+  value={[value]}
+  onValueChange={([v]) => setValue(v)}
+/>
+```
+
+### Disabled
+
+```tsx
+<Slider disabled defaultValue={[50]} />
+```
+
+## Related
+
+- [TextField](/components/forms/text-field) - Text input
+- [Progress](/components/data-display/progress) - Progress bar

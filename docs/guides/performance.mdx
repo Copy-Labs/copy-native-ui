@@ -1,0 +1,394 @@
+---
+title: Performance Guide
+description: Best practices for optimizing React Native app performance.
+---
+
+# Performance Guide
+
+This guide covers performance optimization techniques for React Native applications using Radix Themes Native.
+
+## React Optimization
+
+### Memoization
+
+Use memoization to prevent unnecessary re-renders:
+
+```tsx
+import { memo, useMemo, useCallback } from 'react';
+
+// Memoize components
+const ExpensiveComponent = memo(function ExpensiveComponent({ data }) {
+  return <Text>{data}</Text>;
+});
+
+// Memoize values
+function MyComponent({ items }) {
+  const sortedItems = useMemo(() => {
+    return items.sort((a, b) => a.name.localeCompare(b.name));
+  }, [items]);
+
+  return (
+    <Flex direction="column">
+      {sortedItems.map(item => (
+        <Text key={item.id}>{item.name}</Text>
+      ))}
+    </Flex>
+  );
+}
+
+// Memoize callbacks
+function ParentComponent() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    console.log('Clicked');
+  }, []);
+
+  return <ChildComponent onClick={handleClick} />;
+}
+```
+
+### Virtualization
+
+Use virtualization for long lists:
+
+```tsx
+import { FlashList } from '@shopify/flash-list';
+
+function VirtualizedList({ items }) {
+  const renderItem = useCallback(({ item }) => (
+    <Card>
+      <Text>{item.name}</Text>
+    </Card>
+  ), []);
+
+  return (
+    <FlashList
+      data={items}
+      renderItem={renderItem}
+      estimatedItemSize={80}
+    />
+  );
+}
+```
+
+## Styling Performance
+
+### Use StyleSheet
+
+Use `StyleSheet.create` for static styles:
+
+```tsx
+import { StyleSheet } from 'react-native';
+
+// Good - Styles are created once
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+});
+
+function MyComponent() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>Title</Text>
+    </View>
+  );
+}
+
+// Avoid - Styles created on every render
+function MyComponent() {
+  return (
+    <View style={{ flex: 1, padding: 16 }}>
+      <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Title</Text>
+    </View>
+  );
+}
+```
+
+### Avoid Inline Functions in Props
+
+```tsx
+// Good - Stable function reference
+const handlePress = useCallback(() => {
+  console.log('Pressed');
+}, []);
+
+<Button onPress={handlePress}>Click</Button>
+
+// Avoid - New function on every render
+<Button onPress={() => console.log('Pressed')}>Click</Button>
+```
+
+## Image Optimization
+
+### Use Proper Image Sizes
+
+```tsx
+// Good - Specify dimensions
+<Image
+  source={{ uri: imageUrl, width: 200, height: 200 }}
+  style={{ width: 200, height: 200 }}
+/>
+
+// Avoid - No dimensions
+<Image source={{ uri: imageUrl }} />
+```
+
+### Use FastImage for Remote Images
+
+```tsx
+import FastImage from 'react-native-fast-image';
+
+<FastImage
+  source={{ uri: imageUrl, priority: FastImage.priority.normal }}
+  style={{ width: 200, height: 200 }}
+/>
+```
+
+### Cache Images
+
+```tsx
+<Image
+  source={{
+    uri: imageUrl,
+    cache: 'force-cache'
+  }}
+/>
+```
+
+## List Optimization
+
+### Key Prop
+
+Always use stable keys:
+
+```tsx
+// Good - Stable unique keys
+{items.map(item => (
+  <Card key={item.id}>
+    <Text>{item.name}</Text>
+  </Card>
+))}
+
+// Avoid - Index as key
+{items.map((item, index) => (
+  <Card key={index}>
+    <Text>{item.name}</Text>
+  </Card>
+))}
+```
+
+### getItemLayout
+
+Provide item layout for flat lists:
+
+```tsx
+<FlatList
+  data={items}
+  renderItem={renderItem}
+  getItemLayout={(data, index) => ({
+    length: ITEM_HEIGHT,
+    offset: ITEM_HEIGHT * index,
+    index,
+  })}
+/>
+```
+
+### Remove Clipped Subviews
+
+```tsx
+<FlatList
+  data={items}
+  renderItem={renderItem}
+  removeClippedSubviews={true}
+/>
+```
+
+## Animation Performance
+
+### Use Native Driver
+
+```tsx
+import { Animated } from 'react-native';
+
+// Good - Uses native driver
+Animated.timing(fadeAnim, {
+  toValue: 1,
+  duration: 500,
+  useNativeDriver: true, // Runs on native thread
+}).start();
+
+// Avoid - JS-driven animation
+Animated.timing(fadeAnim, {
+  toValue: 1,
+  duration: 500,
+  useNativeDriver: false,
+}).start();
+```
+
+### Use LayoutAnimation
+
+```tsx
+import { LayoutAnimation, UIManager } from 'react-native';
+
+function AnimatedList({ items }) {
+  const handleAdd = () => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setItems([...items, newItem]);
+  };
+
+  return (
+    <Flex direction="column">
+      {items.map(item => (
+        <Card key={item.id}>
+          <Text>{item.name}</Text>
+        </Card>
+      ))}
+    </Flex>
+  );
+}
+```
+
+## State Management
+
+### Avoid Prop Drilling
+
+Use context or state management:
+
+```tsx
+// Good - Context for shared state
+const UserContext = createContext();
+
+function App() {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      <Navigation />
+    </UserContext.Provider>
+  );
+}
+
+// Avoid - Prop drilling
+function App() {
+  const [user, setUser] = useState(null);
+
+  return <Parent user={user} setUser={setUser} />;
+}
+
+function Parent({ user, setUser }) {
+  return <Child user={user} setUser={setUser} />;
+}
+
+function Child({ user, setUser }) {
+  return <Grandchild user={user} setUser={setUser} />;
+}
+```
+
+### Local State
+
+Keep state as close as possible to where it's used:
+
+```tsx
+// Good - Local state
+function SearchInput() {
+  const [query, setQuery] = useState('');
+  return <TextField value={query} onChangeText={setQuery} />;
+}
+
+// Avoid - Global state for local concerns
+function SearchInput() {
+  const query = useGlobalStore(state => state.query);
+  const setQuery = useGlobalStore(state => state.setQuery);
+  return <TextField value={query} onChangeText={setQuery} />;
+}
+```
+
+## Bundle Size
+
+### Tree Shaking
+
+Import only what you need:
+
+```tsx
+// Good - Tree-shakeable
+import { Button } from '@radix-ui/themes-native';
+
+// Avoid - Imports everything
+import * as Radix from '@radix-ui/themes-native';
+```
+
+### Lazy Loading
+
+Lazy load screens and components:
+
+```tsx
+import { lazy, Suspense } from 'react';
+
+const SettingsScreen = lazy(() => import('./SettingsScreen'));
+
+function App() {
+  return (
+    <Suspense fallback={<Spinner />}>
+      <SettingsScreen />
+    </Suspense>
+  );
+}
+```
+
+## Profiling
+
+### React DevTools
+
+Use React DevTools to identify performance issues:
+1. Open React DevTools
+2. Go to Profiler tab
+3. Record a profile
+4. Analyze component renders
+
+### Flipper
+
+Use Flipper for React Native debugging:
+- Network inspection
+- Layout inspection
+- Performance monitoring
+
+### Performance Monitor
+
+Enable performance monitor in development:
+
+```tsx
+import { PerformanceObserver } from 'react-native-performance';
+
+const observer = new PerformanceObserver((list) => {
+  const entries = list.getEntries();
+  entries.forEach(entry => {
+    console.log(`${entry.name}: ${entry.duration}ms`);
+  });
+});
+
+observer.observe({ entryTypes: ['measure'] });
+```
+
+## Best Practices Checklist
+
+- [ ] Use `memo` for expensive components
+- [ ] Use `useMemo` for expensive calculations
+- [ ] Use `useCallback` for event handlers
+- [ ] Use `StyleSheet.create` for static styles
+- [ ] Use stable keys for list items
+- [ ] Use native driver for animations
+- [ ] Virtualize long lists
+- [ ] Optimize images
+- [ ] Profile before optimizing
+
+## Related
+
+- [Styling Guide](/guides/styling) - Styling best practices
+- [Accessibility Guide](/guides/accessibility) - Accessibility best practices

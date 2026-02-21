@@ -1,0 +1,216 @@
+---
+title: ThemeProvider
+description: Theme provider component for configuring the theme.
+---
+
+# ThemeProvider
+
+`ThemeProvider` is the root component that provides theme context to your application.
+
+## Import
+
+```tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Application content.
+  </Prop>
+  <Prop name="accentColor" type="string" default="'iris'">
+    Primary accent color.
+  </Prop>
+  <Prop name="grayColor" type="string" default="'slate'">
+    Gray scale color.
+  </Prop>
+  <Prop name="panelBackground" type="'solid' | 'translucent'" default="'solid'">
+    Background style for panels.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'" default="'medium'">
+    Border radius scale.
+  </Prop>
+  <Prop name="scaling" type="'90%' | '95%' | '100%' | '105%' | '110%'" default="'100%'">
+    Overall scaling factor.
+  </Prop>
+  <Prop name="appearance" type="'light' | 'dark' | 'inherit'" default="'inherit'">
+    Color scheme preference.
+  </Prop>
+  <Prop name="hasBackground" type="boolean" default="true">
+    Whether to apply background color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Setup
+
+```tsx
+import { ThemeProvider, Text } from '@radix-ui/themes-native';
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Text>Hello World</Text>
+    </ThemeProvider>
+  );
+}
+```
+
+### Custom Accent Color
+
+```tsx
+<ThemeProvider accentColor="blue">
+  <App />
+</ThemeProvider>
+```
+
+### Dark Mode
+
+```tsx
+<ThemeProvider appearance="dark">
+  <App />
+</ThemeProvider>
+```
+
+### System Appearance
+
+```tsx
+<ThemeProvider appearance="inherit">
+  <App />
+</ThemeProvider>
+```
+
+### Custom Radius
+
+```tsx
+<ThemeProvider radius="large">
+  <App />
+</ThemeProvider>
+```
+
+### Custom Gray Scale
+
+```tsx
+<ThemeProvider grayColor="gray">
+  <App />
+</ThemeProvider>
+```
+
+### Full Configuration
+
+```tsx
+<ThemeProvider
+  accentColor="crimson"
+  grayColor="mauve"
+  panelBackground="translucent"
+  radius="large"
+  scaling="105%"
+  appearance="dark"
+>
+  <App />
+</ThemeProvider>
+```
+
+### Dynamic Theme
+
+```tsx
+function App() {
+  const [appearance, setAppearance] = useState('light');
+  const [accentColor, setAccentColor] = useState('blue');
+
+  return (
+    <ThemeProvider
+      appearance={appearance}
+      accentColor={accentColor}
+    >
+      <Flex direction="column" gap={3}>
+        <SegmentedControl.Root
+          value={appearance}
+          onValueChange={setAppearance}
+        >
+          <SegmentedControl.Item value="light">Light</SegmentedControl.Item>
+          <SegmentedControl.Item value="dark">Dark</SegmentedControl.Item>
+        </SegmentedControl.Root>
+
+        <Select value={accentColor} onValueChange={setAccentColor}>
+          <Select.Item value="blue">Blue</Select.Item>
+          <Select.Item value="green">Green</Select.Item>
+          <Select.Item value="crimson">Crimson</Select.Item>
+        </Select>
+
+        <AppContent />
+      </Flex>
+    </ThemeProvider>
+  );
+}
+```
+
+### Nested Themes
+
+```tsx
+<ThemeProvider accentColor="blue">
+  <Flex direction="column" gap={3}>
+    <Text>Blue theme</Text>
+
+    <ThemeProvider accentColor="green">
+      <Text>Green theme (nested)</Text>
+    </ThemeProvider>
+  </Flex>
+</ThemeProvider>
+```
+
+## Available Colors
+
+### Accent Colors
+- `iris` (default)
+- `indigo`
+- `violet`
+- `purple`
+- `pink`
+- `plum`
+- `crimson`
+- `red`
+- `ruby`
+- `orange`
+- `amber`
+- `yellow`
+- `lime`
+- `green`
+- `teal`
+- `cyan`
+- `sky`
+- `blue`
+- `tomato`
+
+### Gray Colors
+- `slate` (default)
+- `gray`
+- `mauve`
+- `sage`
+- `olive`
+- `sand`
+- `aqua`
+- `gold`
+- `bronze`
+
+## Related
+
+- [useTheme](/api-reference/hooks#usetheme) - Theme hook
+- [Colors](/theming/colors) - Color system
+- [Dark Mode](/theming/dark-mode) - Dark mode guide

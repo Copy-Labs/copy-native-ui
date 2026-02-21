@@ -1,0 +1,221 @@
+---
+title: Colors
+description: Learn about the color system in Radix Themes Native.
+---
+
+# Colors
+
+Radix Themes Native provides a comprehensive color system with carefully designed color scales for both light and dark modes.
+
+## Color Scale Structure
+
+Each color has a 12-step scale designed for different purposes:
+
+| Step | Purpose |
+|------|---------|
+| 1 | App background |
+| 2 | Subtle background |
+| 3 | UI element background |
+| 4 | Hovered UI element background |
+| 5 | Active / Selected UI element background |
+| 6 | Subtle borders |
+| 7 | UI element border, focus ring |
+| 8 | Hovered UI element border |
+| 9 | Solid backgrounds |
+| 10 | Hovered solid backgrounds |
+| 11 | Low-contrast text |
+| 12 | High-contrast text |
+
+## Using Colors
+
+### In Components
+
+Most components accept a `color` prop:
+
+```tsx
+<Button color="blue">Blue Button</Button>
+<Badge color="green">Success</Badge>
+<Callout color="red">Error message</Callout>
+```
+
+### In Custom Styles
+
+Access colors through the theme object:
+
+```tsx
+import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function CustomComponent() {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  // Get the blue color scale
+  const blueScale = mode === 'dark'
+    ? theme.colors.blue.dark
+    : theme.colors.blue;
+
+  return (
+    <View style={{
+      backgroundColor: blueScale[3],
+      borderColor: blueScale[6]
+    }}>
+      <Text style={{ color: blueScale[11] }}>
+        Custom styled component
+      </Text>
+    </View>
+  );
+}
+```
+
+## Available Colors
+
+### Accent Colors
+
+<CardGroup cols={5}>
+  <Card>**amber** - Warm yellow-orange</Card>
+  <Card>**blue** - Classic blue</Card>
+  <Card>**bronze** - Metallic brown</Card>
+  <Card>**brown** - Earth brown</Card>
+  <Card>**crimson** - Deep red</Card>
+  <Card>**cyan** - Light blue-green</Card>
+  <Card>**gold** - Rich golden</Card>
+  <Card>**grass** - Natural green</Card>
+  <Card>**green** - Standard green</Card>
+  <Card>**indigo** - Purple-blue</Card>
+  <Card>**iris** - Light purple</Card>
+  <Card>**jade** - Cool green</Card>
+  <Card>**lime** - Bright green</Card>
+  <Card>**mint** - Soft green</Card>
+  <Card>**orange** - Vibrant orange</Card>
+  <Card>**pink** - Light red</Card>
+  <Card>**plum** - Deep purple</Card>
+  <Card>**purple** - Standard purple</Card>
+  <Card>**red** - Standard red</Card>
+  <Card>**ruby** - Jewel red</Card>
+  <Card>**sky** - Light blue</Card>
+  <Card>**teal** - Blue-green</Card>
+  <Card>**tomato** - Red-orange</Card>
+  <Card>**violet** - Blue-purple</Card>
+  <Card>**yellow** - Bright yellow</Card>
+</CardGroup>
+
+### Gray Scales
+
+| Scale | Description | Best For |
+|-------|-------------|----------|
+| `gray` | Standard neutral gray | General purpose |
+| `mauve` | Warm gray with purple tint | Warm color schemes |
+| `olive` | Green-tinted gray | Natural/organic themes |
+| `sage` | Soft green-tinted gray | Calm, natural themes |
+| `sand` | Warm beige-tinted gray | Warm, earthy themes |
+| `slate` | Cool blue-tinted gray | Cool, modern themes |
+
+## Alpha Colors
+
+For transparent overlays, use the alpha color scales:
+
+```tsx
+import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function Overlay() {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  // Use blackAlpha for light mode, whiteAlpha for dark mode
+  const alphaScale = mode === 'dark'
+    ? theme.colors.whiteAlpha
+    : theme.colors.blackAlpha;
+
+  return (
+    <View style={{
+      backgroundColor: alphaScale[3] // 8% opacity
+    }}>
+      <Text>Overlay content</Text>
+    </View>
+  );
+}
+```
+
+### Alpha Scale Values
+
+| Step | Opacity |
+|------|---------|
+| 1 | 4% |
+| 2 | 6% |
+| 3 | 8% |
+| 4 | 12% |
+| 5 | 16% |
+| 6 | 24% |
+| 7 | 36% |
+| 8 | 48% |
+| 9 | 64% |
+| 10 | 80% |
+| 11 | 92% |
+| 12 | 100% |
+
+## High Contrast Mode
+
+Many components support a `highContrast` prop for improved visibility:
+
+```tsx
+<Button highContrast>High Contrast Button</Button>
+<Badge highContrast color="blue">Badge</Badge>
+```
+
+High contrast mode uses:
+- **Background**: Color step 11 (instead of 9)
+- **Text**: Black/white (depending on mode)
+
+## Color Helper Functions
+
+### getVariantColors
+
+Get colors for a specific variant:
+
+```tsx
+import { getVariantColors, useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function CustomButton({ variant = 'solid', highContrast = false }) {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  const colors = getVariantColors(
+    theme,
+    'blue',      // color name
+    mode,
+    variant,     // 'solid' | 'soft' | 'outline' | 'ghost'
+    highContrast
+  );
+
+  // Returns: { backgroundColor, textColor, borderColor }
+}
+```
+
+### getColorScale
+
+Get the full color scale:
+
+```tsx
+import { getColorScale, useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function Component() {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  const blueScale = getColorScale(theme, 'blue', mode);
+  // Returns color scale with steps 1-12
+}
+```
+
+## Best Practices
+
+1. **Use semantic colors** - Use `success` (green), `warning` (amber), `error` (red) for status indicators
+2. **Maintain contrast** - Ensure text has sufficient contrast against backgrounds
+3. **Use highContrast** - Enable for accessibility when needed
+4. **Test both modes** - Always test your UI in both light and dark modes
+
+## Related
+
+- [ThemeProvider](/theming/theme-provider)
+- [Dark Mode](/theming/dark-mode)
+- [Color Helpers API](/api-reference/color-helpers)

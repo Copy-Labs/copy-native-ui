@@ -1,0 +1,191 @@
+---
+title: Portal
+description: Portal component for rendering content outside the component hierarchy.
+---
+
+# Portal
+
+`Portal` is a utility component for rendering children into a different part of the React tree, typically at the root of the application.
+
+## Import
+
+```tsx
+import { Portal } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Portal, Flex, Text } from '@radix-ui/themes-native';
+
+<Portal>
+  <Flex style={{ position: 'absolute', top: 0, left: 0 }}>
+    <Text>This renders at the root level</Text>
+  </Flex>
+</Portal>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Content to render in the portal.
+  </Prop>
+  <Prop name="container" type="HTMLElement | React.RefObject">
+    Custom container element.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Portal
+
+```tsx
+<Portal>
+  <Flex style={{ position: 'absolute', bottom: 20, left: 20, right: 20 }}>
+    <Card>
+      <Text>This appears at the bottom of the screen</Text>
+    </Card>
+  </Flex>
+</Portal>
+```
+
+### Modal Overlay
+
+```tsx
+function ModalOverlay({ visible, children }) {
+  if (!visible) return null;
+
+  return (
+    <Portal>
+      <Flex
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <Card>
+          {children}
+        </Card>
+      </Flex>
+    </Portal>
+  );
+}
+```
+
+### Toast Container
+
+```tsx
+function ToastContainer({ toasts }) {
+  return (
+    <Portal>
+      <Flex
+        direction="column"
+        gap={2}
+        style={{
+          position: 'absolute',
+          bottom: 20,
+          right: 20,
+          maxWidth: 400
+        }}
+      >
+        {toasts.map(toast => (
+          <Card key={toast.id}>
+            <Text>{toast.message}</Text>
+          </Card>
+        ))}
+      </Flex>
+    </Portal>
+  );
+}
+```
+
+### Dropdown Menu
+
+```tsx
+function DropdownMenu({ trigger, children, open }) {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  return (
+    <>
+      <Flex
+        onLayout={(e) => {
+          setPosition({
+            x: e.nativeEvent.layout.x,
+            y: e.nativeEvent.layout.y + e.nativeEvent.layout.height
+          });
+        }}
+      >
+        {trigger}
+      </Flex>
+
+      {open && (
+        <Portal>
+          <Card
+            style={{
+              position: 'absolute',
+              top: position.y,
+              left: position.x
+            }}
+          >
+            {children}
+          </Card>
+        </Portal>
+      )}
+    </>
+  );
+}
+```
+
+### Tooltip
+
+```tsx
+function Tooltip({ content, children }) {
+  const [visible, setVisible] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+
+  return (
+    <>
+      <Flex
+        onLongPress={() => setVisible(true)}
+        onPressOut={() => setVisible(false)}
+        onLayout={(e) => {
+          setPosition({
+            x: e.nativeEvent.layout.x,
+            y: e.nativeEvent.layout.y - 40
+          });
+        }}
+      >
+        {children}
+      </Flex>
+
+      {visible && (
+        <Portal>
+          <Card
+            size={1}
+            style={{
+              position: 'absolute',
+              top: position.y,
+              left: position.x
+            }}
+          >
+            <Text size={1}>{content}</Text>
+          </Card>
+        </Portal>
+      )}
+    </>
+  );
+}
+```
+
+## Related
+
+- [Dialog](/components/overlays/dialog) - Dialog component
+- [Popover](/components/overlays/popover) - Popover component
+- [Toast](/components/overlays/toast) - Toast component

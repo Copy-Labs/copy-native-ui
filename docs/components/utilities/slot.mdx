@@ -1,0 +1,217 @@
+---
+title: Slot
+description: Utility component for merging props onto children.
+---
+
+# Slot
+
+`Slot` is a utility component that merges its props onto its immediate child element, useful for building composable components.
+
+## Import
+
+```tsx
+import { Slot } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Slot, Text } from '@radix-ui/themes-native';
+
+<Slot onPress={() => console.log('Pressed')}>
+  <Text>Click me</Text>
+</Slot>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactElement">
+    Single child element to merge props onto.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Styles to merge.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Slot
+
+```tsx
+<Slot onPress={() => alert('Clicked!')}>
+  <Text>Click me</Text>
+</Slot>
+```
+
+### Merging Styles
+
+```tsx
+<Slot style={{ backgroundColor: 'blue', padding: 10 }}>
+  <Flex style={{ borderRadius: 8 }}>
+    <Text>Styled content</Text>
+  </Flex>
+</Slot>
+```
+
+### Creating a Button Primitive
+
+```tsx
+function ButtonPrimitive({ children, variant, ...props }) {
+  const variantStyles = {
+    solid: { backgroundColor: 'blue' },
+    soft: { backgroundColor: 'lightblue' },
+    outline: { borderWidth: 1, borderColor: 'blue' }
+  };
+
+  return (
+    <Slot
+      style={[variantStyles[variant], props.style]}
+      {...props}
+    >
+      {children}
+    </Slot>
+  );
+}
+
+// Usage
+<ButtonPrimitive variant="solid" onPress={handlePress}>
+  <Text>Click me</Text>
+</ButtonPrimitive>
+```
+
+### Composable Card
+
+```tsx
+function Card({ asChild, children, ...props }) {
+  const Component = asChild ? Slot : Flex;
+
+  return (
+    <Component
+      style={{
+        padding: 16,
+        borderRadius: 8,
+        backgroundColor: 'white',
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 4
+      }}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
+
+// Usage as a card
+<Card>
+  <Text>Card content</Text>
+</Card>
+
+// Usage as a button
+<Card asChild onPress={handlePress}>
+  <Button variant="ghost">
+    <Text>Clickable card</Text>
+  </Button>
+</Card>
+```
+
+### Link Component
+
+```tsx
+function Link({ asChild, href, children, ...props }) {
+  const Component = asChild ? Slot : Text;
+
+  return (
+    <Component
+      onPress={() => Linking.openURL(href)}
+      style={{ color: 'blue', textDecorationLine: 'underline' }}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
+
+// Usage
+<Link href="https://example.com">
+  Visit website
+</Link>
+
+// With custom element
+<Link asChild href="https://example.com">
+  <Button variant="ghost">
+    <Icon name="external-link" />
+    <Text>Open</Text>
+  </Button>
+</Link>
+```
+
+### Pressable List Item
+
+```tsx
+function ListItem({ asChild, children, onPress, ...props }) {
+  const Component = asChild ? Slot : Flex;
+
+  return (
+    <Component
+      direction="row"
+      align="center"
+      p={3}
+      onPress={onPress}
+      style={{ borderBottomWidth: 1, borderBottomColor: 'gray.200' }}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+}
+
+// Usage
+<ListItem onPress={() => navigate('detail')}>
+  <Text>Item 1</Text>
+</ListItem>
+
+// With custom content
+<ListItem asChild onPress={() => navigate('detail')}>
+  <Flex direction="row" justify="between">
+    <Text>Item 1</Text>
+    <Badge>New</Badge>
+  </Flex>
+</ListItem>
+```
+
+### Creating Polymorphic Components
+
+```tsx
+type AsProp<E extends React.ElementType> = {
+  as?: E;
+};
+
+type PropsToOmit<E extends React.ElementType, P> = keyof (AsProp<E> & P);
+
+type PolymorphicComponentProps<
+  E extends React.ElementType,
+  Props = {}
+> = React.PropsWithChildren<Props & AsProp<E>> &
+  Omit<React.ComponentProps<E>, PropsToOmit<E, Props>>;
+
+function Box<E extends React.ElementType = 'View'>({
+  as,
+  children,
+  ...props
+}: PolymorphicComponentProps<E>) {
+  const Component = as || View;
+  return <Component {...props}>{children}</Component>;
+}
+
+// Usage
+<Box>Default View</Box>
+<Box as={Text}>Text element</Box>
+<Box as={Pressable} onPress={handlePress}>Pressable element</Box>
+```
+
+## Related
+
+- [VisuallyHidden](/components/utilities/visually-hidden) - VisuallyHidden component
+- [Box](/components/layout/box) - Box component

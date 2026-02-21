@@ -1,0 +1,452 @@
+---
+title: Forms Guide
+description: Best practices for building forms in React Native.
+---
+
+# Forms Guide
+
+This guide covers best practices for building forms with Radix Themes Native.
+
+## Basic Form
+
+```tsx
+import { Form, TextField, Button, Flex } from '@radix-ui/themes-native';
+
+function LoginForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = () => {
+    console.log({ email, password });
+  };
+
+  return (
+    <Flex direction="column" gap={3}>
+      <TextField
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextField
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+      />
+      <Button onPress={handleSubmit}>Sign In</Button>
+    </Flex>
+  );
+}
+```
+
+## Form Validation
+
+### Basic Validation
+
+```tsx
+function ValidatedForm() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+
+  const validateEmail = (value: string) => {
+    if (!value) {
+      setError('Email is required');
+    } else if (!/\S+@\S+\.\S+/.test(value)) {
+      setError('Please enter a valid email');
+    } else {
+      setError('');
+    }
+    setEmail(value);
+  };
+
+  return (
+    <Flex direction="column" gap={1}>
+      <TextField
+        placeholder="Email"
+        value={email}
+        onChangeText={validateEmail}
+        style={error ? { borderColor: 'red' } : undefined}
+      />
+      {error && (
+        <Text color="red" size={1}>{error}</Text>
+      )}
+    </Flex>
+  );
+}
+```
+
+### Form Schema Validation
+
+```tsx
+import { z } from 'zod';
+
+const formSchema = z.object({
+  email: z.string().email('Invalid email'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+});
+
+function SchemaValidatedForm() {
+  const [values, setValues] = useState({ email: '', password: '' });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validate = (field: string, value: string) => {
+    try {
+      formSchema.shape[field].parse(value);
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        setErrors(prev => ({ ...prev, [field]: err.errors[0].message }));
+      }
+    }
+    setValues(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = () => {
+    try {
+      formSchema.parse(values);
+      // Submit form
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        const fieldErrors: Record<string, string> = {};
+        err.errors.forEach(e => {
+          if (e.path[0]) {
+            fieldErrors[e.path[0] as string] = e.message;
+          }
+        });
+        setErrors(fieldErrors);
+      }
+    }
+  };
+
+  return (
+    <Flex direction="column" gap={3}>
+      <Flex direction="column" gap={1}>
+        <TextField
+          placeholder="Email"
+          value={values.email}
+          onChangeText={(v) => validate('email', v)}
+        />
+        {errors.email && <Text color="red" size={1}>{errors.email}</Text>}
+      </Flex>
+
+      <Flex direction="column" gap={1}>
+        <TextField
+          placeholder="Password"
+          value={values.password}
+          onChangeText={(v) => validate('password', v)}
+          secureTextEntry
+        />
+        {errors.password && <Text color="red" size={1}>{errors.password}</Text>}
+      </Flex>
+
+      <Button onPress={handleSubmit}>Submit</Button>
+    </Flex>
+  );
+}
+```
+
+## Form Components
+
+### TextField
+
+```tsx
+<TextField
+  placeholder="Enter text"
+  value={value}
+  onChangeText={setValue}
+  size={2}
+  color="blue"
+  radius="medium"
+/>
+```
+
+### TextArea
+
+```tsx
+<TextArea
+  placeholder="Enter description"
+  value={value}
+  onChangeText={setValue}
+  rows={4}
+/>
+```
+
+### Select
+
+```tsx
+<Select value={value} onValueChange={setValue}>
+  <Select.Trigger>
+    <Text>{value || 'Select an option'}</Text>
+  </Select.Trigger>
+  <Select.Content>
+    <Select.Item value="option1">Option 1</Select.Item>
+    <Select.Item value="option2">Option 2</Select.Item>
+    <Select.Item value="option3">Option 3</Select.Item>
+  </Select.Content>
+</Select>
+```
+
+### Checkbox
+
+```tsx
+<Checkbox
+  checked={checked}
+  onCheckedChange={setChecked}
+>
+  I agree to the terms
+</Checkbox>
+```
+
+### Radio Group
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <Flex direction="column" gap={2}>
+    <Radio value="option1">Option 1</Radio>
+    <Radio value="option2">Option 2</Radio>
+    <Radio value="option3">Option 3</Radio>
+  </Flex>
+</RadioGroup>
+```
+
+### Switch
+
+```tsx
+<Flex direction="row" justify="between" align="center">
+  <Text>Enable notifications</Text>
+  <Switch checked={enabled} onCheckedChange={setEnabled} />
+</Flex>
+```
+
+## Form Layout
+
+### Vertical Layout
+
+```tsx
+<Flex direction="column" gap={3}>
+  <TextField placeholder="Name" />
+  <TextField placeholder="Email" />
+  <TextField placeholder="Phone" />
+  <Button>Submit</Button>
+</Flex>
+```
+
+### Horizontal Layout
+
+```tsx
+<Flex direction="row" gap={2}>
+  <TextField placeholder="First name" style={{ flex: 1 }} />
+  <TextField placeholder="Last name" style={{ flex: 1 }} />
+</Flex>
+```
+
+### Form Groups
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Personal Information</Heading>
+    <TextField placeholder="Full name" />
+    <TextField placeholder="Email" />
+    <TextField placeholder="Phone" />
+  </Flex>
+</Card>
+
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Address</Heading>
+    <TextField placeholder="Street" />
+    <Flex direction="row" gap={2}>
+      <TextField placeholder="City" style={{ flex: 1 }} />
+      <TextField placeholder="ZIP" style={{ flex: 1 }} />
+    </Flex>
+  </Flex>
+</Card>
+```
+
+## Form State Management
+
+### Custom Hook
+
+```tsx
+function useForm<T extends Record<string, string>>(initialValues: T) {
+  const [values, setValues] = useState(initialValues);
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+  const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
+
+  const handleChange = (field: keyof T, value: string) => {
+    setValues(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleBlur = (field: keyof T) => {
+    setTouched(prev => ({ ...prev, [field]: true }));
+  };
+
+  const setError = (field: keyof T, error: string) => {
+    setErrors(prev => ({ ...prev, [field]: error }));
+  };
+
+  const reset = () => {
+    setValues(initialValues);
+    setErrors({});
+    setTouched({});
+  };
+
+  return {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    setError,
+    reset
+  };
+}
+```
+
+### Usage
+
+```tsx
+function MyForm() {
+  const form = useForm({ email: '', password: '' });
+
+  const handleSubmit = () => {
+    if (!form.values.email) {
+      form.setError('email', 'Email is required');
+      return;
+    }
+    // Submit
+  };
+
+  return (
+    <Flex direction="column" gap={3}>
+      <TextField
+        placeholder="Email"
+        value={form.values.email}
+        onChangeText={(v) => form.handleChange('email', v)}
+        onBlur={() => form.handleBlur('email')}
+      />
+      {form.touched.email && form.errors.email && (
+        <Text color="red">{form.errors.email}</Text>
+      )}
+
+      <Button onPress={handleSubmit}>Submit</Button>
+    </Flex>
+  );
+}
+```
+
+## Submit Button States
+
+```tsx
+function SubmitButton({ loading, disabled, onPress }) {
+  return (
+    <Button
+      onPress={onPress}
+      disabled={disabled || loading}
+    >
+      {loading ? (
+        <Flex direction="row" gap={2} align="center">
+          <Spinner size={1} />
+          <Text>Submitting...</Text>
+        </Flex>
+      ) : (
+        'Submit'
+      )}
+    </Button>
+  );
+}
+```
+
+## Best Practices
+
+### 1. Use Proper Keyboard Types
+
+```tsx
+<TextField
+  placeholder="Email"
+  keyboardType="email-address"
+  autoCapitalize="none"
+/>
+
+<TextField
+  placeholder="Phone"
+  keyboardType="phone-pad"
+/>
+
+<TextField
+  placeholder="Website"
+  keyboardType="url"
+  autoCapitalize="none"
+/>
+```
+
+### 2. Use Return Key Actions
+
+```tsx
+<TextField
+  placeholder="Email"
+  returnKeyType="next"
+  onSubmitEditing={() => passwordRef.current?.focus()}
+/>
+
+<TextField
+  ref={passwordRef}
+  placeholder="Password"
+  returnKeyType="done"
+  onSubmitEditing={handleSubmit}
+/>
+```
+
+### 3. Disable Submit During Loading
+
+```tsx
+<Button disabled={loading} onPress={handleSubmit}>
+  {loading ? 'Submitting...' : 'Submit'}
+</Button>
+```
+
+### 4. Show Success/Error Feedback
+
+```tsx
+function FormWithFeedback() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async () => {
+    setStatus('loading');
+    try {
+      await submitForm();
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <Flex direction="column" gap={3}>
+      {/* Form fields */}
+
+      <Button onPress={handleSubmit} disabled={status === 'loading'}>
+        Submit
+      </Button>
+
+      {status === 'success' && (
+        <Callout color="green">Form submitted successfully!</Callout>
+      )}
+
+      {status === 'error' && (
+        <Callout color="red">Failed to submit form. Please try again.</Callout>
+      )}
+    </Flex>
+  );
+}
+```
+
+## Related
+
+- [TextField](/components/forms/text-field) - TextField component
+- [Select](/components/forms/select) - Select component
+- [Checkbox](/components/forms/checkbox) - Checkbox component
+- [Accessibility Guide](/guides/accessibility) - Accessibility best practices

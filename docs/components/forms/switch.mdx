@@ -1,0 +1,136 @@
+---
+title: Switch
+description: Toggle switch component for boolean values.
+---
+
+# Switch
+
+`Switch` is a form component for toggling between on/off states.
+
+## Import
+
+```tsx
+import { Switch } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Switch } from '@radix-ui/themes-native';
+
+<Switch
+  checked={enabled}
+  onCheckedChange={setEnabled}
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="checked" type="boolean" default="false">
+    Whether the switch is on.
+  </Prop>
+  <Prop name="onCheckedChange" type="(checked: boolean) => void">
+    Called when checked state changes.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the switch is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color when checked.
+  </Prop>
+  <Prop name="size" type="'small' | 'medium' | 'large'" default="'medium'">
+    Size of the switch.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Switch
+
+```tsx
+<Switch
+  checked={enabled}
+  onCheckedChange={setEnabled}
+/>
+```
+
+### With Label
+
+```tsx
+<Flex direction="row" justify="between" align="center">
+  <Text>Enable notifications</Text>
+  <Switch
+    checked={notifications}
+    onCheckedChange={setNotifications}
+  />
+</Flex>
+```
+
+### Sizes
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Flex direction="row" justify="between" align="center">
+    <Text>Small</Text>
+    <Switch size="small" />
+  </Flex>
+  <Flex direction="row" justify="between" align="center">
+    <Text>Medium</Text>
+    <Switch size="medium" />
+  </Flex>
+  <Flex direction="row" justify="between" align="center">
+    <Text>Large</Text>
+    <Switch size="large" />
+  </Flex>
+</Flex>
+```
+
+### With Color
+
+```tsx
+<Switch
+  color="green"
+  checked={enabled}
+  onCheckedChange={setEnabled}
+/>
+```
+
+### Disabled
+
+```tsx
+<Switch disabled />
+```
+
+### Settings Panel
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Settings</Heading>
+    <Flex direction="row" justify="between" align="center">
+      <Text>Push notifications</Text>
+      <Switch checked={push} onCheckedChange={setPush} />
+    </Flex>
+    <Flex direction="row" justify="between" align="center">
+      <Text>Email notifications</Text>
+      <Switch checked={email} onCheckedChange={setEmail} />
+    </Flex>
+    <Flex direction="row" justify="between" align="center">
+      <Text>Dark mode</Text>
+      <Switch checked={dark} onCheckedChange={setDark} />
+    </Flex>
+  </Flex>
+</Card>
+```
+
+## Related
+
+- [Checkbox](/components/forms/checkbox) - Checkbox component
+- [Button](/components/forms/button) - Button component

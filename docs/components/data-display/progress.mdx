@@ -1,0 +1,158 @@
+---
+title: Progress
+description: Progress indicator component for showing completion status.
+---
+
+# Progress
+
+`Progress` is a data display component for showing completion status of tasks or operations.
+
+## Import
+
+```tsx
+import { Progress } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Progress } from '@radix-ui/themes-native';
+
+<Progress value={60} />
+```
+
+## Props
+
+<PropTable>
+  <Prop name="value" type="number" default="0">
+    Current progress value (0-100).
+  </Prop>
+  <Prop name="max" type="number" default="100">
+    Maximum value.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the progress bar.
+  </Prop>
+  <Prop name="color" type="string" default="'accent'">
+    Color of the progress bar.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'">
+    Border radius override.
+  </Prop>
+  <Prop name="variant" type="'soft' | 'surface' | 'gradient'" default="'soft'">
+    Visual style variant.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Progress
+
+```tsx
+<Progress value={50} />
+```
+
+### Sizes
+
+```tsx
+<Progress size={1} value={60} />
+<Progress size={2} value={60} />
+<Progress size={3} value={60} />
+```
+
+### Colors
+
+```tsx
+<Progress color="blue" value={60} />
+<Progress color="green" value={60} />
+<Progress color="red" value={60} />
+<Progress color="yellow" value={60} />
+<Progress color="purple" value={60} />
+```
+
+### Variants
+
+```tsx
+<Progress variant="soft" value={60} />
+<Progress variant="surface" value={60} />
+<Progress variant="gradient" value={60} />
+```
+
+### With Label
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Flex direction="row" justify="between">
+    <Text>Uploading...</Text>
+    <Text>60%</Text>
+  </Flex>
+  <Progress value={60} />
+</Flex>
+```
+
+### Multiple Progress Bars
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Flex direction="column" gap={1}>
+    <Text size={2}>Storage Used</Text>
+    <Progress value={75} color="blue" />
+    <Text size={1} color="gray">7.5 GB of 10 GB</Text>
+  </Flex>
+
+  <Flex direction="column" gap={1}>
+    <Text size={2}>Bandwidth</Text>
+    <Progress value={45} color="green" />
+    <Text size={1} color="gray">4.5 GB of 10 GB</Text>
+  </Flex>
+
+  <Flex direction="column" gap={1}>
+    <Text size={2}>API Calls</Text>
+    <Progress value={90} color="red" />
+    <Text size={1} color="gray">9,000 of 10,000</Text>
+  </Flex>
+</Flex>
+```
+
+### Indeterminate
+
+```tsx
+<Progress value={null} />
+```
+
+### Dynamic Progress
+
+```tsx
+function UploadProgress() {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <Flex direction="column" gap={2}>
+      <Text>Uploading: {progress}%</Text>
+      <Progress value={progress} color={progress === 100 ? 'green' : 'blue'} />
+    </Flex>
+  );
+}
+```
+
+## Related
+
+- [Spinner](/components/data-display/spinner) - Loading spinner
+- [Slider](/components/forms/slider) - Slider input

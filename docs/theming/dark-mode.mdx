@@ -1,0 +1,223 @@
+---
+title: Dark Mode
+description: Learn how to implement dark mode in your Radix Themes Native app.
+---
+
+# Dark Mode
+
+Radix Themes Native provides built-in support for dark mode with automatic color scheme detection and manual control.
+
+## Automatic Dark Mode
+
+By default, the theme follows the device's color scheme:
+
+```tsx
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      {/* Theme will automatically match device settings */}
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+```
+
+## Manual Dark Mode
+
+### Fixed Mode
+
+Set a fixed mode that doesn't respond to device settings:
+
+```tsx
+// Always light mode
+<ThemeProvider mode="light">
+  <AppContent />
+</ThemeProvider>
+
+// Always dark mode
+<ThemeProvider mode="dark">
+  <AppContent />
+</ThemeProvider>
+```
+
+### Forced Mode
+
+Use `forcedMode` to override device settings completely:
+
+```tsx
+<ThemeProvider forcedMode="dark">
+  {/* Always dark, even if device is in light mode */}
+  <AppContent />
+</ThemeProvider>
+```
+
+## Toggle Dark Mode
+
+Implement a theme toggle using the `useThemeActions` hook:
+
+```tsx
+import {
+  ThemeProvider,
+  useThemeActions,
+  useThemeMode,
+  Button
+} from '@radix-ui/themes-native';
+
+function ThemeToggle() {
+  const mode = useThemeMode();
+  const { toggleMode } = useThemeActions();
+
+  return (
+    <Button onPress={toggleMode}>
+      Switch to {mode === 'light' ? 'dark' : 'light'} mode
+    </Button>
+  );
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <ThemeToggle />
+    </ThemeProvider>
+  );
+}
+```
+
+## Controlled Dark Mode
+
+Manage theme mode with state:
+
+```tsx
+import { useState } from 'react';
+import { ThemeProvider, useThemeMode, Button } from '@radix-ui/themes-native';
+
+function App() {
+  const [mode, setMode] = useState<'light' | 'dark'>('light');
+
+  return (
+    <ThemeProvider
+      mode={mode}
+      onModeChange={setMode}
+    >
+      <Button onPress={() => setMode(m => m === 'light' ? 'dark' : 'light')}>
+        Toggle Theme
+      </Button>
+    </ThemeProvider>
+  );
+}
+```
+
+## Persist Theme Preference
+
+Store user preference with AsyncStorage:
+
+```tsx
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+const THEME_KEY = '@theme_mode';
+
+function App() {
+  const [mode, setMode] = useState<'light' | 'dark' | undefined>(undefined);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load saved theme on mount
+  useEffect(() => {
+    AsyncStorage.getItem(THEME_KEY).then((savedMode) => {
+      if (savedMode) {
+        setMode(savedMode as 'light' | 'dark');
+      }
+      setIsLoaded(true);
+    });
+  }, []);
+
+  // Save theme when it changes
+  const handleModeChange = async (newMode: 'light' | 'dark') => {
+    setMode(newMode);
+    await AsyncStorage.setItem(THEME_KEY, newMode);
+  };
+
+  if (!isLoaded) {
+    return null; // Or a loading screen
+  }
+
+  return (
+    <ThemeProvider
+      mode={mode}
+      onModeChange={handleModeChange}
+    >
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+```
+
+## Dark Mode Colors
+
+Colors automatically adapt to the current mode:
+
+```tsx
+import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function ThemedComponent() {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  // Access mode-specific colors
+  const backgroundColor = mode === 'dark'
+    ? theme.colors.gray.dark[2]
+    : theme.colors.gray[2];
+
+  const textColor = mode === 'dark'
+    ? theme.colors.gray.dark[12]
+    : theme.colors.gray[12];
+
+  return (
+    <View style={{ backgroundColor, padding: 16 }}>
+      <Text style={{ color: textColor }}>
+        Themed content
+      </Text>
+    </View>
+  );
+}
+```
+
+## System Theme Detection
+
+The theme automatically detects system preference changes:
+
+```tsx
+import { ThemeProvider, useThemeMode } from '@radix-ui/themes-native';
+
+function SystemThemeIndicator() {
+  const mode = useThemeMode();
+
+  return (
+    <Text>
+      Current theme: {mode} (following system)
+    </Text>
+  );
+}
+
+// When mode prop is undefined, it follows the system
+<ThemeProvider>
+  <SystemThemeIndicator />
+</ThemeProvider>
+```
+
+## Best Practices
+
+1. **Test both modes** - Always test your UI in both light and dark modes
+2. **Use theme colors** - Don't hardcode colors; use theme values for automatic adaptation
+3. **Check contrast** - Ensure text is readable in both modes
+4. **Consider images** - Some images may need different versions for each mode
+5. **Persist preference** - Save user's theme preference for a better experience
+
+## Related
+
+- [ThemeProvider](/theming/theme-provider)
+- [Colors](/theming/colors)
+- [useThemeMode Hook](/api-reference/hooks)

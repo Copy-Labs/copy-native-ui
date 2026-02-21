@@ -1,0 +1,118 @@
+---
+title: Link
+description: Pressable link component for navigation.
+---
+
+# Link
+
+`Link` is a typography component for rendering pressable links with styling.
+
+## Import
+
+```tsx
+import { Link } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Link } from '@radix-ui/themes-native';
+
+<Link href="https://example.com">
+  Visit Website
+</Link>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Link content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="href" type="string">
+    URL to navigate to.
+  </Prop>
+  <Prop name="onPress" type="(event: GestureResponderEvent) => void">
+    Press handler (alternative to href).
+  </Prop>
+  <Prop name="color" type="string" default="accent color">
+    Link color.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether link is disabled.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+  <Prop name="underline" type="boolean" default="true">
+    Whether to show underline.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### External Link
+
+```tsx
+<Link href="https://radix-ui.com">
+  Radix UI Website
+</Link>
+```
+
+### Internal Navigation
+
+```tsx
+<Link onPress={() => router.push('/settings')}>
+  Go to Settings
+</Link>
+```
+
+### With Custom Color
+
+```tsx
+<Link color="blue" href="https://example.com">
+  Blue Link
+</Link>
+```
+
+### Without Underline
+
+```tsx
+<Link underline={false} href="https://example.com">
+  No Underline
+</Link>
+```
+
+### In Text
+
+```tsx
+<Text>
+  Read our <Link href="/terms">Terms of Service</Link> and{' '}
+  <Link href="/privacy">Privacy Policy</Link>.
+</Text>
+```
+
+### Disabled Link
+
+```tsx
+<Link disabled href="https://example.com">
+  Disabled Link
+</Link>
+```
+
+### With Icon
+
+```tsx
+<Flex align="center" gap={1}>
+  <Link href="https://example.com">Open Link</Link>
+  <Icon name="external-link" size={14} />
+</Flex>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Button](/components/forms/button) - Button component

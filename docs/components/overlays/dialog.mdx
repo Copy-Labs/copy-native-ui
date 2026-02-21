@@ -1,0 +1,245 @@
+---
+title: Dialog
+description: Modal dialog component for displaying content in a layer above the app.
+---
+
+# Dialog
+
+`Dialog` is an overlay component for displaying modal content that requires user attention or interaction.
+
+## Import
+
+```tsx
+import { Dialog } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Dialog, Button, Text, Flex } from '@radix-ui/themes-native';
+
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+
+  <Dialog.Content>
+    <Dialog.Title>Dialog Title</Dialog.Title>
+    <Dialog.Description>
+      This is the dialog description.
+    </Dialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <Dialog.Close>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </Dialog.Close>
+      <Dialog.Close>
+        <Button>Confirm</Button>
+      </Dialog.Close>
+    </Flex>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## Components
+
+### Dialog.Root
+
+The root container component that manages dialog state.
+
+### Dialog.Trigger
+
+Element that opens the dialog.
+
+### Dialog.Content
+
+The dialog content container.
+
+### Dialog.Title
+
+Title for the dialog.
+
+### Dialog.Description
+
+Description text for the dialog.
+
+### Dialog.Close
+
+Element that closes the dialog.
+
+## Props
+
+### Dialog.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Dialog components.
+  </Prop>
+  <Prop name="open" type="boolean">
+    Controlled open state.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+</PropTable>
+
+### Dialog.Content
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Dialog content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4" default="3">
+    Size of the dialog.
+  </Prop>
+</PropTable>
+
+### Dialog.Title
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Title content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### Dialog.Description
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Description content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Dialog
+
+```tsx
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open</Button>
+  </Dialog.Trigger>
+
+  <Dialog.Content>
+    <Dialog.Title>Welcome</Dialog.Title>
+    <Dialog.Description>
+      Welcome to our app! We're glad to have you here.
+    </Dialog.Description>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+### Controlled Dialog
+
+```tsx
+function ControlledDialog() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Trigger>
+        <Button>Open Settings</Button>
+      </Dialog.Trigger>
+
+      <Dialog.Content>
+        <Dialog.Title>Settings</Dialog.Title>
+        <Dialog.Description>
+          Configure your preferences.
+        </Dialog.Description>
+
+        <Flex direction="column" gap={3} mt={4}>
+          <TextField placeholder="Display Name" />
+          <TextField placeholder="Email" />
+        </Flex>
+
+        <Flex gap={3} mt={4} justify="end">
+          <Button variant="soft" color="gray" onPress={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button onPress={() => setOpen(false)}>
+            Save
+          </Button>
+        </Flex>
+      </Dialog.Content>
+    </Dialog.Root>
+  );
+}
+```
+
+### Form Dialog
+
+```tsx
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Create New Project</Button>
+  </Dialog.Trigger>
+
+  <Dialog.Content>
+    <Dialog.Title>New Project</Dialog.Title>
+    <Dialog.Description>
+      Create a new project to get started.
+    </Dialog.Description>
+
+    <Flex direction="column" gap={3} mt={4}>
+      <Flex direction="column" gap={1}>
+        <Text size={2} weight="medium">Project Name</Text>
+        <TextField placeholder="Enter project name" />
+      </Flex>
+
+      <Flex direction="column" gap={1}>
+        <Text size={2} weight="medium">Description</Text>
+        <TextArea placeholder="Enter description" />
+      </Flex>
+    </Flex>
+
+    <Flex gap={3} mt={4} justify="end">
+      <Dialog.Close>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </Dialog.Close>
+      <Dialog.Close>
+        <Button>Create Project</Button>
+      </Dialog.Close>
+    </Flex>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+### Confirmation Dialog
+
+```tsx
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button color="red">Delete Account</Button>
+  </Dialog.Trigger>
+
+  <Dialog.Content>
+    <Dialog.Title>Delete Account</Dialog.Title>
+    <Dialog.Description>
+      Are you sure you want to delete your account? This action cannot be undone.
+    </Dialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <Dialog.Close>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </Dialog.Close>
+      <Dialog.Close>
+        <Button color="red">Delete</Button>
+      </Dialog.Close>
+    </Flex>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## Related
+
+- [AlertDialog](/components/overlays/alert-dialog) - Alert dialog component
+- [Popover](/components/overlays/popover) - Popover component

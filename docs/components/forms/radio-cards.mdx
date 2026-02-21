@@ -1,0 +1,149 @@
+---
+title: RadioCards
+description: Card-style radio selection component.
+---
+
+# RadioCards
+
+`RadioCards` provides a card-style interface for selecting a single option from a group.
+
+## Import
+
+```tsx
+import { RadioCards } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { RadioCards } from '@radix-ui/themes-native';
+
+<RadioCards.Root value={value} onValueChange={setValue}>
+  <RadioCards.Item value="1">
+    <Flex direction="column">
+      <Text weight="medium">Option 1</Text>
+      <Text size={2} color="gray">Description here</Text>
+    </Flex>
+  </RadioCards.Item>
+  <RadioCards.Item value="2">
+    <Flex direction="column">
+      <Text weight="medium">Option 2</Text>
+      <Text size={2} color="gray">Description here</Text>
+    </Flex>
+  </RadioCards.Item>
+</RadioCards.Root>
+```
+
+## Props
+
+### RadioCards.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    RadioCard items.
+  </Prop>
+  <Prop name="value" type="string">
+    Currently selected value.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string) => void">
+    Called when selection changes.
+  </Prop>
+  <Prop name="defaultValue" type="string">
+    Default selected value (uncontrolled).
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether all items are disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the cards.
+  </Prop>
+  <Prop name="columns" type="number" default="1">
+    Number of columns.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+### RadioCards.Item
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Card content.
+  </Prop>
+  <Prop name="value" type="string" required>
+    Unique value for this item.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether this item is disabled.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Cards
+
+```tsx
+<RadioCards.Root value={value} onValueChange={setValue}>
+  <RadioCards.Item value="small">
+    <Text>Small</Text>
+  </RadioCards.Item>
+  <RadioCards.Item value="medium">
+    <Text>Medium</Text>
+  </RadioCards.Item>
+  <RadioCards.Item value="large">
+    <Text>Large</Text>
+  </RadioCards.Item>
+</RadioCards.Root>
+```
+
+### Plan Selection
+
+```tsx
+<RadioCards.Root value={plan} onValueChange={setPlan}>
+  <RadioCards.Item value="starter">
+    <Flex direction="column" gap={1}>
+      <Text weight="medium">Starter</Text>
+      <Text size={2} color="gray">For individuals</Text>
+      <Text size={4} weight="bold">$9/mo</Text>
+    </Flex>
+  </RadioCards.Item>
+  <RadioCards.Item value="pro">
+    <Flex direction="column" gap={1}>
+      <Flex align="center" gap={2}>
+        <Text weight="medium">Pro</Text>
+        <Badge color="green">Popular</Badge>
+      </Flex>
+      <Text size={2} color="gray">For teams</Text>
+      <Text size={4} weight="bold">$29/mo</Text>
+    </Flex>
+  </RadioCards.Item>
+  <RadioCards.Item value="enterprise">
+    <Flex direction="column" gap={1}>
+      <Text weight="medium">Enterprise</Text>
+      <Text size={2} color="gray">For organizations</Text>
+      <Text size={4} weight="bold">Custom</Text>
+    </Flex>
+  </RadioCards.Item>
+</RadioCards.Root>
+```
+
+### Grid Layout
+
+```tsx
+<RadioCards.Root columns={2} value={value} onValueChange={setValue}>
+  <RadioCards.Item value="1">Option 1</RadioCards.Item>
+  <RadioCards.Item value="2">Option 2</RadioCards.Item>
+  <RadioCards.Item value="3">Option 3</RadioCards.Item>
+  <RadioCards.Item value="4">Option 4</RadioCards.Item>
+</RadioCards.Root>
+```
+
+## Related
+
+- [Radio](/components/forms/radio) - Individual radio button
+- [RadioGroup](/components/forms/radio-group) - Radio button group
+- [CheckboxCards](/components/forms/checkbox-cards) - Card-style checkboxes

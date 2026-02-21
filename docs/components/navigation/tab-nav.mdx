@@ -1,0 +1,186 @@
+---
+title: TabNav
+description: Navigation component for tab-based page navigation.
+---
+
+# TabNav
+
+`TabNav` is a navigation component for creating tab-based navigation links, typically used for page-level navigation.
+
+## Import
+
+```tsx
+import { TabNav } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { TabNav } from '@radix-ui/themes-native';
+
+<TabNav.Root>
+  <TabNav.Link href="/dashboard" active>
+    Dashboard
+  </TabNav.Link>
+  <TabNav.Link href="/analytics">
+    Analytics
+  </TabNav.Link>
+  <TabNav.Link href="/settings">
+    Settings
+  </TabNav.Link>
+</TabNav.Root>
+```
+
+## Components
+
+### TabNav.Root
+
+The root container component.
+
+### TabNav.Link
+
+Individual navigation link.
+
+## Props
+
+### TabNav.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Navigation links.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### TabNav.Link
+
+<PropTable>
+  <Prop name="href" type="string">
+    Link destination.
+  </Prop>
+  <Prop name="active" type="boolean" default="false">
+    Whether the link is active.
+  </Prop>
+  <Prop name="children" type="ReactNode">
+    Link content.
+  </Prop>
+  <Prop name="onPress" type="() => void">
+    Press handler.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Navigation
+
+```tsx
+<TabNav.Root>
+  <TabNav.Link href="/home" active>
+    Home
+  </TabNav.Link>
+  <TabNav.Link href="/about">
+    About
+  </TabNav.Link>
+  <TabNav.Link href="/contact">
+    Contact
+  </TabNav.Link>
+</TabNav.Root>
+```
+
+### With Active State
+
+```tsx
+function Navigation({ currentPath }) {
+  return (
+    <TabNav.Root>
+      <TabNav.Link
+        href="/dashboard"
+        active={currentPath === '/dashboard'}
+      >
+        Dashboard
+      </TabNav.Link>
+      <TabNav.Link
+        href="/projects"
+        active={currentPath === '/projects'}
+      >
+        Projects
+      </TabNav.Link>
+      <TabNav.Link
+        href="/team"
+        active={currentPath === '/team'}
+      >
+        Team
+      </TabNav.Link>
+    </TabNav.Root>
+  );
+}
+```
+
+### With Icons
+
+```tsx
+<TabNav.Root>
+  <TabNav.Link href="/inbox" active>
+    <Flex direction="row" gap={2} align="center">
+      <Icon name="inbox" />
+      <Text>Inbox</Text>
+    </Flex>
+  </TabNav.Link>
+  <TabNav.Link href="/sent">
+    <Flex direction="row" gap={2} align="center">
+      <Icon name="send" />
+      <Text>Sent</Text>
+    </Flex>
+  </TabNav.Link>
+  <TabNav.Link href="/drafts">
+    <Flex direction="row" gap={2} align="center">
+      <Icon name="file" />
+      <Text>Drafts</Text>
+    </Flex>
+  </TabNav.Link>
+</TabNav.Root>
+```
+
+### With Badge
+
+```tsx
+<TabNav.Root>
+  <TabNav.Link href="/notifications" active>
+    <Flex direction="row" gap={2} align="center">
+      <Text>Notifications</Text>
+      <Badge color="red" size={1}>5</Badge>
+    </Flex>
+  </TabNav.Link>
+  <TabNav.Link href="/messages">
+    <Flex direction="row" gap={2} align="center">
+      <Text>Messages</Text>
+      <Badge color="blue" size={1}>12</Badge>
+    </Flex>
+  </TabNav.Link>
+</TabNav.Root>
+```
+
+### In Header
+
+```tsx
+<Flex direction="row" justify="between" align="center" px={4} py={2}>
+  <Heading size={4}>My App</Heading>
+  <TabNav.Root>
+    <TabNav.Link href="/home" active>Home</TabNav.Link>
+    <TabNav.Link href="/features">Features</TabNav.Link>
+    <TabNav.Link href="/pricing">Pricing</TabNav.Link>
+    <TabNav.Link href="/about">About</TabNav.Link>
+  </TabNav.Root>
+  <Button>Sign In</Button>
+</Flex>
+```
+
+## Related
+
+- [Tabs](/components/navigation/tabs) - Tabs component
+- [SegmentedControl](/components/navigation/segmented-control) - Segmented control component

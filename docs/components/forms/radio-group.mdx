@@ -1,0 +1,125 @@
+---
+title: RadioGroup
+description: Group of radio buttons for single selection.
+---
+
+# RadioGroup
+
+`RadioGroup` is a component for managing a group of radio buttons where only one can be selected.
+
+## Import
+
+```tsx
+import { RadioGroup } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { RadioGroup, Radio } from '@radix-ui/themes-native';
+
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="option1">Option 1</Radio>
+  <Radio value="option2">Option 2</Radio>
+  <Radio value="option3">Option 3</Radio>
+</RadioGroup>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Radio children.
+  </Prop>
+  <Prop name="value" type="string">
+    Currently selected value.
+  </Prop>
+  <Prop name="onValueChange" type="(value: string) => void">
+    Called when selection changes.
+  </Prop>
+  <Prop name="defaultValue" type="string">
+    Default selected value (uncontrolled).
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether all radios are disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color for all radios.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of all radios.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Group
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="orange">Orange</Radio>
+</RadioGroup>
+```
+
+### With Label
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Text weight="medium">Select your favorite fruit:</Text>
+  <RadioGroup value={value} onValueChange={setValue}>
+    <Radio value="apple">Apple</Radio>
+    <Radio value="banana">Banana</Radio>
+    <Radio value="orange">Orange</Radio>
+  </RadioGroup>
+</Flex>
+```
+
+### Payment Method Selection
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Payment Method</Heading>
+    <RadioGroup value={method} onValueChange={setMethod}>
+      <Radio value="card">
+        <Flex direction="row" gap={2} align="center">
+          <Icon name="credit-card" />
+          <Text>Credit Card</Text>
+        </Flex>
+      </Radio>
+      <Radio value="paypal">
+        <Flex direction="row" gap={2} align="center">
+          <Icon name="paypal" />
+          <Text>PayPal</Text>
+        </Flex>
+      </Radio>
+      <Radio value="bank">
+        <Flex direction="row" gap={2} align="center">
+          <Icon name="bank" />
+          <Text>Bank Transfer</Text>
+        </Flex>
+      </Radio>
+    </RadioGroup>
+  </Flex>
+</Card>
+```
+
+### Disabled Group
+
+```tsx
+<RadioGroup disabled defaultValue="1">
+  <Radio value="1">Option 1</Radio>
+  <Radio value="2">Option 2</Radio>
+</RadioGroup>
+```
+
+## Related
+
+- [Radio](/components/forms/radio) - Individual radio button
+- [RadioCards](/components/forms/radio-cards) - Card-style radio selection
+- [CheckboxGroup](/components/forms/checkbox-group) - Checkbox group

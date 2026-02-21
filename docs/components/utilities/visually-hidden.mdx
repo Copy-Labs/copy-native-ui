@@ -1,0 +1,160 @@
+---
+title: VisuallyHidden
+description: Utility component for hiding content visually while keeping it accessible.
+---
+
+# VisuallyHidden
+
+`VisuallyHidden` is a utility component for hiding content visually while keeping it accessible to screen readers.
+
+## Import
+
+```tsx
+import { VisuallyHidden } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { VisuallyHidden, IconButton } from '@radix-ui/themes-native';
+
+<IconButton>
+  <Icon name="search" />
+  <VisuallyHidden>Search</VisuallyHidden>
+</IconButton>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Content to hide visually.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Icon Button Label
+
+```tsx
+<IconButton>
+  <Icon name="menu" />
+  <VisuallyHidden>Open menu</VisuallyHidden>
+</IconButton>
+```
+
+### Skip Link
+
+```tsx
+<VisuallyHidden>
+  <Button onPress={() => mainContentRef.current?.focus()}>
+    Skip to main content
+  </Button>
+</VisuallyHidden>
+```
+
+### Form Labels
+
+```tsx
+<Flex direction="column" gap={2}>
+  <VisuallyHidden>
+    <Text nativeID="search-label">Search</Text>
+  </VisuallyHidden>
+  <TextField
+    placeholder="Search..."
+    aria-labelledby="search-label"
+  />
+</Flex>
+```
+
+### Status Messages
+
+```tsx
+function StatusIndicator({ status }) {
+  return (
+    <Flex direction="row" gap={2} align="center">
+      <Badge color={status === 'success' ? 'green' : 'red'}>
+        {status === 'success' ? '✓' : '✗'}
+      </Badge>
+      <VisuallyHidden>
+        <Text>{status === 'success' ? 'Operation successful' : 'Operation failed'}</Text>
+      </VisuallyHidden>
+    </Flex>
+  );
+}
+```
+
+### Loading State
+
+```tsx
+function LoadingButton({ loading, children, ...props }) {
+  return (
+    <Button {...props} disabled={loading}>
+      {loading ? (
+        <>
+          <Spinner size={1} />
+          <VisuallyHidden>Loading...</VisuallyHidden>
+        </>
+      ) : (
+        children
+      )}
+    </Button>
+  );
+}
+```
+
+### Accessible Icon
+
+```tsx
+function AccessibleIcon({ label, children }) {
+  return (
+    <>
+      {children}
+      <VisuallyHidden>{label}</VisuallyHidden>
+    </>
+  );
+}
+
+// Usage
+<AccessibleIcon label="Warning">
+  <Icon name="warning" color="yellow" />
+</AccessibleIcon>
+```
+
+### Table Headers
+
+```tsx
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>
+        <VisuallyHidden>Actions</VisuallyHidden>
+      </Table.ColumnHeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    {/* ... */}
+  </Table.Body>
+</Table.Root>
+```
+
+### Live Region
+
+```tsx
+function LiveAnnouncer({ message }) {
+  return (
+    <VisuallyHidden>
+      <Text aria-live="polite">{message}</Text>
+    </VisuallyHidden>
+  );
+}
+
+// Usage
+<LiveAnnouncer message="Item added to cart" />
+```
+
+## Related
+
+- [Slot](/components/utilities/slot) - Slot component
+- [Accessibility Guide](/guides/accessibility) - Accessibility best practices

@@ -1,0 +1,116 @@
+---
+title: Checkbox
+description: Checkbox component for boolean selections.
+---
+
+# Checkbox
+
+`Checkbox` is a form component for capturing boolean selections.
+
+## Import
+
+```tsx
+import { Checkbox } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Checkbox } from '@radix-ui/themes-native';
+
+<Checkbox
+  checked={agreed}
+  onCheckedChange={setAgreed}
+>
+  I agree to the terms
+</Checkbox>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Label content.
+  </Prop>
+  <Prop name="checked" type="boolean" default="false">
+    Whether the checkbox is checked.
+  </Prop>
+  <Prop name="onCheckedChange" type="(checked: boolean) => void">
+    Called when checked state changes.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the checkbox is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the checkbox.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Checkbox
+
+```tsx
+<Checkbox
+  checked={checked}
+  onCheckedChange={setChecked}
+>
+  Accept terms
+</Checkbox>
+```
+
+### Sizes
+
+```tsx
+<Checkbox size={1}>Small</Checkbox>
+<Checkbox size={2}>Medium (default)</Checkbox>
+<Checkbox size={3}>Large</Checkbox>
+```
+
+### With Color
+
+```tsx
+<Checkbox color="blue" checked={checked} onCheckedChange={setChecked}>
+  Blue checkbox
+</Checkbox>
+```
+
+### Disabled
+
+```tsx
+<Checkbox disabled>
+  Disabled checkbox
+</Checkbox>
+```
+
+### Form Example
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Checkbox checked={terms} onCheckedChange={setTerms}>
+    I agree to the Terms of Service
+  </Checkbox>
+  <Checkbox checked={privacy} onCheckedChange={setPrivacy}>
+    I agree to the Privacy Policy
+  </Checkbox>
+  <Checkbox checked={newsletter} onCheckedChange={setNewsletter}>
+    Subscribe to newsletter
+  </Checkbox>
+  <Button disabled={!terms || !privacy}>Continue</Button>
+</Flex>
+```
+
+## Related
+
+- [CheckboxGroup](/components/forms/checkbox-group) - Group of checkboxes
+- [CheckboxCards](/components/forms/checkbox-cards) - Card-style checkboxes
+- [Switch](/components/forms/switch) - Toggle switch

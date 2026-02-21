@@ -1,0 +1,130 @@
+---
+title: Badge
+description: Status badge component for labels and indicators.
+---
+
+# Badge
+
+`Badge` is a data display component for rendering status indicators and labels.
+
+## Import
+
+```tsx
+import { Badge } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Badge } from '@radix-ui/themes-native';
+
+<Badge color="green">Active</Badge>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Badge content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="variant" type="'solid' | 'soft' | 'outline'" default="'soft'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="1">
+    Size of the badge.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'">
+    Border radius override.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Variants
+
+```tsx
+<Flex direction="row" gap={2}>
+  <Badge variant="solid">Solid</Badge>
+  <Badge variant="soft">Soft</Badge>
+  <Badge variant="outline">Outline</Badge>
+</Flex>
+```
+
+### Colors
+
+```tsx
+<Flex direction="row" gap={2} wrap="wrap">
+  <Badge color="green">Success</Badge>
+  <Badge color="red">Error</Badge>
+  <Badge color="yellow">Warning</Badge>
+  <Badge color="blue">Info</Badge>
+  <Badge color="gray">Neutral</Badge>
+</Flex>
+```
+
+### Sizes
+
+```tsx
+<Flex direction="row" gap={2} align="center">
+  <Badge size={1}>Small</Badge>
+  <Badge size={2}>Medium</Badge>
+  <Badge size={3}>Large</Badge>
+</Flex>
+```
+
+### High Contrast
+
+```tsx
+<Flex direction="row" gap={2}>
+  <Badge color="blue">Normal</Badge>
+  <Badge color="blue" highContrast>High Contrast</Badge>
+</Flex>
+```
+
+### Status Indicators
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Flex direction="row" gap={2} align="center">
+    <Badge color="green">Active</Badge>
+    <Text>Account is active</Text>
+  </Flex>
+  <Flex direction="row" gap={2} align="center">
+    <Badge color="yellow">Pending</Badge>
+    <Text>Verification pending</Text>
+  </Flex>
+  <Flex direction="row" gap={2} align="center">
+    <Badge color="red">Suspended</Badge>
+    <Text>Account suspended</Text>
+  </Flex>
+</Flex>
+```
+
+### With Avatar
+
+```tsx
+<Flex direction="row" gap={3} align="center">
+  <Avatar fallback="JD" />
+  <Flex direction="column">
+    <Flex direction="row" gap={2} align="center">
+      <Text weight="medium">John Doe</Text>
+      <Badge size={1} color="green">Pro</Badge>
+    </Flex>
+    <Text size={2} color="gray">john@example.com</Text>
+  </Flex>
+</Flex>
+```
+
+## Related
+
+- [Avatar](/components/data-display/avatar) - Avatar component
+- [Card](/components/data-display/card) - Card component

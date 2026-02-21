@@ -1,0 +1,247 @@
+---
+title: AlertDialog
+description: Modal alert dialog for critical confirmations.
+---
+
+# AlertDialog
+
+`AlertDialog` is an overlay component for displaying critical alerts that require user confirmation before proceeding.
+
+## Import
+
+```tsx
+import { AlertDialog } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { AlertDialog, Button, Text, Flex } from '@radix-ui/themes-native';
+
+<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <Button color="red">Delete</Button>
+  </AlertDialog.Trigger>
+
+  <AlertDialog.Content>
+    <AlertDialog.Title>Confirm Deletion</AlertDialog.Title>
+    <AlertDialog.Description>
+      Are you sure you want to delete this item? This action cannot be undone.
+    </AlertDialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button color="red">Delete</Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+## Components
+
+### AlertDialog.Root
+
+The root container component that manages dialog state.
+
+### AlertDialog.Trigger
+
+Element that opens the alert dialog.
+
+### AlertDialog.Content
+
+The alert dialog content container.
+
+### AlertDialog.Title
+
+Title for the alert dialog.
+
+### AlertDialog.Description
+
+Description text for the alert dialog.
+
+### AlertDialog.Cancel
+
+Element that cancels the action and closes the dialog.
+
+### AlertDialog.Action
+
+Element that confirms the action.
+
+## Props
+
+### AlertDialog.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    AlertDialog components.
+  </Prop>
+  <Prop name="open" type="boolean">
+    Controlled open state.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+</PropTable>
+
+### AlertDialog.Content
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    AlertDialog content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### AlertDialog.Title
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Title content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### AlertDialog.Description
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Description content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Delete Confirmation
+
+```tsx
+<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <Button color="red">Delete Account</Button>
+  </AlertDialog.Trigger>
+
+  <AlertDialog.Content>
+    <AlertDialog.Title>Delete Account</AlertDialog.Title>
+    <AlertDialog.Description>
+      This will permanently delete your account and all associated data.
+      This action cannot be undone.
+    </AlertDialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button color="red">Delete Account</Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+### Controlled AlertDialog
+
+```tsx
+function ControlledAlertDialog() {
+  const [open, setOpen] = useState(false);
+
+  const handleDelete = () => {
+    // Perform delete action
+    console.log('Item deleted');
+    setOpen(false);
+  };
+
+  return (
+    <AlertDialog.Root open={open} onOpenChange={setOpen}>
+      <AlertDialog.Trigger>
+        <Button color="red">Delete Item</Button>
+      </AlertDialog.Trigger>
+
+      <AlertDialog.Content>
+        <AlertDialog.Title>Confirm Delete</AlertDialog.Title>
+        <AlertDialog.Description>
+          Are you sure you want to delete this item?
+        </AlertDialog.Description>
+
+        <Flex gap={3} mt={4} justify="end">
+          <AlertDialog.Cancel>
+            <Button variant="soft" color="gray">Cancel</Button>
+          </AlertDialog.Cancel>
+          <AlertDialog.Action onPress={handleDelete}>
+            <Button color="red">Delete</Button>
+          </AlertDialog.Action>
+        </Flex>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
+  );
+}
+```
+
+### Destructive Action
+
+```tsx
+<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <IconButton color="red">
+      <Icon name="trash" />
+    </IconButton>
+  </AlertDialog.Trigger>
+
+  <AlertDialog.Content>
+    <AlertDialog.Title>Remove Item</AlertDialog.Title>
+    <AlertDialog.Description>
+      This item will be removed from your list. You can add it again later.
+    </AlertDialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray">Keep</Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button color="red">Remove</Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+### Logout Confirmation
+
+```tsx
+<AlertDialog.Root>
+  <AlertDialog.Trigger>
+    <Button variant="soft">Sign Out</Button>
+  </AlertDialog.Trigger>
+
+  <AlertDialog.Content>
+    <AlertDialog.Title>Sign Out</AlertDialog.Title>
+    <AlertDialog.Description>
+      Are you sure you want to sign out of your account?
+    </AlertDialog.Description>
+
+    <Flex gap={3} mt={4} justify="end">
+      <AlertDialog.Cancel>
+        <Button variant="soft" color="gray">Cancel</Button>
+      </AlertDialog.Cancel>
+      <AlertDialog.Action>
+        <Button>Sign Out</Button>
+      </AlertDialog.Action>
+    </Flex>
+  </AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+## Related
+
+- [Dialog](/components/overlays/dialog) - Dialog component
+- [Popover](/components/overlays/popover) - Popover component

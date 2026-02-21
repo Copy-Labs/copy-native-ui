@@ -1,0 +1,235 @@
+---
+title: Typography
+description: Learn about the typography system in Radix Themes Native.
+---
+
+# Typography
+
+Radix Themes Native provides a comprehensive typography system with font sizes, weights, and line heights designed for optimal readability.
+
+## Font Size Scale
+
+The typography scale includes 9 sizes:
+
+| Size | Font Size | Line Height | Letter Spacing | Use Case |
+|------|-----------|-------------|----------------|----------|
+| 1 | 11px | 16px | 0.5px | Fine print, captions |
+| 2 | 12px | 18px | 0.5px | Small text, labels |
+| 3 | 14px | 20px | 0.25px | Body text (default) |
+| 4 | 16px | 24px | 0px | Large body text |
+| 5 | 18px | 26px | -0.25px | Subheadings |
+| 6 | 20px | 28px | -0.25px | Headings |
+| 7 | 24px | 32px | -0.5px | Large headings |
+| 8 | 30px | 36px | -0.5px | Display headings |
+| 9 | 36px | 40px | -0.75px | Hero text |
+
+## Using Typography
+
+### Text Component
+
+```tsx
+import { Text } from '@radix-ui/themes-native';
+
+<Text size={1}>Small text</Text>
+<Text size={3}>Regular text (default)</Text>
+<Text size={5}>Large text</Text>
+```
+
+### Heading Component
+
+```tsx
+import { Heading } from '@radix-ui/themes-native';
+
+<Heading size={1}>H1 Heading</Heading>
+<Heading size={3}>H3 Heading</Heading>
+<Heading size={5}>H5 Heading</Heading>
+```
+
+## Font Weights
+
+| Weight | Value | Use Case |
+|--------|-------|----------|
+| `light` | 300 | Subtle text |
+| `regular` | 400 | Body text |
+| `medium` | 500 | Emphasis |
+| `bold` | 700 | Strong emphasis |
+
+```tsx
+<Text weight="light">Light text</Text>
+<Text weight="regular">Regular text</Text>
+<Text weight="medium">Medium text</Text>
+<Text weight="bold">Bold text</Text>
+```
+
+## Accessing Typography Values
+
+### Through Theme Object
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function CustomText() {
+  const theme = useTheme();
+
+  const fontSize3 = theme.fontSizes[3];
+  // { fontSize: 14, lineHeight: 20, letterSpacing: 0.25 }
+
+  return (
+    <Text style={{
+      fontSize: fontSize3.fontSize,
+      lineHeight: fontSize3.lineHeight,
+    }}>
+      Custom styled text
+    </Text>
+  );
+}
+```
+
+### Font Weights
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function Component() {
+  const theme = useTheme();
+
+  const boldWeight = theme.fontWeights.bold; // '700'
+
+  return (
+    <Text style={{ fontWeight: boldWeight }}>
+      Bold text
+    </Text>
+  );
+}
+```
+
+## Custom Fonts
+
+### Setting Custom Fonts
+
+Configure custom fonts through ThemeProvider:
+
+```tsx
+<ThemeProvider
+  themeOptions={{
+    fonts: {
+      heading: {
+        fontFamily: 'CustomFont-Bold',
+        fontWeight: '700',
+      },
+      body: {
+        fontFamily: 'CustomFont-Regular',
+        fontWeight: '400',
+      },
+    },
+  }}
+>
+  <App />
+</ThemeProvider>
+```
+
+### Loading Custom Fonts (Expo)
+
+```tsx
+import { useFonts } from 'expo-font';
+import { ThemeProvider } from '@radix-ui/themes-native';
+
+function App() {
+  const [fontsLoaded] = useFonts({
+    'CustomFont-Regular': require('./assets/fonts/CustomFont-Regular.ttf'),
+    'CustomFont-Bold': require('./assets/fonts/CustomFont-Bold.ttf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  return (
+    <ThemeProvider
+      themeOptions={{
+        fonts: {
+          heading: { fontFamily: 'CustomFont-Bold' },
+          body: { fontFamily: 'CustomFont-Regular' },
+        },
+      }}
+    >
+      <AppContent />
+    </ThemeProvider>
+  );
+}
+```
+
+## Typography Components
+
+### Text
+
+General-purpose text component:
+
+```tsx
+<Text size={3} weight="medium" color="blue">
+  Styled text
+</Text>
+```
+
+### Heading
+
+Semantic heading component:
+
+```tsx
+<Heading size={4} weight="bold">
+  Section Title
+</Heading>
+```
+
+### Strong
+
+Bold text for emphasis:
+
+```tsx
+<Text>
+  This is <Strong>important</Strong> text.
+</Text>
+```
+
+### Em
+
+Italic text for emphasis:
+
+```tsx
+<Text>
+  This is <Em>emphasized</Em> text.
+</Text>
+```
+
+### Code
+
+Inline code styling:
+
+```tsx
+<Text>
+  Use the <Code>useState</Code> hook for state.
+</Text>
+```
+
+### Kbd
+
+Keyboard shortcut styling:
+
+```tsx
+<Text>
+  Press <Kbd>Cmd + C</Kbd> to copy.
+</Text>
+```
+
+## Best Practices
+
+1. **Use semantic sizes** - Size 3 for body, size 4-5 for subheadings, size 6+ for headings
+2. **Maintain hierarchy** - Don't skip heading sizes
+3. **Consider line height** - The default line heights are optimized for readability
+4. **Test on device** - Font rendering can vary between iOS and Android
+
+## Related
+
+- [Text Component](/components/typography/text)
+- [Heading Component](/components/typography/heading)
+- [ThemeProvider](/theming/theme-provider)

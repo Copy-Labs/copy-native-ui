@@ -1,0 +1,254 @@
+---
+title: Table
+description: Table component for displaying tabular data.
+---
+
+# Table
+
+`Table` is a data display component for rendering tabular data in rows and columns.
+
+## Import
+
+```tsx
+import { Table } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Table } from '@radix-ui/themes-native';
+
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Role</Table.ColumnHeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>John Doe</Table.Cell>
+      <Table.Cell>john@example.com</Table.Cell>
+      <Table.Cell>Admin</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>Jane Smith</Table.Cell>
+      <Table.Cell>jane@example.com</Table.Cell>
+      <Table.Cell>User</Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table.Root>
+```
+
+## Components
+
+### Table.Root
+
+The root container component.
+
+### Table.Header
+
+Header section of the table.
+
+### Table.Body
+
+Body section containing data rows.
+
+### Table.Row
+
+Individual row in the table.
+
+### Table.HeaderCell
+
+Header cell in the table header.
+
+### Table.ColumnHeaderCell
+
+Column header cell with optional sorting.
+
+### Table.Cell
+
+Data cell in the table body.
+
+## Props
+
+### Table.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Table content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the table cells.
+  </Prop>
+</PropTable>
+
+### Table.Row
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Row content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end'" default="'center'">
+    Vertical alignment.
+  </Prop>
+</PropTable>
+
+### Table.Cell
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Cell content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Table
+
+```tsx
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.ColumnHeaderCell>Product</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Price</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Stock</Table.ColumnHeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>Widget A</Table.Cell>
+      <Table.Cell>$29.99</Table.Cell>
+      <Table.Cell>150</Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>Widget B</Table.Cell>
+      <Table.Cell>$49.99</Table.Cell>
+      <Table.Cell>75</Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table.Root>
+```
+
+### Sizes
+
+```tsx
+<Table.Root size={1}>
+  {/* Small table */}
+</Table.Root>
+
+<Table.Root size={2}>
+  {/* Medium table (default) */}
+</Table.Root>
+
+<Table.Root size={3}>
+  {/* Large table */}
+</Table.Root>
+```
+
+### With Status Badges
+
+```tsx
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.ColumnHeaderCell>Order ID</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Customer</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>#12345</Table.Cell>
+      <Table.Cell>John Doe</Table.Cell>
+      <Table.Cell>
+        <Badge color="green">Completed</Badge>
+      </Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>#12346</Table.Cell>
+      <Table.Cell>Jane Smith</Table.Cell>
+      <Table.Cell>
+        <Badge color="yellow">Pending</Badge>
+      </Table.Cell>
+    </Table.Row>
+    <Table.Row>
+      <Table.Cell>#12347</Table.Cell>
+      <Table.Cell>Bob Wilson</Table.Cell>
+      <Table.Cell>
+        <Badge color="red">Cancelled</Badge>
+      </Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table.Root>
+```
+
+### With Row Actions
+
+```tsx
+<Table.Root>
+  <Table.Header>
+    <Table.Row>
+      <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
+      <Table.ColumnHeaderCell>Actions</Table.ColumnHeaderCell>
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    <Table.Row>
+      <Table.Cell>John Doe</Table.Cell>
+      <Table.Cell>john@example.com</Table.Cell>
+      <Table.Cell>
+        <Flex gap={2}>
+          <IconButton size={1} variant="ghost">
+            <Icon name="pencil" />
+          </IconButton>
+          <IconButton size={1} variant="ghost" color="red">
+            <Icon name="trash" />
+          </IconButton>
+        </Flex>
+      </Table.Cell>
+    </Table.Row>
+  </Table.Body>
+</Table.Root>
+```
+
+### In Card
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={3}>Users</Heading>
+    <Table.Root>
+      <Table.Header>
+        <Table.Row>
+          <Table.ColumnHeaderCell>Name</Table.ColumnHeaderCell>
+          <Table.ColumnHeaderCell>Role</Table.ColumnHeaderCell>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row>
+          <Table.Cell>John Doe</Table.Cell>
+          <Table.Cell>Admin</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+    </Table.Root>
+  </Flex>
+</Card>
+```
+
+## Related
+
+- [Card](/components/data-display/card) - Card component
+- [Flex](/components/layout/flex) - Flexbox layout
+- [Badge](/components/data-display/badge) - Badge component

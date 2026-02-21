@@ -1,0 +1,233 @@
+---
+title: Migration from Web
+description: Learn how to migrate from web Radix Themes to Radix Themes Native.
+---
+
+# Migration from Web Radix Themes
+
+If you're already using [Radix Themes](https://www.radix-ui.com/themes) on the web, this guide will help you understand the key differences and migrate your code to React Native.
+
+## Key Differences
+
+### Event Handlers
+
+The most noticeable difference is the event handler naming:
+
+| Web | React Native |
+|-----|--------------|
+| `onClick` | `onPress` |
+| `onMouseEnter` | `onPressIn` |
+| `onMouseLeave` | `onPressOut` |
+| `onChange` | `onChangeText` or `onValueChange` |
+
+```tsx
+// Web Radix Themes
+<Button onClick={handleClick}>Click me</Button>
+
+// Radix Themes Native
+<Button onPress={handlePress}>Click me</Button>
+```
+
+### Styling
+
+React Native uses StyleSheet instead of CSS:
+
+```tsx
+// Web Radix Themes
+<Box css={{ p: '$4', bg: '$gray2' }}>
+  <Text>Content</Text>
+</Box>
+
+// Radix Themes Native
+<Box padding={4} backgroundColor="gray.2">
+  <Text>Content</Text>
+</Box>
+```
+
+### Color References
+
+Colors use a different notation in React Native:
+
+```tsx
+// Web Radix Themes (CSS variables)
+<Box css={{ backgroundColor: '$blue4' }} />
+
+// Radix Themes Native (theme scale)
+<Box backgroundColor="blue.4" />
+```
+
+### Layout
+
+Flexbox is the default layout system in React Native:
+
+```tsx
+// Web Radix Themes
+<Flex gap="4" align="center">
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+</Flex>
+
+// Radix Themes Native (same API)
+<Flex gap={4} align="center">
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+</Flex>
+```
+
+## Component Mapping
+
+### Buttons
+
+```tsx
+// Web
+<Button onClick={handleClick} variant="solid">
+  Click me
+</Button>
+
+// Native
+<Button onPress={handlePress} variant="solid">
+  Click me
+</Button>
+```
+
+### Text Fields
+
+```tsx
+// Web
+<TextField.Root>
+  <TextField.Input
+    placeholder="Enter text"
+    onChange={(e) => setValue(e.target.value)}
+  />
+</TextField.Root>
+
+// Native
+<TextField
+  placeholder="Enter text"
+  onChangeText={setValue}
+/>
+```
+
+### Checkbox
+
+```tsx
+// Web
+<Checkbox
+  checked={checked}
+  onCheckedChange={setChecked}
+/>
+
+// Native (same API)
+<Checkbox
+  checked={checked}
+  onCheckedChange={setChecked}
+/>
+```
+
+### Select
+
+```tsx
+// Web
+<Select.Root value={value} onValueChange={setValue}>
+  <Select.Trigger />
+  <Select.Content>
+    <Select.Item value="1">Option 1</Select.Item>
+    <Select.Item value="2">Option 2</Select.Item>
+  </Select.Content>
+</Select.Root>
+
+// Native (simplified API)
+<Select
+  value={value}
+  onValueChange={setValue}
+  items={[
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+  ]}
+/>
+```
+
+### Dialog
+
+```tsx
+// Web
+<Dialog.Root open={open} onOpenChange={setOpen}>
+  <Dialog.Trigger>Open</Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Overlay />
+    <Dialog.Content>
+      <Dialog.Title>Title</Dialog.Title>
+      <Dialog.Description>Description</Dialog.Description>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
+
+// Native (same compound pattern)
+<Dialog.Root open={open} onOpenChange={setOpen}>
+  <Dialog.Trigger>Open</Dialog.Trigger>
+  <Dialog.Portal>
+    <Dialog.Overlay />
+    <Dialog.Content>
+      <Dialog.Title>Title</Dialog.Title>
+      <Dialog.Description>Description</Dialog.Description>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>
+```
+
+## CSS to React Native Props
+
+| CSS Property | React Native Prop |
+|--------------|-------------------|
+| `padding` | `padding` |
+| `margin` | `margin` |
+| `backgroundColor` | `backgroundColor` |
+| `borderRadius` | `borderRadius` |
+| `display: flex` | `display="flex"` |
+| `flexDirection: row` | `flexDirection="row"` |
+| `justifyContent: center` | `justifyContent="center"` |
+| `alignItems: center` | `alignItems="center"` |
+| `gap: 16` | `gap={4}` (uses theme scale) |
+
+## Theme Variables
+
+Web CSS variables map to theme object properties:
+
+```tsx
+// Web (CSS variables)
+const color = 'var(--blue-9)';
+
+// Native (theme object)
+import { useTheme } from '@radix-ui/themes-native';
+
+const theme = useTheme();
+const color = theme.colors.blue[9];
+```
+
+## Unsupported Features
+
+Some web features don't have equivalents in React Native:
+
+| Feature | Status |
+|---------|--------|
+| CSS `:hover` | Use `onPressIn`/`onPressOut` |
+| CSS `:focus` | Use `onFocus`/`onBlur` |
+| CSS animations | Use React Native Animated or Reanimated |
+| CSS Grid | Use `Grid` component (flexbox-based) |
+| Media queries | Use `Dimensions` API or responsive hooks |
+
+## Tips for Migration
+
+1. **Start with ThemeProvider** - Wrap your app first to ensure theming works
+2. **Replace event handlers** - Change `onClick` to `onPress` throughout
+3. **Update styling** - Convert CSS to StyleSheet props
+4. **Test incrementally** - Migrate one component at a time
+5. **Use TypeScript** - Type errors will help identify API differences
+
+## Getting Help
+
+If you encounter issues during migration:
+
+- Check the [API Reference](/api-reference/theme-provider) for component props
+- Browse the [Examples](/examples/login-form) for patterns
+- Open an issue on [GitHub](https://github.com/Copy-Labs/radix-ui-native-kilo)

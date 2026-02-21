@@ -1,0 +1,128 @@
+---
+title: TextArea
+description: Multi-line text input component.
+---
+
+# TextArea
+
+`TextArea` is a form component for capturing multi-line text input.
+
+## Import
+
+```tsx
+import { TextArea } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { TextArea } from '@radix-ui/themes-native';
+
+<TextArea
+  placeholder="Enter your message"
+  value={message}
+  onChangeText={setMessage}
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="value" type="string">
+    Current input value.
+  </Prop>
+  <Prop name="onChangeText" type="(text: string) => void">
+    Called when text changes.
+  </Prop>
+  <Prop name="placeholder" type="string">
+    Placeholder text.
+  </Prop>
+  <Prop name="variant" type="'classic' | 'surface' | 'soft'" default="'surface'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the input.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color for focus state.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the input is disabled.
+  </Prop>
+  <Prop name="error" type="string | boolean">
+    Error state or error message.
+  </Prop>
+  <Prop name="numberOfLines" type="number" default="4">
+    Number of visible lines.
+  </Prop>
+  <Prop name="maxLength" type="number">
+    Maximum character length.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic TextArea
+
+```tsx
+<TextArea
+  placeholder="Enter your message"
+  value={message}
+  onChangeText={setMessage}
+/>
+```
+
+### With Character Limit
+
+```tsx
+<TextArea
+  placeholder="Write a bio (max 200 characters)"
+  value={bio}
+  onChangeText={setBio}
+  maxLength={200}
+/>
+```
+
+### Different Sizes
+
+```tsx
+<TextArea size={1} placeholder="Small" />
+<TextArea size={2} placeholder="Medium (default)" />
+<TextArea size={3} placeholder="Large" />
+```
+
+### With Error
+
+```tsx
+<TextArea
+  placeholder="Enter description"
+  value={description}
+  onChangeText={setDescription}
+  error="Description is required"
+/>
+```
+
+### Contact Form
+
+```tsx
+<Flex direction="column" gap={3}>
+  <TextField placeholder="Your Name" />
+  <TextField placeholder="Email" keyboardType="email-address" />
+  <TextArea
+    placeholder="Your Message"
+    numberOfLines={6}
+  />
+  <Button>Send Message</Button>
+</Flex>
+```
+
+## Related
+
+- [TextField](/components/forms/text-field) - Single-line text input
+- [Button](/components/forms/button) - Button component

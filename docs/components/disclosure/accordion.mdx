@@ -1,0 +1,297 @@
+---
+title: Accordion
+description: Accordion component for collapsible content sections.
+---
+
+# Accordion
+
+`Accordion` is a disclosure component for creating collapsible content sections that can be expanded or collapsed.
+
+## Import
+
+```tsx
+import { Accordion } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Accordion, Text, Flex } from '@radix-ui/themes-native';
+
+<Accordion.Root type="single" defaultValue="item-1">
+  <Accordion.Item value="item-1">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Text>Section 1</Text>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>Content for section 1</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="item-2">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Text>Section 2</Text>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>Content for section 2</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+## Components
+
+### Accordion.Root
+
+The root container component that manages accordion state.
+
+### Accordion.Item
+
+Individual accordion item.
+
+### Accordion.Header
+
+Header section containing the trigger.
+
+### Accordion.Trigger
+
+Button that toggles the accordion item.
+
+### Accordion.Content
+
+Content that is shown/hidden.
+
+## Props
+
+### Accordion.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Accordion items.
+  </Prop>
+  <Prop name="type" type="'single' | 'multiple'" required>
+    Single allows one open item, multiple allows many.
+  </Prop>
+  <Prop name="defaultValue" type="string | string[]">
+    Initial open item(s) (uncontrolled).
+  </Prop>
+  <Prop name="value" type="string | string[]">
+    Controlled open item(s).
+  </Prop>
+  <Prop name="onValueChange" type="(value: string | string[]) => void">
+    Callback when value changes.
+  </Prop>
+  <Prop name="collapsible" type="boolean" default="false">
+    Whether items can be collapsed when open.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### Accordion.Item
+
+<PropTable>
+  <Prop name="value" type="string" required>
+    Unique value for this item.
+  </Prop>
+  <Prop name="children" type="ReactNode">
+    Item content.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the item is disabled.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Single Mode
+
+```tsx
+<Accordion.Root type="single" defaultValue="faq-1">
+  <Accordion.Item value="faq-1">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Text>What is React Native?</Text>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>React Native is a framework for building native mobile apps using React.</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="faq-2">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Text>How do I get started?</Text>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>Start by installing the CLI and creating a new project.</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+### Multiple Mode
+
+```tsx
+<Accordion.Root type="multiple" defaultValue={['section-1', 'section-2']}>
+  <Accordion.Item value="section-1">
+    <Accordion.Header>
+      <Accordion.Trigger>Section 1</Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>Both sections can be open at the same time.</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="section-2">
+    <Accordion.Header>
+      <Accordion.Trigger>Section 2</Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>This is also open.</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+### Collapsible
+
+```tsx
+<Accordion.Root type="single" collapsible defaultValue="item-1">
+  <Accordion.Item value="item-1">
+    <Accordion.Header>
+      <Accordion.Trigger>Can be collapsed</Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Text>Click the trigger to collapse this item.</Text>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+### FAQ Section
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Heading size={4}>Frequently Asked Questions</Heading>
+
+    <Accordion.Root type="single" collapsible>
+      <Accordion.Item value="q1">
+        <Accordion.Header>
+          <Accordion.Trigger>
+            <Flex direction="row" justify="between" align="center">
+              <Text weight="medium">How do I reset my password?</Text>
+              <Icon name="chevron-down" />
+            </Flex>
+          </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
+          <Text color="gray">
+            Click on "Forgot Password" on the login screen and follow the instructions sent to your email.
+          </Text>
+        </Accordion.Content>
+      </Accordion.Item>
+
+      <Accordion.Item value="q2">
+        <Accordion.Header>
+          <Accordion.Trigger>
+            <Flex direction="row" justify="between" align="center">
+              <Text weight="medium">Can I change my email?</Text>
+              <Icon name="chevron-down" />
+            </Flex>
+          </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
+          <Text color="gray">
+            Yes, go to Settings > Account > Email to update your email address.
+          </Text>
+        </Accordion.Content>
+      </Accordion.Item>
+
+      <Accordion.Item value="q3">
+        <Accordion.Header>
+          <Accordion.Trigger>
+            <Flex direction="row" justify="between" align="center">
+              <Text weight="medium">How do I delete my account?</Text>
+              <Icon name="chevron-down" />
+            </Flex>
+          </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content>
+          <Text color="gray">
+            Go to Settings > Account > Delete Account. This action cannot be undone.
+          </Text>
+        </Accordion.Content>
+      </Accordion.Item>
+    </Accordion.Root>
+  </Flex>
+</Card>
+```
+
+### Settings Accordion
+
+```tsx
+<Accordion.Root type="multiple">
+  <Accordion.Item value="appearance">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Flex gap={2} align="center">
+          <Icon name="palette" />
+          <Text weight="medium">Appearance</Text>
+        </Flex>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Flex direction="column" gap={3}>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Dark Mode</Text>
+          <Switch />
+        </Flex>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Reduce Motion</Text>
+          <Switch />
+        </Flex>
+      </Flex>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="notifications">
+    <Accordion.Header>
+      <Accordion.Trigger>
+        <Flex gap={2} align="center">
+          <Icon name="bell" />
+          <Text weight="medium">Notifications</Text>
+        </Flex>
+      </Accordion.Trigger>
+    </Accordion.Header>
+    <Accordion.Content>
+      <Flex direction="column" gap={3}>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Push Notifications</Text>
+          <Switch />
+        </Flex>
+        <Flex direction="row" justify="between" align="center">
+          <Text>Email Notifications</Text>
+          <Switch />
+        </Flex>
+      </Flex>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+## Related
+
+- [Tabs](/components/navigation/tabs) - Tabs component
+- [Card](/components/data-display/card) - Card component

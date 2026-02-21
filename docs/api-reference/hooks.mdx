@@ -1,0 +1,291 @@
+---
+title: Hooks
+description: API reference for theme hooks in Radix Themes Native.
+---
+
+# Hooks
+
+Radix Themes Native provides several hooks for accessing theme values and controlling theme behavior.
+
+## useTheme
+
+Returns the current theme object with all design tokens.
+
+### Usage
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const theme = useTheme();
+
+  return (
+    <View style={{
+      backgroundColor: theme.colors.gray[2],
+      padding: theme.space[4]
+    }}>
+      <Text style={{ color: theme.colors.gray[12] }}>
+        Themed content
+      </Text>
+    </View>
+  );
+}
+```
+
+### Returns
+
+```tsx
+interface Theme {
+  colors: {
+    gray: ColorScale;
+    blue: ColorScale;
+    // ... all color scales
+    blackAlpha: AlphaColorScale;
+    whiteAlpha: AlphaColorScale;
+  };
+  space: number[];
+  radii: Record<number, number>;
+  fontSizes: Record<number, TypographyValue>;
+  fontWeights: Record<string, string>;
+  fonts: {
+    heading: FontConfig;
+    body: FontConfig;
+    strong: FontConfig;
+    em: FontConfig;
+    code: FontConfig;
+    quote: FontConfig;
+  };
+}
+```
+
+---
+
+## useThemeMode
+
+Returns the current theme mode ('light' or 'dark').
+
+### Usage
+
+```tsx
+import { useThemeMode } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const mode = useThemeMode();
+
+  return (
+    <Text>Current mode: {mode}</Text>
+  );
+}
+```
+
+### Returns
+
+```tsx
+type ThemeMode = 'light' | 'dark';
+```
+
+---
+
+## useThemeActions
+
+Returns theme control functions and the current mode.
+
+### Usage
+
+```tsx
+import { useThemeActions } from '@radix-ui/themes-native';
+
+function ThemeToggle() {
+  const { setMode, toggleMode, mode } = useThemeActions();
+
+  return (
+    <Flex direction="column" gap={2}>
+      <Text>Current: {mode}</Text>
+      <Button onPress={toggleMode}>Toggle Theme</Button>
+      <Button onPress={() => setMode('dark')}>Dark Mode</Button>
+      <Button onPress={() => setMode('light')}>Light Mode</Button>
+    </Flex>
+  );
+}
+```
+
+### Returns
+
+```tsx
+interface ThemeActions {
+  mode: ThemeMode;
+  setMode: (mode: ThemeMode) => void;
+  toggleMode: () => void;
+}
+```
+
+---
+
+## useThemeColors
+
+Returns convenience colors for the current mode.
+
+### Usage
+
+```tsx
+import { useThemeColors } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const { gray, background, surface, panel } = useThemeColors();
+
+  return (
+    <View style={{ backgroundColor: background }}>
+      <View style={{ backgroundColor: surface }}>
+        <Text style={{ color: gray[12] }}>Content</Text>
+      </View>
+    </View>
+  );
+}
+```
+
+### Returns
+
+```tsx
+interface ThemeColors {
+  gray: ColorScale;
+  background: string;
+  surface: string;
+  panel: string;
+  text: string;
+  textMuted: string;
+}
+```
+
+---
+
+## useToast
+
+Returns the toast notification controller.
+
+### Usage
+
+```tsx
+import { useToast } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const { toast, dismiss } = useToast();
+
+  const handleSuccess = () => {
+    toast({
+      title: 'Success!',
+      description: 'Your changes have been saved.',
+      type: 'success',
+    });
+  };
+
+  return (
+    <Button onPress={handleSuccess}>Save Changes</Button>
+  );
+}
+```
+
+### Returns
+
+```tsx
+interface ToastController {
+  toast: (options: ToastOptions) => void;
+  dismiss: (id?: string) => void;
+  dismissAll: () => void;
+}
+
+interface ToastOptions {
+  title: string;
+  description?: string;
+  type?: 'success' | 'error' | 'warning' | 'info';
+  duration?: number;
+  action?: {
+    label: string;
+    onPress: () => void;
+  };
+}
+```
+
+---
+
+## Color Helper Functions
+
+### getVariantColors
+
+Get colors for a specific variant with highContrast support.
+
+```tsx
+import { getVariantColors, useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+function CustomButton({ variant = 'solid', highContrast = false }) {
+  const theme = useTheme();
+  const mode = useThemeMode();
+
+  const colors = getVariantColors(
+    theme,
+    'blue',      // color name
+    mode,
+    variant,     // 'solid' | 'soft' | 'outline' | 'ghost' | 'classic'
+    highContrast
+  );
+
+  // Returns: { backgroundColor, textColor, borderColor }
+}
+```
+
+### getHighContrastTextColor
+
+Returns the high contrast text color.
+
+```tsx
+import { getHighContrastTextColor, useTheme } from '@radix-ui/themes-native';
+
+const theme = useTheme();
+const textColor = getHighContrastTextColor(theme);
+// Returns: blackAlpha[12]
+```
+
+### getHighContrastBackground
+
+Returns the high contrast background color.
+
+```tsx
+import { getHighContrastBackground, useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+const theme = useTheme();
+const mode = useThemeMode();
+const bgColor = getHighContrastBackground(theme, 'blue', mode);
+// Returns: blue[11]
+```
+
+### getColorScale
+
+Returns the color scale for any color name.
+
+```tsx
+import { getColorScale, useTheme, useThemeMode } from '@radix-ui/themes-native';
+
+const theme = useTheme();
+const mode = useThemeMode();
+const scale = getColorScale(theme, 'blue', mode);
+// Returns: ColorScale object with keys 1-12
+```
+
+### getColorAlpha
+
+Returns the alpha color scale for any color name.
+
+```tsx
+import { getColorAlpha, useTheme } from '@radix-ui/themes-native';
+
+const theme = useTheme();
+const alpha = getColorAlpha(theme, 'blue');
+// Returns: AlphaColorScale object with keys 1-12
+```
+
+---
+
+## Related
+
+- [ThemeProvider](/theming/theme-provider)
+- [Colors](/theming/colors)
+- [Toast](/components/overlays/toast)

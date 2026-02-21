@@ -1,0 +1,142 @@
+---
+title: Grid
+description: Grid layout component for creating responsive grid layouts.
+---
+
+# Grid
+
+`Grid` is a layout component for creating grid-based layouts using flexbox under the hood.
+
+## Import
+
+```tsx
+import { Grid } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Grid, Box, Text } from '@radix-ui/themes-native';
+
+<Grid columns={3} gap={4}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+  <Box>Item 3</Box>
+</Grid>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Child components.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="columns" type="number" default="1">
+    Number of columns in the grid.
+  </Prop>
+  <Prop name="gap" type="number">
+    Gap between all cells (uses theme scale).
+  </Prop>
+  <Prop name="columnGap" type="number">
+    Gap between columns.
+  </Prop>
+  <Prop name="rowGap" type="number">
+    Gap between rows.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end' | 'stretch' | 'baseline'">
+    Alignment along cross axis.
+  </Prop>
+  <Prop name="justify" type="'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'">
+    Alignment along main axis.
+  </Prop>
+  <Prop name="columnWidth" type="string | number">
+    Width of each column.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Grid
+
+```tsx
+<Grid columns={3} gap={3}>
+  <Card>1</Card>
+  <Card>2</Card>
+  <Card>3</Card>
+  <Card>4</Card>
+  <Card>5</Card>
+  <Card>6</Card>
+</Grid>
+```
+
+### Different Gaps
+
+```tsx
+<Grid columns={2} columnGap={4} rowGap={2}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+  <Box>Item 3</Box>
+  <Box>Item 4</Box>
+</Grid>
+```
+
+### Centered Grid
+
+```tsx
+<Grid columns={2} gap={3} align="center" justify="center">
+  <Box>Centered 1</Box>
+  <Box>Centered 2</Box>
+</Grid>
+```
+
+### Image Gallery
+
+```tsx
+<Grid columns={3} gap={2}>
+  {images.map((image, index) => (
+    <AspectRatio key={index} ratio={1}>
+      <Image source={{ uri: image.uri }} />
+    </AspectRatio>
+  ))}
+</Grid>
+```
+
+### Dashboard Cards
+
+```tsx
+<Grid columns={2} gap={4}>
+  <Card>
+    <Flex direction="column" gap={2}>
+      <Text size={2} color="gray">Total Users</Text>
+      <Heading size={5}>1,234</Heading>
+    </Flex>
+  </Card>
+  <Card>
+    <Flex direction="column" gap={2}>
+      <Text size={2} color="gray">Revenue</Text>
+      <Heading size={5}>$12,345</Heading>
+    </Flex>
+  </Card>
+  <Card>
+    <Flex direction="column" gap={2}>
+      <Text size={2} color="gray">Orders</Text>
+      <Heading size={5}>567</Heading>
+    </Flex>
+  </Card>
+  <Card>
+    <Flex direction="column" gap={2}>
+      <Text size={2} color="gray">Growth</Text>
+      <Heading size={5}>+23%</Heading>
+    </Flex>
+  </Card>
+</Grid>
+```
+
+## Related
+
+- [Box](/components/layout/box) - Primitive container
+- [Flex](/components/layout/flex) - Flexbox layout component
+- [Container](/components/layout/container) - Responsive container

@@ -1,0 +1,104 @@
+---
+title: Container
+description: Responsive container component with max-width constraints.
+---
+
+# Container
+
+`Container` is a layout component that centers content with a max-width constraint.
+
+## Import
+
+```tsx
+import { Container } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Container, Text } from '@radix-ui/themes-native';
+
+<Container size={3}>
+  <Text>Centered content with max-width</Text>
+</Container>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Child components.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4" default="3">
+    Max-width size.
+  </Prop>
+  <Prop name="responsive" type="boolean" default="false">
+    Whether to apply responsive padding.
+  </Prop>
+</PropTable>
+
+## Container Sizes
+
+| Size | Max Width |
+|------|-----------|
+| 1 | 480px |
+| 2 | 640px |
+| 3 | 768px (default) |
+| 4 | 1024px |
+
+## Examples
+
+### Basic Container
+
+```tsx
+<Container>
+  <Text>Content is centered with default max-width</Text>
+</Container>
+```
+
+### Narrow Container
+
+```tsx
+<Container size={1}>
+  <Text>Narrow content area</Text>
+</Container>
+```
+
+### Wide Container
+
+```tsx
+<Container size={4}>
+  <Text>Wide content area</Text>
+</Container>
+```
+
+### Page Layout
+
+```tsx
+<Container size={3}>
+  <Flex direction="column" gap={4}>
+    <Heading size={5}>Page Title</Heading>
+    <Text>Page content goes here...</Text>
+    <Card>
+      <Text>Card content</Text>
+    </Card>
+  </Flex>
+</Container>
+```
+
+### Responsive Container
+
+```tsx
+<Container size={3} responsive>
+  <Text>Container with responsive padding</Text>
+</Container>
+```
+
+## Related
+
+- [Box](/components/layout/box) - Primitive container
+- [Flex](/components/layout/flex) - Flexbox layout component
+- [Grid](/components/layout/grid) - Grid layout component

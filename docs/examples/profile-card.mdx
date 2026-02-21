@@ -1,0 +1,315 @@
+---
+title: Profile Card Example
+description: Complete profile card example with user information.
+---
+
+# Profile Card Example
+
+A complete profile card example showcasing user information with various components.
+
+## Complete Example
+
+```tsx
+import { useState } from 'react';
+import {
+  Flex,
+  Text,
+  Heading,
+  Card,
+  Avatar,
+  Badge,
+  Button,
+  IconButton,
+  DropdownMenu,
+  DataList,
+  Separator,
+  AspectRatio,
+  Box
+} from '@radix-ui/themes-native';
+
+interface User {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  avatar: string;
+  coverImage: string;
+  bio: string;
+  location: string;
+  website: string;
+  joinedDate: string;
+  followers: number;
+  following: number;
+  posts: number;
+  verified: boolean;
+}
+
+interface ProfileCardProps {
+  user: User;
+  isOwnProfile?: boolean;
+  onFollow?: () => void;
+  onMessage?: () => void;
+  onEdit?: () => void;
+}
+
+export function ProfileCard({
+  user,
+  isOwnProfile = false,
+  onFollow,
+  onMessage,
+  onEdit
+}: ProfileCardProps) {
+  const [isFollowing, setIsFollowing] = useState(false);
+
+  const handleFollow = () => {
+    setIsFollowing(!isFollowing);
+    onFollow?.();
+  };
+
+  return (
+    <Card style={{ overflow: 'hidden' }}>
+      <Flex direction="column">
+        {/* Cover Image */}
+        <AspectRatio ratio={3}>
+          <Box
+            style={{
+              backgroundColor: 'gray.3',
+              backgroundImage: `url(${user.coverImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          />
+        </AspectRatio>
+
+        {/* Profile Header */}
+        <Flex direction="column" px={4} pb={4}>
+          {/* Avatar and Actions Row */}
+          <Flex
+            direction="row"
+            justify="between"
+            align="start"
+            style={{ marginTop: -30 }}
+          >
+            <Avatar
+              src={user.avatar}
+              fallback={user.name.charAt(0)}
+              size={7}
+              style={{ borderWidth: 4, borderColor: 'white' }}
+            />
+
+            <Flex direction="row" gap={2} mt={2}>
+              {isOwnProfile ? (
+                <Button variant="soft" onPress={onEdit}>
+                  Edit Profile
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    color={isFollowing ? 'gray' : 'blue'}
+                    variant={isFollowing ? 'soft' : 'solid'}
+                    onPress={handleFollow}
+                  >
+                    {isFollowing ? 'Following' : 'Follow'}
+                  </Button>
+                  <Button variant="soft" onPress={onMessage}>
+                    Message
+                  </Button>
+                </>
+              )}
+
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                  <IconButton variant="soft">
+                    <Text>•••</Text>
+                  </IconButton>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  <DropdownMenu.Item>Share Profile</DropdownMenu.Item>
+                  <DropdownMenu.Item>Copy Link</DropdownMenu.Item>
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item color="red">
+                    Report User
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
+            </Flex>
+          </Flex>
+
+          {/* User Info */}
+          <Flex direction="column" gap={2} mt={3}>
+            {/* Name and Verified */}
+            <Flex direction="row" gap={2} align="center">
+              <Heading size={4}>{user.name}</Heading>
+              {user.verified && (
+                <Badge color="blue" size={1}>
+                  ✓ Verified
+                </Badge>
+              )}
+            </Flex>
+
+            {/* Username */}
+            <Text color="gray" size={2}>@{user.username}</Text>
+
+            {/* Bio */}
+            <Text size={2}>{user.bio}</Text>
+
+            {/* Location and Website */}
+            <Flex direction="row" gap={3} wrap="wrap">
+              {user.location && (
+                <Flex direction="row" gap={1} align="center">
+                  <Text size={1}>📍</Text>
+                  <Text size={1} color="gray">{user.location}</Text>
+                </Flex>
+              )}
+              {user.website && (
+                <Flex direction="row" gap={1} align="center">
+                  <Text size={1}>🔗</Text>
+                  <Text size={1} color="blue">{user.website}</Text>
+                </Flex>
+              )}
+              <Flex direction="row" gap={1} align="center">
+                <Text size={1}>📅</Text>
+                <Text size={1} color="gray">Joined {user.joinedDate}</Text>
+              </Flex>
+            </Flex>
+          </Flex>
+
+          {/* Stats */}
+          <Flex direction="row" gap={4} mt={3}>
+            <Flex direction="row" gap={1}>
+              <Text weight="bold">{user.posts}</Text>
+              <Text color="gray">Posts</Text>
+            </Flex>
+            <Flex direction="row" gap={1}>
+              <Text weight="bold">{user.followers.toLocaleString()}</Text>
+              <Text color="gray">Followers</Text>
+            </Flex>
+            <Flex direction="row" gap={1}>
+              <Text weight="bold">{user.following}</Text>
+              <Text color="gray">Following</Text>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Card>
+  );
+}
+```
+
+## Extended Profile with Details
+
+```tsx
+export function ProfileCardExtended({ user }: ProfileCardProps) {
+  return (
+    <Flex direction="column" gap={4}>
+      {/* Main Profile Card */}
+      <ProfileCard user={user} />
+
+      {/* Additional Details */}
+      <Card>
+        <Flex direction="column" gap={3}>
+          <Heading size={3}>Contact Information</Heading>
+
+          <DataList>
+            <DataList.Item>
+              <DataList.Label>Email</DataList.Label>
+              <DataList.Value>{user.email}</DataList.Value>
+            </DataList.Item>
+            {user.location && (
+              <DataList.Item>
+                <DataList.Label>Location</DataList.Label>
+                <DataList.Value>{user.location}</DataList.Value>
+              </DataList.Item>
+            )}
+            {user.website && (
+              <DataList.Item>
+                <DataList.Label>Website</DataList.Label>
+                <DataList.Value>
+                  <Text color="blue">{user.website}</Text>
+                </DataList.Value>
+              </DataList.Item>
+            )}
+          </DataList>
+        </Flex>
+      </Card>
+
+      {/* Activity Summary */}
+      <Card>
+        <Flex direction="column" gap={3}>
+          <Heading size={3}>Activity</Heading>
+
+          <Flex direction="row" gap={3}>
+            <Card variant="soft" style={{ flex: 1 }}>
+              <Flex direction="column" gap={1} align="center">
+                <Heading size={5}>{user.posts}</Heading>
+                <Text size={1} color="gray">Posts</Text>
+              </Flex>
+            </Card>
+            <Card variant="soft" style={{ flex: 1 }}>
+              <Flex direction="column" gap={1} align="center">
+                <Heading size={5}>{user.followers.toLocaleString()}</Heading>
+                <Text size={1} color="gray">Followers</Text>
+              </Flex>
+            </Card>
+            <Card variant="soft" style={{ flex: 1 }}>
+              <Flex direction="column" gap={1} align="center">
+                <Heading size={5}>{user.following}</Heading>
+                <Text size={1} color="gray">Following</Text>
+              </Flex>
+            </Card>
+          </Flex>
+        </Flex>
+      </Card>
+    </Flex>
+  );
+}
+```
+
+## Usage
+
+```tsx
+const sampleUser: User = {
+  id: '1',
+  name: 'John Doe',
+  username: 'johndoe',
+  email: 'john@example.com',
+  avatar: 'https://i.pravatar.cc/300',
+  coverImage: 'https://picsum.photos/800/300',
+  bio: 'Software developer passionate about React Native and mobile development.',
+  location: 'San Francisco, CA',
+  website: 'johndoe.dev',
+  joinedDate: 'January 2023',
+  followers: 1234,
+  following: 567,
+  posts: 42,
+  verified: true,
+};
+
+function App() {
+  return (
+    <ThemeProvider>
+      <Flex flex={1} p={4}>
+        <ProfileCardExtended user={sampleUser} />
+      </Flex>
+    </ThemeProvider>
+  );
+}
+```
+
+## Features
+
+- **Cover Image**: Full-width cover image with aspect ratio
+- **Avatar**: Large avatar with border
+- **Verification Badge**: Shows verified status
+- **Follow/Message Actions**: Interactive buttons for engagement
+- **Dropdown Menu**: Additional actions (share, report)
+- **Stats Display**: Posts, followers, following counts
+- **Contact Information**: Email, location, website
+- **Activity Summary**: Visual stats cards
+
+## Related
+
+- [Avatar](/components/data-display/avatar) - Avatar component
+- [Card](/components/data-display/card) - Card component
+- [Badge](/components/data-display/badge) - Badge component
+- [DataList](/components/data-display/data-list) - DataList component

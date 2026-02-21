@@ -1,0 +1,101 @@
+---
+title: Kbd
+description: Keyboard shortcut styling component.
+---
+
+# Kbd
+
+`Kbd` is a typography component for rendering keyboard shortcuts and key combinations.
+
+## Import
+
+```tsx
+import { Kbd } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Text, Kbd } from '@radix-ui/themes-native';
+
+<Text>
+  Press <Kbd>Cmd + C</Kbd> to copy.
+</Text>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Key content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+  <Prop name="backgroundColor" type="string">
+    Background color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Single Key
+
+```tsx
+<Text>
+  Press <Kbd>Enter</Kbd> to submit.
+</Text>
+```
+
+### Key Combinations
+
+```tsx
+<Text>
+  <Kbd>Cmd + S</Kbd> to save
+</Text>
+
+<Text>
+  <Kbd>Ctrl + Shift + P</Kbd> to open command palette
+</Text>
+```
+
+### Navigation Keys
+
+```tsx
+<Flex direction="column" gap={2}>
+  <Text><Kbd>↑</Kbd> Move up</Text>
+  <Text><Kbd>↓</Kbd> Move down</Text>
+  <Text><Kbd>←</Kbd> Move left</Text>
+  <Text><Kbd>→</Kbd> Move right</Text>
+</Flex>
+```
+
+### Shortcuts List
+
+```tsx
+<Card>
+  <Flex direction="column" gap={2}>
+    <Heading size={3}>Keyboard Shortcuts</Heading>
+    <Flex justify="between">
+      <Text>Copy</Text>
+      <Kbd>Cmd + C</Kbd>
+    </Flex>
+    <Flex justify="between">
+      <Text>Paste</Text>
+      <Kbd>Cmd + V</Kbd>
+    </Flex>
+    <Flex justify="between">
+      <Text>Undo</Text>
+      <Kbd>Cmd + Z</Kbd>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Code](/components/typography/code) - Inline code styling

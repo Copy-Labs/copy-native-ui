@@ -1,0 +1,292 @@
+---
+title: Styling Guide
+description: Best practices for styling components in Radix Themes Native.
+---
+
+# Styling Guide
+
+This guide covers best practices and patterns for styling components in Radix Themes Native.
+
+## Style Props
+
+Most components accept a `style` prop for custom styling:
+
+```tsx
+<Button style={{ marginTop: 16, backgroundColor: 'blue' }}>
+  Custom Button
+</Button>
+```
+
+## Theme Tokens
+
+Use theme tokens for consistent styling:
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function MyComponent() {
+  const theme = useTheme();
+
+  return (
+    <Box style={{
+      padding: theme.spacing[4],
+      backgroundColor: theme.colors.blue3
+    }}>
+      <Text>Themed content</Text>
+    </Box>
+  );
+}
+```
+
+## Responsive Styling
+
+Adapt styles based on screen size:
+
+```tsx
+import { useWindowDimensions } from 'react-native';
+
+function ResponsiveComponent() {
+  const { width } = useWindowDimensions();
+  const isLarge = width > 768;
+
+  return (
+    <Flex
+      direction={isLarge ? 'row' : 'column'}
+      gap={isLarge ? 4 : 2}
+    >
+      <Text>Responsive layout</Text>
+    </Flex>
+  );
+}
+```
+
+## Conditional Styling
+
+Apply styles conditionally:
+
+```tsx
+function StatusBadge({ status }) {
+  const statusStyles = {
+    success: { backgroundColor: 'green', color: 'white' },
+    warning: { backgroundColor: 'yellow', color: 'black' },
+    error: { backgroundColor: 'red', color: 'white' }
+  };
+
+  return (
+    <Badge style={statusStyles[status]}>
+      {status}
+    </Badge>
+  );
+}
+```
+
+## Style Composition
+
+Combine multiple styles:
+
+```tsx
+const baseStyle = { padding: 16, borderRadius: 8 };
+const variantStyles = {
+  primary: { backgroundColor: 'blue' },
+  secondary: { backgroundColor: 'gray' }
+};
+
+function Card({ variant }) {
+  return (
+    <Box style={[baseStyle, variantStyles[variant]]}>
+      <Text>Card content</Text>
+    </Box>
+  );
+}
+```
+
+## Using StyleSheet
+
+For better performance with static styles:
+
+```tsx
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: 'white'
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  }
+});
+
+function MyComponent() {
+  return (
+    <Box style={styles.container}>
+      <Text style={styles.title}>Title</Text>
+    </Box>
+  );
+}
+```
+
+## Component Variants
+
+Create component variants:
+
+```tsx
+type ButtonVariant = 'solid' | 'soft' | 'outline' | 'ghost';
+
+interface CustomButtonProps {
+  variant?: ButtonVariant;
+  size?: 'small' | 'medium' | 'large';
+  children: ReactNode;
+}
+
+function CustomButton({
+  variant = 'solid',
+  size = 'medium',
+  children
+}: CustomButtonProps) {
+  const variantStyles: Record<ButtonVariant, object> = {
+    solid: { backgroundColor: 'blue' },
+    soft: { backgroundColor: 'lightblue' },
+    outline: { borderWidth: 1, borderColor: 'blue' },
+    ghost: { backgroundColor: 'transparent' }
+  };
+
+  const sizeStyles = {
+    small: { padding: 8, fontSize: 12 },
+    medium: { padding: 12, fontSize: 14 },
+    large: { padding: 16, fontSize: 16 }
+  };
+
+  return (
+    <Button style={[variantStyles[variant], sizeStyles[size]]}>
+      {children}
+    </Button>
+  );
+}
+```
+
+## Dark Mode Styling
+
+Adapt styles for dark mode:
+
+```tsx
+import { useTheme } from '@radix-ui/themes-native';
+
+function ThemedCard() {
+  const { appearance } = useTheme();
+  const isDark = appearance === 'dark';
+
+  return (
+    <Card style={{
+      backgroundColor: isDark ? 'gray.3' : 'white',
+      borderColor: isDark ? 'gray.6' : 'gray.4'
+    }}>
+      <Text>Themed content</Text>
+    </Card>
+  );
+}
+```
+
+## Animation
+
+Add animations to components:
+
+```tsx
+import { Animated } from 'react-native';
+
+function AnimatedCard() {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true
+    }).start();
+  }, []);
+
+  return (
+    <Animated.View style={{ opacity: fadeAnim }}>
+      <Card>
+        <Text>Fading in</Text>
+      </Card>
+    </Animated.View>
+  );
+}
+```
+
+## Best Practices
+
+### 1. Use Theme Values
+
+Always prefer theme values over hardcoded values:
+
+```tsx
+// Good
+<Box p={4} gap={2}>
+  <Text>Content</Text>
+</Box>
+
+// Avoid
+<Box style={{ padding: 16, gap: 8 }}>
+  <Text>Content</Text>
+</Box>
+```
+
+### 2. Keep Styles Close to Usage
+
+Define styles near where they're used:
+
+```tsx
+function MyComponent() {
+  // Styles defined here
+  const styles = useMemo(() => ({
+    container: { padding: 16 },
+    title: { fontSize: 18 }
+  }), []);
+
+  return (
+    <Box style={styles.container}>
+      <Text style={styles.title}>Title</Text>
+    </Box>
+  );
+}
+```
+
+### 3. Use Semantic Components
+
+Use semantic components instead of generic ones:
+
+```tsx
+// Good
+<Heading size={4}>Title</Heading>
+<Text>Content</Text>
+
+// Avoid
+<Text style={{ fontSize: 24, fontWeight: 'bold' }}>Title</Text>
+<Text>Content</Text>
+```
+
+### 4. Avoid Inline Functions for Styles
+
+Memoize style functions:
+
+```tsx
+// Good
+const getVariantStyle = useCallback((variant) => ({
+  backgroundColor: variant === 'primary' ? 'blue' : 'gray'
+}), []);
+
+// Avoid
+function Component({ variant }) {
+  return <Button style={{ backgroundColor: variant === 'primary' ? 'blue' : 'gray' }} />;
+}
+```
+
+## Related
+
+- [Theming Overview](/theming/overview) - Theming system
+- [Colors](/theming/colors) - Color system
+- [Spacing](/theming/spacing) - Spacing system

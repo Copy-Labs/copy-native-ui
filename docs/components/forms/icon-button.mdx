@@ -1,0 +1,150 @@
+---
+title: IconButton
+description: Button component optimized for icon content.
+---
+
+# IconButton
+
+`IconButton` is a button component specifically designed for rendering icons with various styles.
+
+## Import
+
+```tsx
+import { IconButton } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { IconButton } from '@radix-ui/themes-native';
+import { Icon } from './icons';
+
+<IconButton onPress={() => console.log('Pressed!')}>
+  <Icon name="plus" />
+</IconButton>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Icon content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="variant" type="'classic' | 'solid' | 'soft' | 'outline' | 'ghost'" default="'classic'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the button.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color name.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the button is disabled.
+  </Prop>
+  <Prop name="loading" type="boolean" default="false">
+    Shows loading spinner.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+  <Prop name="onPress" type="(event: GestureResponderEvent) => void">
+    Called when button is pressed.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string" required>
+    Accessibility label for screen readers.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'">
+    Border radius override.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Variants
+
+```tsx
+<IconButton variant="classic" accessibilityLabel="Add">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton variant="solid" accessibilityLabel="Add">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton variant="soft" accessibilityLabel="Add">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton variant="outline" accessibilityLabel="Add">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton variant="ghost" accessibilityLabel="Add">
+  <Icon name="plus" />
+</IconButton>
+```
+
+### Sizes
+
+```tsx
+<IconButton size={1} accessibilityLabel="Small">
+  <Icon name="plus" size={14} />
+</IconButton>
+
+<IconButton size={2} accessibilityLabel="Medium">
+  <Icon name="plus" size={16} />
+</IconButton>
+
+<IconButton size={3} accessibilityLabel="Large">
+  <Icon name="plus" size={20} />
+</IconButton>
+```
+
+### Colors
+
+```tsx
+<IconButton color="blue" accessibilityLabel="Blue">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton color="red" accessibilityLabel="Red">
+  <Icon name="plus" />
+</IconButton>
+
+<IconButton color="green" accessibilityLabel="Green">
+  <Icon name="plus" />
+</IconButton>
+```
+
+### Toolbar
+
+```tsx
+<Flex direction="row" gap={2}>
+  <IconButton variant="soft" accessibilityLabel="Bold">
+    <Icon name="bold" />
+  </IconButton>
+  <IconButton variant="soft" accessibilityLabel="Italic">
+    <Icon name="italic" />
+  </IconButton>
+  <IconButton variant="soft" accessibilityLabel="Underline">
+    <Icon name="underline" />
+  </IconButton>
+</Flex>
+```
+
+### With Loading
+
+```tsx
+<IconButton loading accessibilityLabel="Loading">
+  <Icon name="refresh" />
+</IconButton>
+```
+
+## Related
+
+- [Button](/components/forms/button) - Regular button component
+- [Badge](/components/data-display/badge) - Badge component

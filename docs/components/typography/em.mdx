@@ -1,0 +1,79 @@
+---
+title: Em
+description: Italic text component for emphasis.
+---
+
+# Em
+
+`Em` is a typography component for rendering italic text for emphasis.
+
+## Import
+
+```tsx
+import { Em } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Text, Em } from '@radix-ui/themes-native';
+
+<Text>
+  This is <Em>emphasized</Em> text.
+</Text>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Text content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Inline Emphasis
+
+```tsx
+<Text>
+  This is <Em>italic</Em> text inline.
+</Text>
+```
+
+### With Color
+
+```tsx
+<Text>
+  Note: <Em color="gray">This is optional.</Em>
+</Text>
+```
+
+### Combined with Strong
+
+```tsx
+<Text>
+  This is <Strong>bold and <Em>italic</Em></Strong> text.
+</Text>
+```
+
+### Quote Attribution
+
+```tsx
+<Text>
+  "The only way to do great work is to love what you do."
+  <Em> — Steve Jobs</Em>
+</Text>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Strong](/components/typography/strong) - Bold text
+- [Blockquote](/components/typography/blockquote) - Quote block

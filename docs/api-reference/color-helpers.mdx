@@ -1,0 +1,210 @@
+---
+title: Color Helpers
+description: Utility functions for working with colors.
+---
+
+# Color Helpers
+
+Color helpers are utility functions for working with theme colors programmatically.
+
+## Import
+
+```tsx
+import {
+  getAccentColor,
+  getGrayColor,
+  getColor,
+  getContrastColor
+} from '@radix-ui/themes-native';
+```
+
+## Functions
+
+### getAccentColor
+
+Returns the current accent color value.
+
+```tsx
+const accentColor = getAccentColor();
+// Returns: 'iris' | 'blue' | 'green' | ...
+```
+
+### getGrayColor
+
+Returns the current gray scale color value.
+
+```tsx
+const grayColor = getGrayColor();
+// Returns: 'slate' | 'gray' | 'mauve' | ...
+```
+
+### getColor
+
+Returns a specific color value from the theme.
+
+```tsx
+const color = getColor('blue', 9);
+// Returns the blue-9 color value
+
+const colorWithAlpha = getColor('blue', 9, 0.5);
+// Returns the blue-9 color with 50% opacity
+```
+
+### getContrastColor
+
+Returns a contrasting color (light or dark) for accessibility.
+
+```tsx
+const contrastColor = getContrastColor('blue', 9);
+// Returns 'light' or 'dark' based on the background color
+```
+
+## Examples
+
+### Dynamic Background Color
+
+```tsx
+import { getColor } from '@radix-ui/themes-native';
+
+function ColoredCard({ color }) {
+  const backgroundColor = getColor(color, 3);
+  const textColor = getColor(color, 11);
+
+  return (
+    <Card style={{ backgroundColor }}>
+      <Text style={{ color: textColor }}>
+        Colored content
+      </Text>
+    </Card>
+  );
+}
+```
+
+### Accessible Text Color
+
+```tsx
+import { getColor, getContrastColor } from '@radix-ui/themes-native';
+
+function AccessibleButton({ backgroundColor }) {
+  const bgColor = getColor(backgroundColor, 9);
+  const contrast = getContrastColor(backgroundColor, 9);
+  const textColor = contrast === 'dark' ? getColor('gray', 12) : getColor('gray', 1);
+
+  return (
+    <Button style={{ backgroundColor: bgColor }}>
+      <Text style={{ color: textColor }}>Click me</Text>
+    </Button>
+  );
+}
+```
+
+### Color Palette Display
+
+```tsx
+import { getColor } from '@radix-ui/themes-native';
+
+function ColorPalette({ colorName }) {
+  const shades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  return (
+    <Flex direction="column" gap={2}>
+      <Heading size={3}>{colorName}</Heading>
+      <Flex direction="row" gap={1}>
+        {shades.map(shade => (
+          <Box
+            key={shade}
+            style={{
+              width: 40,
+              height: 40,
+              backgroundColor: getColor(colorName, shade),
+              borderRadius: 4
+            }}
+          >
+            <Text size={1} align="center">{shade}</Text>
+          </Box>
+        ))}
+      </Flex>
+    </Flex>
+  );
+}
+```
+
+### Theme-Aware Charts
+
+```tsx
+import { getColor } from '@radix-ui/themes-native';
+
+function BarChart({ data }) {
+  const colors = ['blue', 'green', 'yellow', 'red'];
+
+  return (
+    <Flex direction="row" gap={2} align="end" style={{ height: 200 }}>
+      {data.map((value, index) => (
+        <Box
+          key={index}
+          style={{
+            width: 40,
+            height: value * 2,
+            backgroundColor: getColor(colors[index], 9),
+            borderRadius: 4
+          }}
+        />
+      ))}
+    </Flex>
+  );
+}
+```
+
+### Status Colors
+
+```tsx
+import { getColor } from '@radix-ui/themes-native';
+
+const statusColors = {
+  success: 'green',
+  warning: 'yellow',
+  error: 'red',
+  info: 'blue'
+};
+
+function StatusBadge({ status }) {
+  const color = statusColors[status];
+
+  return (
+    <Badge
+      style={{
+        backgroundColor: getColor(color, 3),
+        color: getColor(color, 11)
+      }}
+    >
+      {status}
+    </Badge>
+  );
+}
+```
+
+### Gradient Background
+
+```tsx
+import { getColor } from '@radix-ui/themes-native';
+
+function GradientCard({ color }) {
+  const startColor = getColor(color, 9);
+  const endColor = getColor(color, 7);
+
+  return (
+    <Card
+      style={{
+        background: `linear-gradient(135deg, ${startColor}, ${endColor})`
+      }}
+    >
+      <Text>Gradient content</Text>
+    </Card>
+  );
+}
+```
+
+## Related
+
+- [ThemeProvider](/api-reference/theme-provider) - Theme provider component
+- [Colors](/theming/colors) - Color system

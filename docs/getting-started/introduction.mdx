@@ -1,0 +1,121 @@
+---
+title: Introduction
+description: Learn about Radix Themes Native, a React Native port of the popular Radix Themes component library.
+---
+
+# Introduction
+
+**Radix Themes Native** is a React Native port of [Radix Themes](https://www.radix-ui.com/themes), bringing the beautiful design system and developer experience to mobile applications.
+
+## What is Radix Themes Native?
+
+Radix Themes Native is an open-source component library optimized for:
+
+- **Fast Development** - Pre-built components with sensible defaults
+- **Easy Maintenance** - Consistent design tokens and theming system
+- **Accessibility** - Built with ARIA support and keyboard navigation
+- **Beautiful Design** - Carefully crafted visual design out of the box
+
+## Why Choose Radix Themes Native?
+
+### Beautiful by Default
+
+Every component is designed to look great without any configuration. The design system includes:
+
+- 25+ accent colors
+- 6 gray scale variants
+- Configurable border radius
+- Responsive spacing scale
+- Typography scale with proper line heights
+
+### Developer Experience
+
+```tsx
+// Import components you need
+import { Button, Card, Text, Flex } from '@radix-ui/themes-native';
+
+// Use them in your app
+<Card>
+  <Flex direction="column" gap={3}>
+    <Text>Hello World</Text>
+    <Button>Click me</Button>
+  </Flex>
+</Card>
+```
+
+### Accessibility First
+
+All components are built with accessibility in mind:
+
+- Proper ARIA roles and attributes
+- Keyboard navigation support
+- Screen reader compatibility
+- High contrast mode for visibility
+
+### TypeScript Support
+
+Full TypeScript support with comprehensive type definitions:
+
+```tsx
+import { ButtonProps } from '@radix-ui/themes-native';
+
+const MyButton: React.FC<ButtonProps> = (props) => {
+  return <Button variant="solid" {...props} />;
+};
+```
+
+## Who is this for?
+
+### React Native Developers
+
+If you're building mobile apps with React Native or Expo, Radix Themes Native provides a complete UI toolkit to build beautiful apps quickly.
+
+### Teams
+
+The consistent design system and theming capabilities make it easy for teams to build cohesive user interfaces without design expertise.
+
+### Radix Themes Users
+
+If you're already using Radix Themes on the web, you'll feel right at home. The API is designed to be familiar while adapting to React Native conventions.
+
+## What's Included?
+
+### Layout Components
+Box, Flex, Grid, Container, Inset
+
+### Typography Components
+Text, Heading, Strong, Em, Code, Kbd, Blockquote, Link
+
+### Form Components
+Button, IconButton, TextField, TextArea, Checkbox, Radio, Switch, Select, Slider
+
+### Data Display Components
+Avatar, Badge, Callout, Card, DataList, Progress, Spinner, Table
+
+### Navigation Components
+Tabs, TabNav, SegmentedControl
+
+### Overlay Components
+Dialog, AlertDialog, Popover, Tooltip, DropdownMenu, ContextMenu, Toast
+
+### Disclosure Components
+Accordion
+
+### Utility Components
+AspectRatio, ScrollArea, VisuallyHidden, Slot
+
+## Demo
+
+📺 [Watch the demo on YouTube](https://youtube.com/shorts/sIvz3d_pAoo?feature=share)
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" href="/getting-started/installation" icon="download">
+    Learn how to install and set up Radix Themes Native in your project.
+  </Card>
+
+  <Card title="Quick Start" href="/getting-started/quick-start" icon="rocket">
+    Get up and running with a basic example in minutes.
+  </Card>
+</CardGroup>

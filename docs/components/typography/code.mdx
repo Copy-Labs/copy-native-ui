@@ -1,0 +1,102 @@
+---
+title: Code
+description: Inline code component for displaying code snippets.
+---
+
+# Code
+
+`Code` is a typography component for rendering inline code with monospace styling.
+
+## Import
+
+```tsx
+import { Code } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Text, Code } from '@radix-ui/themes-native';
+
+<Text>
+  Use the <Code>useState</Code> hook for state management.
+</Text>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Code content.
+  </Prop>
+  <Prop name="style" type="StyleProp<TextStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9">
+    Font size from theme scale.
+  </Prop>
+  <Prop name="color" type="string">
+    Text color.
+  </Prop>
+  <Prop name="backgroundColor" type="string">
+    Background color.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Inline Code
+
+```tsx
+<Text>
+  Import React with <Code>import React from 'react'</Code>.
+</Text>
+```
+
+### Variable Names
+
+```tsx
+<Text>
+  The <Code>count</Code> variable holds the current value.
+</Text>
+```
+
+### Function Names
+
+```tsx
+<Text>
+  Call the <Code>handlePress()</Code> function when pressed.
+</Text>
+```
+
+### With Custom Color
+
+```tsx
+<Text>
+  Error in <Code color="red">validateInput()</Code> function.
+</Text>
+```
+
+### Multiple Code Snippets
+
+```tsx
+<Text>
+  Use <Code>npm install</Code> to install and <Code>npm start</Code> to run.
+</Text>
+```
+
+### In Callout
+
+```tsx
+<Callout>
+  <Text>
+    Tip: Use <Code>console.log()</Code> for debugging.
+  </Text>
+</Callout>
+```
+
+## Related
+
+- [Text](/components/typography/text) - Text component
+- [Kbd](/components/typography/kbd) - Keyboard shortcut styling
+- [Callout](/components/data-display/callout) - Callout component

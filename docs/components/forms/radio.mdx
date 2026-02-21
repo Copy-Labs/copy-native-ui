@@ -1,0 +1,94 @@
+---
+title: Radio
+description: Radio button component for single selections.
+---
+
+# Radio
+
+`Radio` is a form component for capturing single selections within a group.
+
+## Import
+
+```tsx
+import { Radio } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Radio, RadioGroup } from '@radix-ui/themes-native';
+
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="option1">Option 1</Radio>
+  <Radio value="option2">Option 2</Radio>
+</RadioGroup>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Label content.
+  </Prop>
+  <Prop name="value" type="string" required>
+    Value for this radio option.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether this radio is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the radio.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Radio
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="apple">Apple</Radio>
+  <Radio value="banana">Banana</Radio>
+  <Radio value="orange">Orange</Radio>
+</RadioGroup>
+```
+
+### Sizes
+
+```tsx
+<RadioGroup defaultValue="1">
+  <Radio value="1" size={1}>Small</Radio>
+  <Radio value="2" size={2}>Medium</Radio>
+  <Radio value="3" size={3}>Large</Radio>
+</RadioGroup>
+```
+
+### With Color
+
+```tsx
+<RadioGroup color="blue" value={value} onValueChange={setValue}>
+  <Radio value="1">Option 1</Radio>
+  <Radio value="2">Option 2</Radio>
+</RadioGroup>
+```
+
+### Disabled Option
+
+```tsx
+<RadioGroup value={value} onValueChange={setValue}>
+  <Radio value="1">Available</Radio>
+  <Radio value="2" disabled>Unavailable</Radio>
+</RadioGroup>
+```
+
+## Related
+
+- [RadioGroup](/components/forms/radio-group) - Radio button group
+- [RadioCards](/components/forms/radio-cards) - Card-style radio selection
+- [Checkbox](/components/forms/checkbox) - Checkbox component

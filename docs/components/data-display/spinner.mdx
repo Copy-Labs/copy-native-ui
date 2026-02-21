@@ -1,0 +1,144 @@
+---
+title: Spinner
+description: Loading spinner component for indicating loading states.
+---
+
+# Spinner
+
+`Spinner` is a data display component for indicating loading states with an animated spinner.
+
+## Import
+
+```tsx
+import { Spinner } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Spinner } from '@radix-ui/themes-native';
+
+<Spinner />
+```
+
+## Props
+
+<PropTable>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the spinner.
+  </Prop>
+  <Prop name="color" type="string" default="'accent'">
+    Color of the spinner.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Spinner
+
+```tsx
+<Spinner />
+```
+
+### Sizes
+
+```tsx
+<Flex direction="row" gap={3} align="center">
+  <Spinner size={1} />
+  <Spinner size={2} />
+  <Spinner size={3} />
+</Flex>
+```
+
+### Colors
+
+```tsx
+<Flex direction="row" gap={3} align="center">
+  <Spinner color="blue" />
+  <Spinner color="green" />
+  <Spinner color="red" />
+  <Spinner color="yellow" />
+  <Spinner color="purple" />
+</Flex>
+```
+
+### With Loading Text
+
+```tsx
+<Flex direction="row" gap={2} align="center">
+  <Spinner size={1} />
+  <Text>Loading...</Text>
+</Flex>
+```
+
+### Full Page Loading
+
+```tsx
+<Flex
+  flex={1}
+  justify="center"
+  align="center"
+>
+  <Spinner size={3} />
+</Flex>
+```
+
+### Button Loading State
+
+```tsx
+<Button disabled>
+  <Flex direction="row" gap={2} align="center">
+    <Spinner size={1} />
+    <Text>Saving...</Text>
+  </Flex>
+</Button>
+```
+
+### Conditional Loading
+
+```tsx
+function DataLoader() {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetchData().then(result => {
+      setData(result);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return (
+      <Flex flex={1} justify="center" align="center">
+        <Spinner size={3} />
+      </Flex>
+    );
+  }
+
+  return <DataDisplay data={data} />;
+}
+```
+
+### Card Loading State
+
+```tsx
+<Card>
+  {loading ? (
+    <Flex direction="column" gap={3} align="center" py={4}>
+      <Spinner size={2} />
+      <Text size={2} color="gray">Loading content...</Text>
+    </Flex>
+  ) : (
+    <CardContent />
+  )}
+</Card>
+```
+
+## Related
+
+- [Progress](/components/data-display/progress) - Progress indicator
+- [Button](/components/forms/button) - Button component

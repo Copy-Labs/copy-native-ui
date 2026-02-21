@@ -1,0 +1,107 @@
+---
+title: Installation
+description: Learn how to install Radix Themes Native in your React Native or Expo project.
+---
+
+# Installation
+
+## Requirements
+
+Radix Themes Native requires the following peer dependencies:
+
+| Package | Version |
+|---------|---------|
+| `react` | >= 18 |
+| `react-native` | >= 0.70 |
+| `expo` | >= 48 |
+
+## Install the Package
+
+Choose your preferred package manager:
+
+```bash
+# npm
+npm install @radix-ui/themes-native
+
+# yarn
+yarn add @radix-ui/themes-native
+
+# pnpm
+pnpm add @radix-ui/themes-native
+```
+
+## Install Peer Dependencies
+
+If you're starting a new project, make sure you have React Native and Expo installed:
+
+```bash
+# Using Expo (recommended)
+npx create-expo-app my-app
+cd my-app
+npm install @radix-ui/themes-native
+
+# Using React Native CLI
+npx react-native init my-app
+cd my-app
+npm install @radix-ui/themes-native
+```
+
+## Optional Dependencies
+
+### Safe Area Context
+
+For proper safe area handling on iOS and Android devices with notches:
+
+```bash
+npm install react-native-safe-area-context
+```
+
+<Note>
+  If you're using Expo, this is likely already installed in your project.
+</Note>
+
+## Verify Installation
+
+Create a simple test to verify the installation:
+
+```tsx
+// App.tsx
+import { ThemeProvider, Button, Text, Flex } from '@radix-ui/themes-native';
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <Flex style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} gap={3}>
+        <Text>Radix Themes Native is working!</Text>
+        <Button onPress={() => alert('Hello!')}>Click me</Button>
+      </Flex>
+    </ThemeProvider>
+  );
+}
+```
+
+## TypeScript Support
+
+Radix Themes Native is written in TypeScript and includes type definitions out of the box. No additional installation is required.
+
+```tsx
+import { ButtonProps, ThemeProviderProps } from '@radix-ui/themes-native';
+
+// Types are automatically available
+const customButtonProps: ButtonProps = {
+  variant: 'solid',
+  size: 2,
+};
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quick Start" href="/getting-started/quick-start" icon="rocket">
+    Learn how to set up your first app with Radix Themes Native.
+  </Card>
+
+  <Card title="Theming" href="/theming/overview" icon="palette">
+    Customize the look and feel of your app with the theming system.
+  </Card>
+</CardGroup>

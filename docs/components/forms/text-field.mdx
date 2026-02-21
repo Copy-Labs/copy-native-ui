@@ -1,0 +1,170 @@
+---
+title: TextField
+description: Text input component for forms.
+---
+
+# TextField
+
+`TextField` is a form component for capturing single-line text input.
+
+## Import
+
+```tsx
+import { TextField } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { TextField } from '@radix-ui/themes-native';
+
+<TextField
+  placeholder="Enter your name"
+  value={name}
+  onChangeText={setName}
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="value" type="string">
+    Current input value.
+  </Prop>
+  <Prop name="onChangeText" type="(text: string) => void">
+    Called when text changes.
+  </Prop>
+  <Prop name="placeholder" type="string">
+    Placeholder text.
+  </Prop>
+  <Prop name="variant" type="'classic' | 'surface' | 'soft'" default="'surface'">
+    Visual style variant.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3" default="2">
+    Size of the input.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color for focus state.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the input is disabled.
+  </Prop>
+  <Prop name="error" type="string | boolean">
+    Error state or error message.
+  </Prop>
+  <Prop name="secureTextEntry" type="boolean" default="false">
+    Masks text for passwords.
+  </Prop>
+  <Prop name="keyboardType" type="'default' | 'email-address' | 'numeric' | 'phone-pad' | ...">
+    Keyboard type.
+  </Prop>
+  <Prop name="autoCapitalize" type="'none' | 'sentences' | 'words' | 'characters'">
+    Auto capitalization.
+  </Prop>
+  <Prop name="autoCorrect" type="boolean">
+    Auto correct enabled.
+  </Prop>
+  <Prop name="accessibilityLabel" type="string">
+    Accessibility label.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Input
+
+```tsx
+<TextField
+  placeholder="Enter text"
+  value={value}
+  onChangeText={setValue}
+/>
+```
+
+### Variants
+
+```tsx
+<TextField variant="classic" placeholder="Classic style" />
+<TextField variant="surface" placeholder="Surface style" />
+<TextField variant="soft" placeholder="Soft style" />
+```
+
+### Sizes
+
+```tsx
+<TextField size={1} placeholder="Small" />
+<TextField size={2} placeholder="Medium (default)" />
+<TextField size={3} placeholder="Large" />
+```
+
+### Email Input
+
+```tsx
+<TextField
+  placeholder="Enter your email"
+  value={email}
+  onChangeText={setEmail}
+  keyboardType="email-address"
+  autoCapitalize="none"
+  autoCorrect={false}
+/>
+```
+
+### Password Input
+
+```tsx
+<TextField
+  placeholder="Enter password"
+  value={password}
+  onChangeText={setPassword}
+  secureTextEntry
+/>
+```
+
+### With Error
+
+```tsx
+<TextField
+  placeholder="Enter email"
+  value={email}
+  onChangeText={setEmail}
+  error="Please enter a valid email"
+/>
+```
+
+### Disabled
+
+```tsx
+<TextField
+  placeholder="Disabled input"
+  disabled
+/>
+```
+
+### Form Example
+
+```tsx
+<Flex direction="column" gap={3}>
+  <TextField
+    placeholder="Email"
+    value={email}
+    onChangeText={setEmail}
+    keyboardType="email-address"
+  />
+  <TextField
+    placeholder="Password"
+    value={password}
+    onChangeText={setPassword}
+    secureTextEntry
+  />
+  <Button onPress={handleLogin}>Sign In</Button>
+</Flex>
+```
+
+## Related
+
+- [TextArea](/components/forms/text-area) - Multi-line text input
+- [Button](/components/forms/button) - Button component

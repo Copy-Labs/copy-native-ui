@@ -1,0 +1,374 @@
+---
+title: Compound Components
+description: Pattern for building flexible, composable components.
+---
+
+# Compound Components
+
+This guide covers the compound components pattern for building flexible, composable UI components.
+
+## What are Compound Components?
+
+Compound components are a pattern where components work together to form a complete UI element. They share state implicitly and provide a flexible API for composition.
+
+## Basic Example
+
+```tsx
+// Instead of a single component with many props
+<Card
+  title="Card Title"
+  description="Card description"
+  image="image.jpg"
+  footer={<Button>Action</Button>}
+/>
+
+// Use compound components
+<Card>
+  <Card.Image src="image.jpg" />
+  <Card.Header>
+    <Card.Title>Card Title</Card.Title>
+    <Card.Description>Card description</Card.Description>
+  </Card.Header>
+  <Card.Content>
+    <Text>Card content</Text>
+  </Card.Content>
+  <Card.Footer>
+    <Button>Action</Button>
+  </Card.Footer>
+</Card>
+```
+
+## Creating Compound Components
+
+### Step 1: Create Context
+
+```tsx
+import { createContext, useContext } from 'react';
+
+const CardContext = createContext<{
+  variant: 'elevated' | 'outlined';
+  size: 1 | 2 | 3;
+}>({
+  variant: 'elevated',
+  size: 2
+});
+
+const useCardContext = () => useContext(CardContext);
+```
+
+### Step 2: Create Root Component
+
+```tsx
+interface CardRootProps {
+  children: ReactNode;
+  variant?: 'elevated' | 'outlined';
+  size?: 1 | 2 | 3;
+}
+
+function CardRoot({
+  children,
+  variant = 'elevated',
+  size = 2
+}: CardRootProps) {
+  return (
+    <CardContext.Provider value={{ variant, size }}>
+      <Box style={getCardStyles(variant)}>
+        {children}
+      </Box>
+    </CardContext.Provider>
+  );
+}
+```
+
+### Step 3: Create Child Components
+
+```tsx
+function CardImage({ src }: { src: string }) {
+  const { variant } = useCardContext();
+
+  return (
+    <AspectRatio ratio={16 / 9}>
+      <Image source={{ uri: src }} />
+    </AspectRatio>
+  );
+}
+
+function CardHeader({ children }: { children: ReactNode }) {
+  return (
+    <Box p={3}>
+      {children}
+    </Box>
+  );
+}
+
+function CardTitle({ children }: { children: ReactNode }) {
+  const { size } = useCardContext();
+
+  return (
+    <Heading size={size + 1}>
+      {children}
+    </Heading>
+  );
+}
+
+function CardDescription({ children }: { children: ReactNode }) {
+  const { size } = useCardContext();
+
+  return (
+    <Text size={size} color="gray">
+      {children}
+    </Text>
+  );
+}
+
+function CardContent({ children }: { children: ReactNode }) {
+  return (
+    <Box p={3}>
+      {children}
+    </Box>
+  );
+}
+
+function CardFooter({ children }: { children: ReactNode }) {
+  return (
+    <Box p={3} style={{ borderTopWidth: 1, borderTopColor: 'gray.5' }}>
+      {children}
+    </Box>
+  );
+}
+```
+
+### Step 4: Export as Compound Component
+
+```tsx
+export const Card = Object.assign(CardRoot, {
+  Image: CardImage,
+  Header: CardHeader,
+  Title: CardTitle,
+  Description: CardDescription,
+  Content: CardContent,
+  Footer: CardFooter
+});
+```
+
+## Usage Examples
+
+### Basic Card
+
+```tsx
+<Card>
+  <Card.Header>
+    <Card.Title>Simple Card</Card.Title>
+    <Card.Description>Just a title and description</Card.Description>
+  </Card.Header>
+</Card>
+```
+
+### Full Card
+
+```tsx
+<Card variant="outlined" size={3}>
+  <Card.Image src="https://example.com/image.jpg" />
+  <Card.Header>
+    <Card.Title>Featured Article</Card.Title>
+    <Card.Description>Published yesterday</Card.Description>
+  </Card.Header>
+  <Card.Content>
+    <Text>This is the article content...</Text>
+  </Card.Content>
+  <Card.Footer>
+    <Flex gap={2}>
+      <Button variant="soft">Share</Button>
+      <Button>Read More</Button>
+    </Flex>
+  </Card.Footer>
+</Card>
+```
+
+### Product Card
+
+```tsx
+<Card>
+  <Card.Image src={product.image} />
+  <Card.Header>
+    <Flex direction="row" justify="between" align="start">
+      <Flex direction="column" gap={1}>
+        <Card.Title>{product.name}</Card.Title>
+        <Card.Description>{product.category}</Card.Description>
+      </Flex>
+      <Badge color="green">New</Badge>
+    </Flex>
+  </Card.Header>
+  <Card.Footer>
+    <Flex direction="row" justify="between" align="center">
+      <Text weight="bold" size={4}>${product.price}</Text>
+      <Button size={1}>Add to Cart</Button>
+    </Flex>
+  </Card.Footer>
+</Card>
+```
+
+## Real Examples from Radix Themes Native
+
+### Dialog
+
+```tsx
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Title>Dialog Title</Dialog.Title>
+    <Dialog.Description>Dialog description</Dialog.Description>
+    <Dialog.Close>Close</Dialog.Close>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+### Tabs
+
+```tsx
+<Tabs.Root defaultValue="tab1">
+  <Tabs.List>
+    <Tabs.Trigger value="tab1">Tab 1</Tabs.Trigger>
+    <Tabs.Trigger value="tab2">Tab 2</Tabs.Trigger>
+  </Tabs.List>
+  <Tabs.Content value="tab1">Content 1</Tabs.Content>
+  <Tabs.Content value="tab2">Content 2</Tabs.Content>
+</Tabs.Root>
+```
+
+### Select
+
+```tsx
+<Select.Root value={value} onValueChange={setValue}>
+  <Select.Trigger>
+    <Select.Value placeholder="Select..." />
+  </Select.Trigger>
+  <Select.Content>
+    <Select.Item value="1">Option 1</Select.Item>
+    <Select.Item value="2">Option 2</Select.Item>
+  </Select.Content>
+</Select.Root>
+```
+
+## Benefits
+
+### 1. Flexibility
+
+Users can compose components in any order:
+
+```tsx
+<Card>
+  <Card.Header>...</Card.Header>
+  <Card.Image src="..." />
+  <Card.Footer>...</Card.Footer>
+</Card>
+```
+
+### 2. Separation of Concerns
+
+Each component handles its own rendering:
+
+```tsx
+// CardTitle only handles title styling
+function CardTitle({ children }) {
+  return <Heading size={3}>{children}</Heading>;
+}
+
+// CardDescription only handles description styling
+function CardDescription({ children }) {
+  return <Text color="gray">{children}</Text>;
+}
+```
+
+### 3. Implicit State Sharing
+
+Child components share state through context:
+
+```tsx
+function CardTitle({ children }) {
+  const { size } = useCardContext();
+  // Size is automatically inherited from parent
+  return <Heading size={size + 1}>{children}</Heading>;
+}
+```
+
+### 4. Custom Composition
+
+Users can add custom elements:
+
+```tsx
+<Card>
+  <Card.Header>
+    <Card.Title>Title</Card.Title>
+    <Badge color="blue">Custom Badge</Badge>
+  </Card.Header>
+  <Card.Content>
+    <CustomComponent />
+  </Card.Content>
+</Card>
+```
+
+## Best Practices
+
+### 1. Use Context for Shared State
+
+```tsx
+// Good - Share state through context
+const TabsContext = createContext({ value: '', onChange: () => {} });
+
+// Avoid - Pass props through every component
+<Tabs value={value} onChange={onChange}>
+  <TabsList value={value} onChange={onChange}>
+    <TabsTrigger value={value} onChange={onChange} />
+  </TabsList>
+</Tabs>
+```
+
+### 2. Provide Sensible Defaults
+
+```tsx
+function CardRoot({ variant = 'elevated', size = 2, children }) {
+  // Default values make the component easier to use
+}
+```
+
+### 3. Keep Components Focused
+
+```tsx
+// Good - Each component has one responsibility
+Card.Title = function Title({ children }) {
+  return <Heading size={3}>{children}</Heading>;
+};
+
+// Avoid - Component doing too much
+Card.Header = function Header({ title, description, image }) {
+  return (
+    <Box>
+      <Image src={image} />
+      <Heading>{title}</Heading>
+      <Text>{description}</Text>
+    </Box>
+  );
+};
+```
+
+### 4. Use TypeScript for Type Safety
+
+```tsx
+interface CardContextValue {
+  variant: 'elevated' | 'outlined';
+  size: 1 | 2 | 3;
+}
+
+const CardContext = createContext<CardContextValue>({
+  variant: 'elevated',
+  size: 2
+});
+```
+
+## Related
+
+- [Slot](/components/utilities/slot) - Slot component
+- [Primitives](/api-reference/primitives) - Primitive components

@@ -1,0 +1,230 @@
+---
+title: Flex
+description: Flexbox layout component for building responsive layouts.
+---
+
+# Flex
+
+`Flex` is a flexbox layout component that makes it easy to build responsive layouts without writing custom styles.
+
+## Import
+
+```tsx
+import { Flex } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Flex, Text, Button } from '@radix-ui/themes-native';
+
+<Flex direction="row" gap={3}>
+  <Text>Left</Text>
+  <Text>Right</Text>
+</Flex>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Child components.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="asChild" type="boolean" default="false">
+    Merge props onto immediate child element.
+  </Prop>
+
+  {/* Flex Layout */}
+  <Prop name="direction" type="'row' | 'column' | 'row-reverse' | 'column-reverse'" default="'column'">
+    Direction of flex items.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end' | 'stretch' | 'baseline'">
+    Alignment along cross axis.
+  </Prop>
+  <Prop name="justify" type="'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'">
+    Alignment along main axis.
+  </Prop>
+  <Prop name="wrap" type="'wrap' | 'nowrap' | 'wrap-reverse'" default="'nowrap'">
+    Wrapping behavior.
+  </Prop>
+  <Prop name="gap" type="number">
+    Gap between children (uses theme scale).
+  </Prop>
+  <Prop name="columnGap" type="number">
+    Gap between columns.
+  </Prop>
+  <Prop name="rowGap" type="number">
+    Gap between rows.
+  </Prop>
+
+  {/* Flex Item */}
+  <Prop name="flex" type="number">
+    Flex grow/shrink value.
+  </Prop>
+  <Prop name="flexGrow" type="number">
+    Flex grow value.
+  </Prop>
+  <Prop name="flexShrink" type="number">
+    Flex shrink value.
+  </Prop>
+  <Prop name="flexBasis" type="number | string">
+    Flex basis value.
+  </Prop>
+  <Prop name="alignSelf" type="'auto' | 'start' | 'center' | 'end' | 'stretch' | 'baseline'">
+    Override align for this item.
+  </Prop>
+
+  {/* Dimensions */}
+  <Prop name="width" type="number | string">
+    Width.
+  </Prop>
+  <Prop name="height" type="number | string">
+    Height.
+  </Prop>
+
+  {/* Appearance */}
+  <Prop name="backgroundColor" type="string">
+    Background color.
+  </Prop>
+  <Prop name="borderRadius" type="number">
+    Border radius (uses theme scale).
+  </Prop>
+  <Prop name="opacity" type="number">
+    Opacity (0-1).
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Horizontal Layout
+
+```tsx
+<Flex direction="row" gap={3}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+  <Box>Item 3</Box>
+</Flex>
+```
+
+### Vertical Layout
+
+```tsx
+<Flex direction="column" gap={3}>
+  <Box>Item 1</Box>
+  <Box>Item 2</Box>
+  <Box>Item 3</Box>
+</Flex>
+```
+
+### Center Content
+
+```tsx
+<Flex align="center" justify="center" style={{ height: 200 }}>
+  <Text>Centered content</Text>
+</Flex>
+```
+
+### Space Between
+
+```tsx
+<Flex direction="row" justify="between">
+  <Text>Left</Text>
+  <Text>Right</Text>
+</Flex>
+```
+
+### Card with Actions
+
+```tsx
+<Card>
+  <Flex direction="column" gap={3}>
+    <Flex direction="row" justify="between" align="center">
+      <Heading size={3}>Card Title</Heading>
+      <Badge>New</Badge>
+    </Flex>
+    <Text>Card description goes here.</Text>
+    <Flex direction="row" gap={2}>
+      <Button variant="soft">Cancel</Button>
+      <Button>Confirm</Button>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+### Form Layout
+
+```tsx
+<Flex direction="column" gap={4}>
+  <Flex direction="column" gap={2}>
+    <Text weight="medium">Email</Text>
+    <TextField placeholder="Enter email" />
+  </Flex>
+
+  <Flex direction="column" gap={2}>
+    <Text weight="medium">Password</Text>
+    <TextField placeholder="Enter password" secureTextEntry />
+  </Flex>
+
+  <Flex direction="row" justify="end" gap={2}>
+    <Button variant="outline">Cancel</Button>
+    <Button>Sign In</Button>
+  </Flex>
+</Flex>
+```
+
+### Wrapping Items
+
+```tsx
+<Flex direction="row" wrap="wrap" gap={2}>
+  <Badge>Tag 1</Badge>
+  <Badge>Tag 2</Badge>
+  <Badge>Tag 3</Badge>
+  <Badge>Tag 4</Badge>
+  <Badge>Tag 5</Badge>
+</Flex>
+```
+
+### Flex Grow
+
+```tsx
+<Flex direction="row" gap={3}>
+  <Box flex={1} backgroundColor="blue.3">
+    <Text>Flexible</Text>
+  </Box>
+  <Box backgroundColor="gray.3">
+    <Text>Fixed</Text>
+  </Box>
+</Flex>
+```
+
+## Alignment Values
+
+### align (cross-axis)
+
+| Value | Description |
+|-------|-------------|
+| `start` | Align to start of cross axis |
+| `center` | Center along cross axis |
+| `end` | Align to end of cross axis |
+| `stretch` | Stretch to fill container |
+| `baseline` | Align to text baseline |
+
+### justify (main-axis)
+
+| Value | Description |
+|-------|-------------|
+| `start` | Pack to start |
+| `center` | Pack to center |
+| `end` | Pack to end |
+| `between` | Space between items |
+| `around` | Space around items |
+| `evenly` | Equal space between and around |
+
+## Related
+
+- [Box](/components/layout/box) - Primitive container
+- [Grid](/components/layout/grid) - Grid layout component
+- [Container](/components/layout/container) - Responsive container

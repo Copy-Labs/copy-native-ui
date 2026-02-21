@@ -1,0 +1,246 @@
+---
+title: Popover
+description: Floating popover component for displaying content in a layer.
+---
+
+# Popover
+
+`Popover` is an overlay component for displaying floating content anchored to a trigger element.
+
+## Import
+
+```tsx
+import { Popover } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Popover, Button, Text, Flex } from '@radix-ui/themes-native';
+
+<Popover.Root>
+  <Popover.Trigger>
+    <Button>Open Popover</Button>
+  </Popover.Trigger>
+
+  <Popover.Content>
+    <Flex direction="column" gap={2}>
+      <Text weight="medium">Popover Title</Text>
+      <Text size={2}>This is the popover content.</Text>
+    </Flex>
+  </Popover.Content>
+</Popover.Root>
+```
+
+## Components
+
+### Popover.Root
+
+The root container component that manages popover state.
+
+### Popover.Trigger
+
+Element that opens the popover.
+
+### Popover.Content
+
+The popover content container.
+
+### Popover.Close
+
+Element that closes the popover.
+
+### Popover.Anchor
+
+Optional anchor element for positioning.
+
+## Props
+
+### Popover.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Popover components.
+  </Prop>
+  <Prop name="open" type="boolean">
+    Controlled open state.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+</PropTable>
+
+### Popover.Content
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Popover content.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="side" type="'top' | 'right' | 'bottom' | 'left'" default="'bottom'">
+    Preferred side to render.
+  </Prop>
+  <Prop name="sideOffset" type="number">
+    Distance from trigger.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end'" default="'center'">
+    Alignment relative to trigger.
+  </Prop>
+  <Prop name="alignOffset" type="number">
+    Offset from alignment.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Popover
+
+```tsx
+<Popover.Root>
+  <Popover.Trigger>
+    <Button>Show Info</Button>
+  </Popover.Trigger>
+
+  <Popover.Content>
+    <Text>This is additional information.</Text>
+  </Popover.Content>
+</Popover.Root>
+```
+
+### Positioned Popover
+
+```tsx
+<Popover.Root>
+  <Popover.Trigger>
+    <Button>Top Popover</Button>
+  </Popover.Trigger>
+
+  <Popover.Content side="top" sideOffset={8}>
+    <Text>Popover on top</Text>
+  </Popover.Content>
+</Popover.Root>
+```
+
+### User Profile Popover
+
+```tsx
+<Popover.Root>
+  <Popover.Trigger>
+    <Avatar src="https://i.pravatar.cc/150" fallback="JD" />
+  </Popover.Trigger>
+
+  <Popover.Content>
+    <Flex direction="column" gap={3}>
+      <Flex direction="row" gap={3} align="center">
+        <Avatar src="https://i.pravatar.cc/150" fallback="JD" size={4} />
+        <Flex direction="column">
+          <Text weight="medium">John Doe</Text>
+          <Text size={2} color="gray">john@example.com</Text>
+        </Flex>
+      </Flex>
+
+      <Flex direction="column" gap={1}>
+        <Button variant="ghost" justify="start">Profile</Button>
+        <Button variant="ghost" justify="start">Settings</Button>
+        <Button variant="ghost" justify="start" color="red">Sign Out</Button>
+      </Flex>
+    </Flex>
+  </Popover.Content>
+</Popover.Root>
+```
+
+### Color Picker Popover
+
+```tsx
+const colors = ['red', 'blue', 'green', 'yellow', 'purple', 'orange'];
+
+<Popover.Root>
+  <Popover.Trigger>
+    <Button>Choose Color</Button>
+  </Popover.Trigger>
+
+  <Popover.Content>
+    <Flex direction="column" gap={2}>
+      <Text size={2} weight="medium">Select Color</Text>
+      <Flex wrap="wrap" gap={2}>
+        {colors.map(color => (
+          <Box
+            key={color}
+            style={{
+              width: 32,
+              height: 32,
+              backgroundColor: color,
+              borderRadius: 4
+            }}
+          />
+        ))}
+      </Flex>
+    </Flex>
+  </Popover.Content>
+</Popover.Root>
+```
+
+### Controlled Popover
+
+```tsx
+function ControlledPopover() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger>
+        <Button>Toggle</Button>
+      </Popover.Trigger>
+
+      <Popover.Content>
+        <Flex direction="column" gap={2}>
+          <Text>Popover content</Text>
+          <Button size={1} onPress={() => setOpen(false)}>
+            Close
+          </Button>
+        </Flex>
+      </Popover.Content>
+    </Popover.Root>
+  );
+}
+```
+
+### With Actions
+
+```tsx
+<Popover.Root>
+  <Popover.Trigger>
+    <IconButton>
+      <Icon name="more-vertical" />
+    </IconButton>
+  </Popover.Trigger>
+
+  <Popover.Content>
+    <Flex direction="column" gap={1}>
+      <Popover.Close>
+        <Button variant="ghost" justify="start">
+          <Icon name="pencil" /> Edit
+        </Button>
+      </Popover.Close>
+      <Popover.Close>
+        <Button variant="ghost" justify="start">
+          <Icon name="copy" /> Duplicate
+        </Button>
+      </Popover.Close>
+      <Popover.Close>
+        <Button variant="ghost" justify="start" color="red">
+          <Icon name="trash" /> Delete
+        </Button>
+      </Popover.Close>
+    </Flex>
+  </Popover.Content>
+</Popover.Root>
+```
+
+## Related
+
+- [Dialog](/components/overlays/dialog) - Dialog component
+- [Tooltip](/components/overlays/tooltip) - Tooltip component
+- [DropdownMenu](/components/overlays/dropdown-menu) - Dropdown menu component

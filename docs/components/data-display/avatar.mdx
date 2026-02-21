@@ -1,0 +1,162 @@
+---
+title: Avatar
+description: User avatar component with image and fallback support.
+---
+
+# Avatar
+
+`Avatar` is a data display component for rendering user avatars with image and fallback support.
+
+## Import
+
+```tsx
+import { Avatar } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Avatar } from '@radix-ui/themes-native';
+
+<Avatar
+  src="https://example.com/avatar.jpg"
+  alt="User avatar"
+  fallback="JD"
+/>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="src" type="string">
+    Image URL source.
+  </Prop>
+  <Prop name="alt" type="string">
+    Alt text for accessibility.
+  </Prop>
+  <Prop name="fallback" type="ReactNode">
+    Fallback content when image fails to load.
+  </Prop>
+  <Prop name="size" type="1 | 2 | 3 | 4 | 5 | 6 | 7" default="3">
+    Size of the avatar.
+  </Prop>
+  <Prop name="variant" type="'solid' | 'soft'" default="'soft'">
+    Visual style for fallback.
+  </Prop>
+  <Prop name="color" type="string">
+    Accent color for fallback.
+  </Prop>
+  <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'" default="'full'">
+    Border radius.
+  </Prop>
+  <Prop name="highContrast" type="boolean" default="false">
+    Uses high contrast colors.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Avatar
+
+```tsx
+<Avatar
+  src="https://i.pravatar.cc/150"
+  alt="User avatar"
+  fallback="JD"
+/>
+```
+
+### With Fallback
+
+```tsx
+<Avatar
+  fallback="AB"
+  alt="Avatar"
+/>
+```
+
+### Sizes
+
+```tsx
+<Flex direction="row" gap={3} align="center">
+  <Avatar size={1} fallback="1" />
+  <Avatar size={2} fallback="2" />
+  <Avatar size={3} fallback="3" />
+  <Avatar size={4} fallback="4" />
+  <Avatar size={5} fallback="5" />
+  <Avatar size={6} fallback="6" />
+  <Avatar size={7} fallback="7" />
+</Flex>
+```
+
+### Variants
+
+```tsx
+<Flex direction="row" gap={3}>
+  <Avatar variant="solid" fallback="S" />
+  <Avatar variant="soft" fallback="S" />
+</Flex>
+```
+
+### With Color
+
+```tsx
+<Flex direction="row" gap={3}>
+  <Avatar color="blue" fallback="B" />
+  <Avatar color="green" fallback="G" />
+  <Avatar color="red" fallback="R" />
+</Flex>
+```
+
+### User Card
+
+```tsx
+<Card>
+  <Flex direction="row" gap={3} align="center">
+    <Avatar
+      src="https://i.pravatar.cc/150"
+      alt="John Doe"
+      fallback="JD"
+      size={5}
+    />
+    <Flex direction="column">
+      <Text weight="medium">John Doe</Text>
+      <Text size={2} color="gray">john@example.com</Text>
+    </Flex>
+  </Flex>
+</Card>
+```
+
+### Avatar Group
+
+```tsx
+<Flex direction="row">
+  <Avatar
+    src="https://i.pravatar.cc/150?img=1"
+    fallback="A"
+    radius="full"
+  />
+  <Avatar
+    src="https://i.pravatar.cc/150?img=2"
+    fallback="B"
+    radius="full"
+    style={{ marginLeft: -8 }}
+  />
+  <Avatar
+    src="https://i.pravatar.cc/150?img=3"
+    fallback="C"
+    radius="full"
+    style={{ marginLeft: -8 }}
+  />
+  <Avatar
+    fallback="+5"
+    radius="full"
+    style={{ marginLeft: -8 }}
+  />
+</Flex>
+```
+
+## Related
+
+- [Badge](/components/data-display/badge) - Badge component
+- [Card](/components/data-display/card) - Card component

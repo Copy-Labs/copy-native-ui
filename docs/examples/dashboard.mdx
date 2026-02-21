@@ -1,0 +1,343 @@
+---
+title: Dashboard Example
+description: Complete dashboard example with stats, charts, and data tables.
+---
+
+# Dashboard Example
+
+A complete dashboard example with stats cards, data visualization, and tables.
+
+## Complete Example
+
+```tsx
+import { useState } from 'react';
+import {
+  Flex,
+  Text,
+  Heading,
+  Card,
+  Badge,
+  Button,
+  SegmentedControl,
+  Table,
+  Progress,
+  Avatar,
+  DropdownMenu,
+  IconButton,
+  ScrollArea,
+  Grid
+} from '@radix-ui/themes-native';
+
+interface StatCardProps {
+  title: string;
+  value: string | number;
+  change?: number;
+  icon?: string;
+}
+
+function StatCard({ title, value, change, icon }: StatCardProps) {
+  const isPositive = change && change > 0;
+  const isNegative = change && change < 0;
+
+  return (
+    <Card>
+      <Flex direction="column" gap={2}>
+        <Flex direction="row" justify="between" align="start">
+          <Text size={2} color="gray">{title}</Text>
+          {icon && <Text>{icon}</Text>}
+        </Flex>
+
+        <Flex direction="column" gap={1}>
+          <Heading size={5}>{value}</Heading>
+
+          {change !== undefined && (
+            <Flex direction="row" gap={1} align="center">
+              <Badge
+                size={1}
+                color={isPositive ? 'green' : isNegative ? 'red' : 'gray'}
+              >
+                {isPositive ? '↑' : isNegative ? '↓' : '→'} {Math.abs(change)}%
+              </Badge>
+              <Text size={1} color="gray">vs last month</Text>
+            </Flex>
+          )}
+        </Flex>
+      </Flex>
+    </Card>
+  );
+}
+
+interface RecentOrder {
+  id: string;
+  customer: string;
+  email: string;
+  amount: number;
+  status: 'completed' | 'pending' | 'cancelled';
+  date: string;
+}
+
+interface TopProduct {
+  id: string;
+  name: string;
+  sales: number;
+  revenue: number;
+  trend: 'up' | 'down' | 'stable';
+}
+
+export function Dashboard() {
+  const [timeRange, setTimeRange] = useState('7d');
+
+  // Sample data
+  const stats = {
+    revenue: { value: '$45,231', change: 12.5 },
+    orders: { value: 1234, change: 8.2 },
+    customers: { value: 892, change: -2.4 },
+    conversion: { value: '3.2%', change: 0.8 }
+  };
+
+  const recentOrders: RecentOrder[] = [
+    { id: '#12345', customer: 'John Doe', email: 'john@example.com', amount: 125.00, status: 'completed', date: '2 min ago' },
+    { id: '#12344', customer: 'Jane Smith', email: 'jane@example.com', amount: 89.50, status: 'pending', date: '15 min ago' },
+    { id: '#12343', customer: 'Bob Wilson', email: 'bob@example.com', amount: 250.00, status: 'completed', date: '1 hour ago' },
+    { id: '#12342', customer: 'Alice Brown', email: 'alice@example.com', amount: 45.00, status: 'cancelled', date: '2 hours ago' },
+    { id: '#12341', customer: 'Charlie Davis', email: 'charlie@example.com', amount: 175.00, status: 'completed', date: '3 hours ago' },
+  ];
+
+  const topProducts: TopProduct[] = [
+    { id: '1', name: 'Product A', sales: 234, revenue: 4680, trend: 'up' },
+    { id: '2', name: 'Product B', sales: 189, revenue: 3780, trend: 'up' },
+    { id: '3', name: 'Product C', sales: 156, revenue: 3120, trend: 'down' },
+    { id: '4', name: 'Product D', sales: 123, revenue: 2460, trend: 'stable' },
+  ];
+
+  const getStatusColor = (status: RecentOrder['status']) => {
+    switch (status) {
+      case 'completed': return 'green';
+      case 'pending': return 'yellow';
+      case 'cancelled': return 'red';
+    }
+  };
+
+  return (
+    <ScrollArea style={{ flex: 1 }}>
+      <Flex direction="column" gap={4} p={4}>
+        {/* Header */}
+        <Flex direction="row" justify="between" align="center">
+          <Flex direction="column" gap={1}>
+            <Heading size={5}>Dashboard</Heading>
+            <Text color="gray" size={2}>Welcome back! Here's what's happening.</Text>
+          </Flex>
+
+          <SegmentedControl.Root value={timeRange} onValueChange={setTimeRange}>
+            <SegmentedControl.Item value="24h">24h</SegmentedControl.Item>
+            <SegmentedControl.Item value="7d">7d</SegmentedControl.Item>
+            <SegmentedControl.Item value="30d">30d</SegmentedControl.Item>
+            <SegmentedControl.Item value="90d">90d</SegmentedControl.Item>
+          </SegmentedControl.Root>
+        </Flex>
+
+        {/* Stats Grid */}
+        <Grid columns={2} gap={3}>
+          <StatCard
+            title="Total Revenue"
+            value={stats.revenue.value}
+            change={stats.revenue.change}
+            icon="💰"
+          />
+          <StatCard
+            title="Orders"
+            value={stats.orders.value}
+            change={stats.orders.change}
+            icon="📦"
+          />
+          <StatCard
+            title="Customers"
+            value={stats.customers.value}
+            change={stats.customers.change}
+            icon="👥"
+          />
+          <StatCard
+            title="Conversion Rate"
+            value={stats.conversion.value}
+            change={stats.conversion.change}
+            icon="📈"
+          />
+        </Grid>
+
+        {/* Charts Row */}
+        <Card>
+          <Flex direction="column" gap={3}>
+            <Flex direction="row" justify="between" align="center">
+              <Heading size={3}>Revenue Overview</Heading>
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger>
+                  <IconButton variant="ghost" size={1}>
+                    <Text>•••</Text>
+                  </IconButton>
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content>
+                  <DropdownMenu.Item>Download Report</DropdownMenu.Item>
+                  <DropdownMenu.Item>View Details</DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Trigger>
+            </DropdownMenu.Root>
+
+            {/* Placeholder for chart */}
+            <Flex
+              direction="row"
+              gap={1}
+              align="end"
+              style={{ height: 150 }}
+            >
+              {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map((height, i) => (
+                <Flex
+                  key={i}
+                  style={{
+                    flex: 1,
+                    height: `${height}%`,
+                    backgroundColor: 'blue',
+                    borderRadius: 4,
+                    opacity: 0.8
+                  }}
+                />
+              ))}
+            </Flex>
+          </Flex>
+        </Card>
+
+        {/* Two Column Layout */}
+        <Flex direction="row" gap={3}>
+          {/* Recent Orders */}
+          <Card style={{ flex: 2 }}>
+            <Flex direction="column" gap={3}>
+              <Flex direction="row" justify="between" align="center">
+                <Heading size={3}>Recent Orders</Heading>
+                <Button variant="soft" size={1}>View All</Button>
+              </Flex>
+
+              <Table.Root>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.ColumnHeaderCell>Order</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Customer</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Amount</Table.ColumnHeaderCell>
+                    <Table.ColumnHeaderCell>Status</Table.ColumnHeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  {recentOrders.map(order => (
+                    <Table.Row key={order.id}>
+                      <Table.Cell>
+                        <Text size={2} weight="medium">{order.id}</Text>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Flex direction="column" gap={1}>
+                          <Text size={2}>{order.customer}</Text>
+                          <Text size={1} color="gray">{order.email}</Text>
+                        </Flex>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Text size={2}>${order.amount.toFixed(2)}</Text>
+                      </Table.Cell>
+                      <Table.Cell>
+                        <Badge color={getStatusColor(order.status)} size={1}>
+                          {order.status}
+                        </Badge>
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Root>
+            </Flex>
+          </Card>
+
+          {/* Top Products */}
+          <Card style={{ flex: 1 }}>
+            <Flex direction="column" gap={3}>
+              <Heading size={3}>Top Products</Heading>
+
+              <Flex direction="column" gap={2}>
+                {topProducts.map((product, index) => (
+                  <Flex
+                    key={product.id}
+                    direction="row"
+                    gap={3}
+                    align="center"
+                    p={2}
+                    style={{
+                      backgroundColor: index === 0 ? 'blue.2' : 'transparent',
+                      borderRadius: 4
+                    }}
+                  >
+                    <Text size={2} color="gray">{index + 1}</Text>
+                    <Flex direction="column" style={{ flex: 1 }}>
+                      <Text size={2} weight="medium">{product.name}</Text>
+                      <Text size={1} color="gray">{product.sales} sales</Text>
+                    </Flex>
+                    <Flex direction="column" align="end">
+                      <Text size={2} weight="medium">${product.revenue}</Text>
+                      <Text size={1} color={product.trend === 'up' ? 'green' : product.trend === 'down' ? 'red' : 'gray'}>
+                        {product.trend === 'up' ? '↑' : product.trend === 'down' ? '↓' : '→'}
+                      </Text>
+                    </Flex>
+                  </Flex>
+                ))}
+              </Flex>
+            </Flex>
+          </Card>
+        </Flex>
+
+        {/* Progress Section */}
+        <Card>
+          <Flex direction="column" gap={3}>
+            <Heading size={3}>Monthly Goals</Heading>
+
+            <Flex direction="column" gap={3}>
+              <Flex direction="column" gap={1}>
+                <Flex direction="row" justify="between">
+                  <Text size={2}>Revenue Goal</Text>
+                  <Text size={2} weight="medium">$45,231 / $50,000</Text>
+                </Flex>
+                <Progress value={90} color="blue" />
+              </Flex>
+
+              <Flex direction="column" gap={1}>
+                <Flex direction="row" justify="between">
+                  <Text size={2}>New Customers</Text>
+                  <Text size={2} weight="medium">892 / 1,000</Text>
+                </Flex>
+                <Progress value={89} color="green" />
+              </Flex>
+
+              <Flex direction="column" gap={1}>
+                <Flex direction="row" justify="between">
+                  <Text size={2}>Order Target</Text>
+                  <Text size={2} weight="medium">1,234 / 1,500</Text>
+                </Flex>
+                <Progress value={82} color="yellow" />
+              </Flex>
+            </Flex>
+          </Flex>
+        </Card>
+      </Flex>
+    </ScrollArea>
+  );
+}
+```
+
+## Features
+
+- **Stats Cards**: Key metrics with change indicators
+- **Time Range Selector**: Segmented control for filtering
+- **Revenue Chart**: Visual bar chart representation
+- **Recent Orders Table**: Sortable table with status badges
+- **Top Products List**: Ranked product list with trends
+- **Progress Goals**: Visual progress indicators
+
+## Related
+
+- [Card](/components/data-display/card) - Card component
+- [Table](/components/data-display/table) - Table component
+- [Progress](/components/data-display/progress) - Progress component
+- [Badge](/components/data-display/badge) - Badge component
+- [SegmentedControl](/components/navigation/segmented-control) - Segmented control component

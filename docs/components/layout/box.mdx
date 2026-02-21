@@ -1,0 +1,241 @@
+---
+title: Box
+description: Primitive container component with comprehensive styling props.
+---
+
+# Box
+
+`Box` is a primitive container component that provides access to all styling props. It's the building block for creating custom components and layouts.
+
+## Import
+
+```tsx
+import { Box } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { Box, Text } from '@radix-ui/themes-native';
+
+<Box padding={4} backgroundColor="gray.2">
+  <Text>Content inside a box</Text>
+</Box>
+```
+
+## Props
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Child components.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="asChild" type="boolean" default="false">
+    Merge props onto immediate child element.
+  </Prop>
+
+  {/* Layout */}
+  <Prop name="display" type="'flex' | 'none'">
+    Display mode.
+  </Prop>
+  <Prop name="flexDirection" type="'row' | 'column' | 'row-reverse' | 'column-reverse'">
+    Direction of flex items.
+  </Prop>
+  <Prop name="justifyContent" type="'flex-start' | 'center' | 'flex-end' | 'space-between' | 'space-around' | 'space-evenly'">
+    Alignment along main axis.
+  </Prop>
+  <Prop name="alignItems" type="'flex-start' | 'center' | 'flex-end' | 'stretch' | 'baseline'">
+    Alignment along cross axis.
+  </Prop>
+  <Prop name="flexWrap" type="'wrap' | 'nowrap' | 'wrap-reverse'">
+    Wrapping behavior.
+  </Prop>
+  <Prop name="flex" type="number">
+    Flex grow/shrink value.
+  </Prop>
+  <Prop name="gap" type="number">
+    Gap between children (uses theme scale).
+  </Prop>
+
+  {/* Spacing */}
+  <Prop name="padding" type="number">
+    Padding on all sides (uses theme scale).
+  </Prop>
+  <Prop name="paddingTop" type="number">
+    Top padding.
+  </Prop>
+  <Prop name="paddingBottom" type="number">
+    Bottom padding.
+  </Prop>
+  <Prop name="paddingLeft" type="number">
+    Left padding.
+  </Prop>
+  <Prop name="paddingRight" type="number">
+    Right padding.
+  </Prop>
+  <Prop name="paddingHorizontal" type="number">
+    Horizontal padding.
+  </Prop>
+  <Prop name="paddingVertical" type="number">
+    Vertical padding.
+  </Prop>
+  <Prop name="margin" type="number">
+    Margin on all sides (uses theme scale).
+  </Prop>
+  <Prop name="marginTop" type="number">
+    Top margin.
+  </Prop>
+  <Prop name="marginBottom" type="number">
+    Bottom margin.
+  </Prop>
+  <Prop name="marginLeft" type="number">
+    Left margin.
+  </Prop>
+  <Prop name="marginRight" type="number">
+    Right margin.
+  </Prop>
+  <Prop name="marginHorizontal" type="number">
+    Horizontal margin.
+  </Prop>
+  <Prop name="marginVertical" type="number">
+    Vertical margin.
+  </Prop>
+
+  {/* Appearance */}
+  <Prop name="backgroundColor" type="string">
+    Background color (e.g., 'gray.2', '#ffffff').
+  </Prop>
+  <Prop name="borderRadius" type="number">
+    Border radius (uses theme scale).
+  </Prop>
+  <Prop name="borderWidth" type="number">
+    Border width.
+  </Prop>
+  <Prop name="borderColor" type="string">
+    Border color.
+  </Prop>
+  <Prop name="opacity" type="number">
+    Opacity (0-1).
+  </Prop>
+  <Prop name="elevation" type="number">
+    Shadow elevation (Android).
+  </Prop>
+
+  {/* Dimensions */}
+  <Prop name="width" type="number | string">
+    Width.
+  </Prop>
+  <Prop name="height" type="number | string">
+    Height.
+  </Prop>
+  <Prop name="minWidth" type="number | string">
+    Minimum width.
+  </Prop>
+  <Prop name="maxWidth" type="number | string">
+    Maximum width.
+  </Prop>
+  <Prop name="minHeight" type="number | string">
+    Minimum height.
+  </Prop>
+  <Prop name="maxHeight" type="number | string">
+    Maximum height.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Container
+
+```tsx
+<Box padding={4} backgroundColor="gray.2">
+  <Text>Simple container</Text>
+</Box>
+```
+
+### Card-like Box
+
+```tsx
+<Box
+  padding={4}
+  backgroundColor="gray.2"
+  borderRadius={3}
+>
+  <Text>Card content</Text>
+</Box>
+```
+
+### Flex Container
+
+```tsx
+<Box display="flex" flexDirection="row" gap={3}>
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+  <Text>Item 3</Text>
+</Box>
+```
+
+### With Border
+
+```tsx
+<Box
+  padding={4}
+  borderWidth={1}
+  borderColor="gray.6"
+  borderRadius={2}
+>
+  <Text>Bordered box</Text>
+</Box>
+```
+
+### Responsive Dimensions
+
+```tsx
+<Box width="100%" height={200} backgroundColor="blue.3">
+  <Text>Full width, fixed height</Text>
+</Box>
+```
+
+### With Shadow
+
+```tsx
+<Box
+  padding={4}
+  backgroundColor="gray.1"
+  borderRadius={3}
+  elevation={2}
+>
+  <Text>Box with shadow</Text>
+</Box>
+```
+
+## Shorthand Props
+
+Box supports shorthand props for common styles:
+
+```tsx
+// Padding
+<Box p={4} />          // padding
+<Box px={4} />         // paddingHorizontal
+<Box py={4} />         // paddingVertical
+<Box pt={4} />         // paddingTop
+<Box pb={4} />         // paddingBottom
+<Box pl={4} />         // paddingLeft
+<Box pr={4} />         // paddingRight
+
+// Margin
+<Box m={4} />          // margin
+<Box mx={4} />         // marginHorizontal
+<Box my={4} />         // marginVertical
+<Box mt={4} />         // marginTop
+<Box mb={4} />         // marginBottom
+<Box ml={4} />         // marginLeft
+<Box mr={4} />         // marginRight
+```
+
+## Related
+
+- [Flex](/components/layout/flex) - Flexbox layout component
+- [Container](/components/layout/container) - Responsive container
+- [Card](/components/data-display/card) - Styled card component

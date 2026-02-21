@@ -1,0 +1,295 @@
+---
+title: DropdownMenu
+description: Dropdown menu component for displaying a list of actions.
+---
+
+# DropdownMenu
+
+`DropdownMenu` is an overlay component for displaying a list of actions or options in a dropdown menu.
+
+## Import
+
+```tsx
+import { DropdownMenu } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { DropdownMenu, IconButton, Text } from '@radix-ui/themes-native';
+
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <IconButton>
+      <Icon name="more-vertical" />
+    </IconButton>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Item>
+      <Text>Edit</Text>
+    </DropdownMenu.Item>
+    <DropdownMenu.Item>
+      <Text>Duplicate</Text>
+    </DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item color="red">
+      <Text>Delete</Text>
+    </DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+## Components
+
+### DropdownMenu.Root
+
+The root container component that manages menu state.
+
+### DropdownMenu.Trigger
+
+Element that opens the menu.
+
+### DropdownMenu.Content
+
+The menu content container.
+
+### DropdownMenu.Item
+
+Individual menu item.
+
+### DropdownMenu.Separator
+
+Visual separator between items.
+
+### DropdownMenu.Label
+
+Label for a group of items.
+
+### DropdownMenu.Group
+
+Group of related items.
+
+### DropdownMenu.CheckboxItem
+
+Checkable menu item.
+
+### DropdownMenu.RadioGroup
+
+Group of mutually exclusive items.
+
+### DropdownMenu.RadioItem
+
+Radio-style menu item.
+
+### DropdownMenu.Sub
+
+Nested submenu.
+
+### DropdownMenu.SubTrigger
+
+Trigger for a submenu.
+
+### DropdownMenu.SubContent
+
+Content for a submenu.
+
+## Props
+
+### DropdownMenu.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Menu components.
+  </Prop>
+  <Prop name="open" type="boolean">
+    Controlled open state.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+</PropTable>
+
+### DropdownMenu.Content
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Menu items.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+  <Prop name="side" type="'top' | 'right' | 'bottom' | 'left'" default="'bottom'">
+    Preferred side to render.
+  </Prop>
+  <Prop name="sideOffset" type="number">
+    Distance from trigger.
+  </Prop>
+  <Prop name="align" type="'start' | 'center' | 'end'" default="'start'">
+    Alignment relative to trigger.
+  </Prop>
+</PropTable>
+
+### DropdownMenu.Item
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Item content.
+  </Prop>
+  <Prop name="onSelect" type="() => void">
+    Callback when item is selected.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the item is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Item color (e.g., "red" for destructive actions).
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Menu
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <Button>Options</Button>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Item>Edit</DropdownMenu.Item>
+    <DropdownMenu.Item>Duplicate</DropdownMenu.Item>
+    <DropdownMenu.Item>Share</DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+### With Separator
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <IconButton>
+      <Icon name="more-vertical" />
+    </IconButton>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Item>Edit</DropdownMenu.Item>
+    <DropdownMenu.Item>Duplicate</DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item color="red">Delete</DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+### With Labels
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <Button>Actions</Button>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Label>Edit</DropdownMenu.Label>
+    <DropdownMenu.Item>Cut</DropdownMenu.Item>
+    <DropdownMenu.Item>Copy</DropdownMenu.Item>
+    <DropdownMenu.Item>Paste</DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Label>Share</DropdownMenu.Label>
+    <DropdownMenu.Item>Email</DropdownMenu.Item>
+    <DropdownMenu.Item>Message</DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+### With Icons
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <IconButton>
+      <Icon name="more-horizontal" />
+    </IconButton>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="pencil" />
+        <Text>Edit</Text>
+      </Flex>
+    </DropdownMenu.Item>
+    <DropdownMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="copy" />
+        <Text>Duplicate</Text>
+      </Flex>
+    </DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item color="red">
+      <Flex gap={2} align="center">
+        <Icon name="trash" />
+        <Text>Delete</Text>
+      </Flex>
+    </DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+### With Checkbox Items
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <Button>View Options</Button>
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.CheckboxItem checked>
+      <Text>Show Sidebar</Text>
+    </DropdownMenu.CheckboxItem>
+    <DropdownMenu.CheckboxItem checked={false}>
+      <Text>Show Toolbar</Text>
+    </DropdownMenu.CheckboxItem>
+    <DropdownMenu.CheckboxItem checked>
+      <Text>Show Status Bar</Text>
+    </DropdownMenu.CheckboxItem>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+### User Menu
+
+```tsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <Avatar src="https://i.pravatar.cc/150" fallback="JD" />
+  </DropdownMenu.Trigger>
+
+  <DropdownMenu.Content>
+    <DropdownMenu.Label>
+      <Flex direction="column">
+        <Text weight="medium">John Doe</Text>
+        <Text size={1} color="gray">john@example.com</Text>
+      </Flex>
+    </DropdownMenu.Label>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item>Profile</DropdownMenu.Item>
+    <DropdownMenu.Item>Settings</DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Item color="red">Sign Out</DropdownMenu.Item>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+## Related
+
+- [ContextMenu](/components/overlays/context-menu) - Context menu component
+- [Popover](/components/overlays/popover) - Popover component
+- [Select](/components/forms/select) - Select component

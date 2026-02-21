@@ -1,0 +1,331 @@
+---
+title: Accessibility Guide
+description: Best practices for building accessible applications.
+---
+
+# Accessibility Guide
+
+This guide covers accessibility best practices for building inclusive applications with Radix Themes Native.
+
+## Core Principles
+
+### 1. Semantic Components
+
+Use semantic components that convey meaning:
+
+```tsx
+// Good - Semantic heading
+<Heading size={4}>Page Title</Heading>
+
+// Avoid - Just styled text
+<Text style={{ fontSize: 24, fontWeight: 'bold' }}>Page Title</Text>
+```
+
+### 2. Accessible Labels
+
+Provide accessible labels for interactive elements:
+
+```tsx
+// Icon buttons need labels
+<IconButton>
+  <Icon name="search" />
+  <VisuallyHidden>Search</VisuallyHidden>
+</IconButton>
+
+// Or use AccessibleIcon
+<AccessibleIcon label="Search">
+  <Icon name="search" />
+</AccessibleIcon>
+```
+
+### 3. Focus Management
+
+Ensure proper focus management:
+
+```tsx
+import { FocusScope } from '@radix-ui/themes-native';
+
+<Dialog.Root>
+  <Dialog.Content>
+    <FocusScope trapped>
+      <Dialog.Title>Modal</Dialog.Title>
+      <Button>Close</Button>
+    </FocusScope>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## Screen Reader Support
+
+### Accessible Names
+
+Ensure all interactive elements have accessible names:
+
+```tsx
+// Buttons with text
+<Button>Submit Form</Button>
+
+// Icon buttons with labels
+<IconButton accessibilityLabel="Add to favorites">
+  <Icon name="heart" />
+</IconButton>
+
+// Links with descriptive text
+<Link href="/help">
+  <Text>Learn more about our pricing plans</Text>
+</Link>
+```
+
+### Announcements
+
+Announce dynamic content changes:
+
+```tsx
+import { announceForAccessibility } from '@radix-ui/themes-native';
+
+function SaveButton() {
+  const handleSave = async () => {
+    await saveData();
+    announceForAccessibility('Changes saved successfully');
+  };
+
+  return <Button onPress={handleSave}>Save</Button>;
+}
+```
+
+### Live Regions
+
+Use live regions for dynamic updates:
+
+```tsx
+function StatusIndicator({ status }) {
+  return (
+    <Box accessibilityLiveRegion="polite">
+      {status === 'loading' && <Text>Loading...</Text>}
+      {status === 'success' && <Text>Operation completed</Text>}
+      {status === 'error' && <Text>Operation failed</Text>}
+    </Box>
+  );
+}
+```
+
+## Touch Targets
+
+Ensure touch targets are large enough:
+
+```tsx
+// Minimum 44x44 points
+<IconButton
+  style={{ minWidth: 44, minHeight: 44 }}
+>
+  <Icon name="menu" />
+</IconButton>
+
+// Add padding to small icons
+<IconButton style={{ padding: 12 }}>
+  <Icon name="close" size={16} />
+</IconButton>
+```
+
+## Color Contrast
+
+Ensure sufficient color contrast:
+
+```tsx
+import { getContrastColor, getColor } from '@radix-ui/themes-native';
+
+function AccessibleButton({ color }) {
+  const bgColor = getColor(color, 9);
+  const contrast = getContrastColor(color, 9);
+  const textColor = contrast === 'dark'
+    ? getColor('gray', 12)
+    : getColor('gray', 1);
+
+  return (
+    <Button style={{ backgroundColor: bgColor }}>
+      <Text style={{ color: textColor }}>Click me</Text>
+    </Button>
+  );
+}
+```
+
+## Form Accessibility
+
+### Labels
+
+Associate labels with form controls:
+
+```tsx
+<Flex direction="column" gap={1}>
+  <Text as="label" htmlFor="email">Email</Text>
+  <TextField id="email" placeholder="Enter your email" />
+</Flex>
+```
+
+### Error Messages
+
+Provide clear error messages:
+
+```tsx
+function FormField({ label, error, ...props }) {
+  return (
+    <Flex direction="column" gap={1}>
+      <Text as="label">{label}</Text>
+      <TextField
+        {...props}
+        aria-invalid={!!error}
+        aria-describedby={error ? `${props.id}-error` : undefined}
+      />
+      {error && (
+        <Text
+          id={`${props.id}-error`}
+          color="red"
+          accessibilityRole="alert"
+        >
+          {error}
+        </Text>
+      )}
+    </Flex>
+  );
+}
+```
+
+### Required Fields
+
+Mark required fields clearly:
+
+```tsx
+<Flex direction="row" gap={1}>
+  <Text as="label">Email</Text>
+  <Text color="red" aria-hidden>*</Text>
+  <VisuallyHidden>(required)</VisuallyHidden>
+</Flex>
+```
+
+## Keyboard Navigation
+
+### Focus Order
+
+Ensure logical focus order:
+
+```tsx
+<Form>
+  <TextField placeholder="Name" />
+  <TextField placeholder="Email" />
+  <Button>Submit</Button>
+</Form>
+```
+
+### Skip Links
+
+Provide skip navigation:
+
+```tsx
+<Box>
+  <VisuallyHidden>
+    <Button onPress={() => mainContentRef.current?.focus()}>
+      Skip to main content
+    </Button>
+  </VisuallyHidden>
+
+  <Navigation />
+
+  <Box ref={mainContentRef} accessibilityRole="main">
+    <MainContent />
+  </Box>
+</Box>
+```
+
+### Keyboard Shortcuts
+
+Document keyboard shortcuts:
+
+```tsx
+<Tooltip content="Press ⌘S to save">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+## Images and Media
+
+### Alternative Text
+
+Provide alt text for images:
+
+```tsx
+// Decorative images
+<Image
+  source={{ uri: 'decorative.jpg' }}
+  accessibilityRole="none"
+  accessibilityLabel=""
+/>
+
+// Informative images
+<Image
+  source={{ uri: 'chart.jpg' }}
+  accessibilityRole="image"
+  accessibilityLabel="Sales increased 25% in Q4"
+/>
+```
+
+### Video Content
+
+Provide captions and transcripts:
+
+```tsx
+<Video
+  source={{ uri: 'video.mp4' }}
+  accessibilityRole="video"
+  accessibilityLabel="Product demo video"
+>
+  <Track src="captions.vtt" kind="captions" />
+</Video>
+```
+
+## Testing
+
+### Screen Reader Testing
+
+Test with actual screen readers:
+- **iOS**: VoiceOver
+- **Android**: TalkBack
+
+### Accessibility Scanner
+
+Use accessibility scanning tools:
+- iOS Accessibility Inspector
+- Android Accessibility Scanner
+
+### Automated Testing
+
+Use automated accessibility tests:
+
+```tsx
+import { checkAccessibility } from '@testing-library/react-native';
+
+test('button is accessible', () => {
+  const { getByRole } = render(<Button>Click me</Button>);
+  const button = getByRole('button');
+
+  expect(button).toBeAccessible();
+});
+```
+
+## Best Practices Checklist
+
+- [ ] All interactive elements have accessible names
+- [ ] Touch targets are at least 44x44 points
+- [ ] Color contrast meets WCAG 2.1 AA standards
+- [ ] Focus is visible and logical
+- [ ] Forms have associated labels
+- [ ] Error messages are announced
+- [ ] Images have appropriate alt text
+- [ ] Dynamic changes are announced
+- [ ] Keyboard navigation works
+- [ ] Screen reader tested
+
+## Related
+
+- [VisuallyHidden](/components/utilities/visually-hidden) - VisuallyHidden component
+- [FocusScope](/api-reference/primitives#focusscope) - Focus management
+- [Styling Guide](/guides/styling) - Styling best practices

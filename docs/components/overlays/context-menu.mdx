@@ -1,0 +1,301 @@
+---
+title: ContextMenu
+description: Context menu component for right-click actions.
+---
+
+# ContextMenu
+
+`ContextMenu` is an overlay component for displaying a menu of actions triggered by right-click or long-press.
+
+## Import
+
+```tsx
+import { ContextMenu } from '@radix-ui/themes-native';
+```
+
+## Usage
+
+```tsx
+import { ContextMenu, Text } from '@radix-ui/themes-native';
+
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <Flex p={4} style={{ backgroundColor: 'gray.3' }}>
+      <Text>Right-click or long-press here</Text>
+    </Flex>
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Content>
+    <ContextMenu.Item>Copy</ContextMenu.Item>
+    <ContextMenu.Item>Cut</ContextMenu.Item>
+    <ContextMenu.Item>Paste</ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item color="red">Delete</ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+## Components
+
+### ContextMenu.Root
+
+The root container component that manages menu state.
+
+### ContextMenu.Trigger
+
+Element that triggers the context menu.
+
+### ContextMenu.Content
+
+The menu content container.
+
+### ContextMenu.Item
+
+Individual menu item.
+
+### ContextMenu.Separator
+
+Visual separator between items.
+
+### ContextMenu.Label
+
+Label for a group of items.
+
+### ContextMenu.Group
+
+Group of related items.
+
+### ContextMenu.CheckboxItem
+
+Checkable menu item.
+
+### ContextMenu.RadioGroup
+
+Group of mutually exclusive items.
+
+### ContextMenu.RadioItem
+
+Radio-style menu item.
+
+### ContextMenu.Sub
+
+Nested submenu.
+
+### ContextMenu.SubTrigger
+
+Trigger for a submenu.
+
+### ContextMenu.SubContent
+
+Content for a submenu.
+
+## Props
+
+### ContextMenu.Root
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Menu components.
+  </Prop>
+  <Prop name="onOpenChange" type="(open: boolean) => void">
+    Callback when open state changes.
+  </Prop>
+</PropTable>
+
+### ContextMenu.Content
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Menu items.
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+### ContextMenu.Item
+
+<PropTable>
+  <Prop name="children" type="ReactNode">
+    Item content.
+  </Prop>
+  <Prop name="onSelect" type="() => void">
+    Callback when item is selected.
+  </Prop>
+  <Prop name="disabled" type="boolean" default="false">
+    Whether the item is disabled.
+  </Prop>
+  <Prop name="color" type="string">
+    Item color (e.g., "red" for destructive actions).
+  </Prop>
+  <Prop name="style" type="StyleProp<ViewStyle>">
+    Custom styles.
+  </Prop>
+</PropTable>
+
+## Examples
+
+### Basic Context Menu
+
+```tsx
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <Card>
+      <Text>Right-click me</Text>
+    </Card>
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Content>
+    <ContextMenu.Item>Edit</ContextMenu.Item>
+    <ContextMenu.Item>Duplicate</ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item color="red">Delete</ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+### File Context Menu
+
+```tsx
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <Flex direction="row" gap={2} align="center" p={2}>
+      <Icon name="file" />
+      <Text>document.pdf</Text>
+    </Flex>
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Content>
+    <ContextMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="eye" />
+        <Text>Preview</Text>
+      </Flex>
+    </ContextMenu.Item>
+    <ContextMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="download" />
+        <Text>Download</Text>
+      </Flex>
+    </ContextMenu.Item>
+    <ContextMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="share" />
+        <Text>Share</Text>
+      </Flex>
+    </ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="pencil" />
+        <Text>Rename</Text>
+      </Flex>
+    </ContextMenu.Item>
+    <ContextMenu.Item>
+      <Flex gap={2} align="center">
+        <Icon name="folder" />
+        <Text>Move to...</Text>
+      </Flex>
+    </ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item color="red">
+      <Flex gap={2} align="center">
+        <Icon name="trash" />
+        <Text>Delete</Text>
+      </Flex>
+    </ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+### Text Editing Context Menu
+
+```tsx
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <TextField value="Selected text" />
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Content>
+    <ContextMenu.Item>Cut</ContextMenu.Item>
+    <ContextMenu.Item>Copy</ContextMenu.Item>
+    <ContextMenu.Item>Paste</ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Item>Select All</ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+### With Submenu
+
+```tsx
+<ContextMenu.Root>
+  <ContextMenu.Trigger>
+    <Card>
+      <Text>Right-click for options</Text>
+    </Card>
+  </ContextMenu.Trigger>
+
+  <ContextMenu.Content>
+    <ContextMenu.Item>Edit</ContextMenu.Item>
+    <ContextMenu.Separator />
+    <ContextMenu.Sub>
+      <ContextMenu.SubTrigger>
+        <Text>Share</Text>
+      </ContextMenu.SubTrigger>
+      <ContextMenu.SubContent>
+        <ContextMenu.Item>Email</ContextMenu.Item>
+        <ContextMenu.Item>Message</ContextMenu.Item>
+        <ContextMenu.Item>Copy Link</ContextMenu.Item>
+      </ContextMenu.SubContent>
+    </ContextMenu.Sub>
+    <ContextMenu.Separator />
+    <ContextMenu.Item color="red">Delete</ContextMenu.Item>
+  </ContextMenu.Content>
+</ContextMenu.Root>
+```
+
+### List Item Context Menu
+
+```tsx
+function FileList({ files }) {
+  return (
+    <Flex direction="column">
+      {files.map(file => (
+        <ContextMenu.Root key={file.id}>
+          <ContextMenu.Trigger>
+            <Flex
+              direction="row"
+              gap={2}
+              align="center"
+              p={2}
+              style={{ borderBottomWidth: 1, borderBottomColor: 'gray.5' }}
+            >
+              <Icon name="file" />
+              <Text>{file.name}</Text>
+            </Flex>
+          </ContextMenu.Trigger>
+
+          <ContextMenu.Content>
+            <ContextMenu.Item onSelect={() => openFile(file)}>
+              Open
+            </ContextMenu.Item>
+            <ContextMenu.Item onSelect={() => renameFile(file)}>
+              Rename
+            </ContextMenu.Item>
+            <ContextMenu.Separator />
+            <ContextMenu.Item color="red" onSelect={() => deleteFile(file)}>
+              Delete
+            </ContextMenu.Item>
+          </ContextMenu.Content>
+        </ContextMenu.Root>
+      ))}
+    </Flex>
+  );
+}
+```
+
+## Related
+
+- [DropdownMenu](/components/overlays/dropdown-menu) - Dropdown menu component
+- [Popover](/components/overlays/popover) - Popover component
