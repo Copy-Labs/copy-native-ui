@@ -4,7 +4,7 @@ export default function LayoutScreen() {
   return (
     <Stack
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         contentStyle: { flex: 1 },
         gestureEnabled: true,
         headerBackButtonDisplayMode: 'default',

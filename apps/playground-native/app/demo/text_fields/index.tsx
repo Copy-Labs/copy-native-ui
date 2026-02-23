@@ -1,39 +1,23 @@
 import {
-  Badge,
-  Flex,
-  ThemeProvider,
-  Heading,
-  TextField,
-  TextArea,
   Box,
-  Text,
-  Card,
-  IconButton,
   Button,
+  Card,
+  Flex,
+  Heading,
+  IconButton,
+  Text,
+  TextField,
+  ThemeProvider,
 } from '@radix-ui/themes-native';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import {
   CrossIcon,
-  LucideDot,
   LucideEllipsis,
   LucideEye,
   LucideMail,
   LucideSearch,
 } from 'lucide-react-native';
-
-/*// Simple icons for demo purposes
-const MagnifyingGlassIcon = ({ size = 16, color = '#666' }: { size?: number; color?: string }) => (
-  <RNText style={{ fontSize: size, color }}>🔍</RNText>
-);
-
-const CrossIcon = ({ size = 14, color = '#666' }: { size?: number; color?: string }) => (
-  <RNText style={{ fontSize: size, color }}>✕</RNText>
-);
-
-const DotsHorizontalIcon = ({ size = 14, color = '#666' }: { size?: number; color?: string }) => (
-  <RNText style={{ fontSize: size, color }}>⋯</RNText>
-);*/
 
 export default function TextFields() {
   const [textValue, setTextValue] = useState<string>('text example text');
@@ -175,11 +159,7 @@ export default function TextFields() {
               <Heading>TextField with Right Slot</Heading>
               <TextField.Root placeholder="Search the docs…" size="2">
                 <TextField.Slot side={'right'}>
-                  <IconButton
-                    accessibilityLabel={''}
-                    size={1}
-                    variant="solid"
-                  >
+                  <IconButton accessibilityLabel={''} size={1} variant="solid">
                     <CrossIcon size={14} />
                   </IconButton>
                 </TextField.Slot>
@@ -196,11 +176,7 @@ export default function TextFields() {
                   </Flex>
                 </TextField.Slot>
                 <TextField.Slot>
-                  <IconButton
-                    accessibilityLabel={'horizontal dot icon'}
-                    size={1}
-                    variant="soft"
-                  >
+                  <IconButton accessibilityLabel={'horizontal dot icon'} size={1} variant="soft">
                     <LucideEllipsis size={14} />
                   </IconButton>
                 </TextField.Slot>
@@ -217,11 +193,7 @@ export default function TextFields() {
                   </Flex>
                 </TextField.Slot>
                 <TextField.Slot side="right">
-                  <IconButton
-                    accessibilityLabel={'cross icon'}
-                    size={1}
-                    variant="ghost"
-                  >
+                  <IconButton accessibilityLabel={'cross icon'} size={1} variant="ghost">
                     <CrossIcon size={14} />
                   </IconButton>
                 </TextField.Slot>

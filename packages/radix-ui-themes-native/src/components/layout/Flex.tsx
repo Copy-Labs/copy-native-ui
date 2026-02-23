@@ -3,6 +3,7 @@ import { DimensionValue, StyleSheet, type StyleProp, type ViewStyle, View as RNV
 import { Slot } from '../utilities/Slot';
 import { View } from '../primitives';
 import { useTheme } from '../../hooks/useTheme';
+import { useThemeMode } from '@/theme';
 
 interface FlexProps {
   /**
@@ -268,7 +269,8 @@ const Flex = React.memo(
       ref
     ) => {
       const theme = useTheme();
-      const colors = theme.colors.gray;
+      const mode = useThemeMode();
+      const colors = mode === 'dark' ? theme.colors.gray.dark : theme.colors.gray;
 
       const flexStyle: ViewStyle = useMemo(
         () => ({
@@ -312,7 +314,7 @@ const Flex = React.memo(
           paddingVertical,
           columnGap: columnGap ?? gap,
           rowGap: rowGap ?? gap,
-          // backgroundColor: backgroundColor || colors[1],
+          // backgroundColor: backgroundColor || colors[2],
           borderRadius,
           opacity,
         }),

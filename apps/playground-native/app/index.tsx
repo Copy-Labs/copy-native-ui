@@ -3,16 +3,18 @@ import { Box, Button, Card, Flex, Heading, Text, ThemeProvider } from '@radix-ui
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRoute } from '@react-navigation/core';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { PageBody, PageContainer } from '@/components/PageSection';
 
 export default function App() {
   const insets = useSafeAreaInsets();
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ThemeProvider
-        mode={'light'}
-        themeOptions={{ accentColor: 'indigo', radius: 'large', scaling: 1 }}
-      >
+    <PageContainer>
+      <PageBody>
+        <Flex position={'absolute'} bottom={24} right={24} zIndex={20}>
+          <ThemeToggle />
+        </Flex>
         <Flex direction={'column'} gap={4} paddingHorizontal={16} paddingVertical={16}>
           <Heading align={'center'} size={7}>
             Copy Native UI
@@ -23,7 +25,7 @@ export default function App() {
         </Flex>
         <Flex
           align={'center'}
-          bottom={insets.bottom + 8}
+          bottom={8}
           direction={'column'}
           flex={1}
           justify={'center'}
@@ -44,9 +46,7 @@ export default function App() {
               <Text color={'gray'} size={8} weight={'light'}>
                 Components
               </Text>
-              <Text color={'gray'}>
-                View all 40+ available components here and how to use them.
-              </Text>
+              <Text color={'gray'}>View all 40+ available components here and how to use them.</Text>
               <Link asChild href={'/demo'}>
                 <Button size={3} variant={'solid'}>
                   All Components
@@ -81,9 +81,7 @@ export default function App() {
                 <Text color={'gray'} size={5} weight={'regular'}>
                   Default Expo Project Example
                 </Text>
-                <Text color={'gray'}>
-                  Visit the default Expo project example.
-                </Text>
+                <Text color={'gray'}>Visit the default Expo project example.</Text>
                 <Link asChild href={'/tabs'}>
                   <Button variant={'ghost'}>
                     Default Expo Project
@@ -96,7 +94,7 @@ export default function App() {
             </Card>
           </Flex>
         </Box>
-      </ThemeProvider>
-    </SafeAreaView>
+      </PageBody>
+    </PageContainer>
   );
 }

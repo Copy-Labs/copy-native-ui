@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "@radix-ui/themes-native": {
-      "signature": "c4dd4a628c5fe2705624b52a5b2a7c6a",
+      "signature": "dd24168981a37de43bf33fa04ca14398",
       "file": true,
       "replaced": "link:.yalc/@radix-ui/themes-native"
     }
