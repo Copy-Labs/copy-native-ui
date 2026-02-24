@@ -546,13 +546,17 @@ interface SelectItemProps {
   style?: StyleProp<ViewStyle>;
 }
 
-export const SelectItem = ({
-  children,
-  value: itemValue,
-  disabled = false,
-  style,
-}: SelectItemProps) => {
-  const { value, onValueChange, colors, onOpenChange, size, registerItem, unregisterItem, setSelectedItemText } = useSelect();
+export const SelectItem = ({ children, value: itemValue, disabled = false, style }: SelectItemProps) => {
+  const {
+    value,
+    onValueChange,
+    colors,
+    onOpenChange,
+    size,
+    registerItem,
+    unregisterItem,
+    setSelectedItemText,
+  } = useSelect();
   const theme = useTheme();
   const isSelected = value === itemValue;
 
@@ -606,6 +610,42 @@ export const SelectItem = ({
     }
   }, [size, theme.space]);
 
+  // Get size values
+  const getSizeValues = () => {
+    switch (size) {
+      case 1:
+        return {
+          boxSize: 20,
+          iconSize: 11,
+          fontSize: theme.typography.fontSizes[1].fontSize,
+          gap: theme.space[1],
+          borderWidth: 1,
+          height: 2.5,
+        };
+      case 3:
+        return {
+          boxSize: 28,
+          iconSize: 16,
+          fontSize: theme.typography.fontSizes[3].fontSize,
+          gap: theme.space[3],
+          borderWidth: 1,
+          height: 3,
+        };
+      case 2:
+      default:
+        return {
+          boxSize: 24,
+          iconSize: 12,
+          fontSize: theme.typography.fontSizes[2].fontSize,
+          gap: theme.space[2],
+          borderWidth: 1,
+          height: 2.7,
+        };
+    }
+  };
+
+  const sizeValues = getSizeValues();
+
   const handlePress = () => {
     if (!disabled) {
       // Store the selected item text before closing the dropdown
@@ -624,12 +664,7 @@ export const SelectItem = ({
     <Pressable
       onPress={handlePress}
       disabled={disabled}
-      style={[
-        styles.item,
-        disabled && styles.itemDisabled,
-        itemPadding,
-        style,
-      ]}
+      style={[styles.item, disabled && styles.itemDisabled, itemPadding, style]}
       accessibilityRole="menuitem"
       accessibilityState={{ selected: isSelected, disabled }}
     >
@@ -645,8 +680,40 @@ export const SelectItem = ({
         >
           {children}
         </Text>
-        {isSelected && (
+        {/*{isSelected && (
           <Text style={{ color: accentColor, fontSize, marginLeft: theme.space[2] }}>✓</Text>
+        )}*/}
+        {isSelected && (
+          <View style={{ alignItems: 'center', justifyContent: 'center', position: 'relative', width: sizeValues.iconSize, height: sizeValues.iconSize }}>
+            <View
+              style={{
+                position: 'absolute',
+                width: sizeValues.iconSize * 0.46,
+                height: sizeValues.height,
+                backgroundColor: accentColor,
+                borderRadius: 1,
+                transform: [
+                  { translateX: sizeValues.iconSize * -0.36 },
+                  { translateY: sizeValues.iconSize * 0.18 },
+                  { rotate: '45deg' },
+                ],
+              }}
+            />
+            <View
+              style={{
+                position: 'absolute',
+                width: sizeValues.iconSize * 1.1,
+                height: sizeValues.height,
+                backgroundColor: accentColor,
+                borderRadius: 3,
+                transform: [
+                  { translateX: sizeValues.iconSize * 0.1 },
+                  { translateY: sizeValues.iconSize * 0.0001 },
+                  { rotate: '-55deg' },
+                ],
+              }}
+            />
+          </View>
         )}
       </View>
     </Pressable>

@@ -1,10 +1,10 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Radix Themes Native",
+  "name": "Copy UI",
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/inkscape-with-text-light.svg",
+    "dark": "/logo/inkscape-with-text-transparent-dark.svg"
   },
   "favicon": "/favicon.png",
   "colors": {

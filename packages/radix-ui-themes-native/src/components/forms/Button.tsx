@@ -227,7 +227,7 @@ const Button = React.memo(
       const mode = useThemeMode();
       const isDark = mode === 'dark';
       const grayScale = isDark ? theme.colors.gray.dark : theme.colors.gray;
-      const grayAlpha = getGrayAlpha(theme);
+      const grayAlpha = getGrayAlpha(theme, mode);
       const activeColor = color || theme.accentColor;
       const accentScale = getColorScale(theme, activeColor, mode);
       const accentAlpha = getColorAlpha(theme, activeColor);

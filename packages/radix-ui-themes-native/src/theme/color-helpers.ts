@@ -48,8 +48,8 @@ export const getAccentAlpha = (theme: Theme) => {
  * Get the gray alpha scale
  * Returns the alpha color scale (1-12) for the gray color
  */
-export const getGrayAlpha = (theme: Theme) => {
-  return theme.colors.gray.alpha;
+export const getGrayAlpha = (theme: Theme, mode?: 'light' | 'dark') => {
+  return mode === 'dark' ? theme.colors.gray.alpha.dark : theme.colors.gray.alpha;
 };
 
 /**
@@ -186,19 +186,19 @@ export const getVariantColors = (
       case 'outline':
         return {
           backgroundColor: 'transparent',
-          textColor: colorScale[11],
-          borderColor: colorScale[11],
+          textColor: colorScale[12],
+          borderColor: colorScale[12],
         };
       case 'surface':
         return {
           backgroundColor: colorAlpha['2'],
-          textColor: colorScale[11],
+          textColor: colorScale[12],
           borderColor: colorScale[11],
         };
       case 'ghost':
         return {
           backgroundColor: 'transparent',
-          textColor: colorScale[11],
+          textColor: colorScale[12],
           borderColor: 'transparent',
         };
     }
@@ -218,25 +218,25 @@ export const getVariantColors = (
     case 'soft':
       return {
         backgroundColor: colorAlpha['3'],
-        textColor: colorAlpha['11'],
+        textColor: colorScale['11'],
         borderColor: 'transparent',
       };
     case 'outline':
       return {
         backgroundColor: 'transparent',
-        textColor: colorAlpha['11'],
+        textColor: colorScale['11'],
         borderColor: colorAlpha['8'],
       };
     case 'surface':
       return {
         backgroundColor: colorAlpha['2'],
-        textColor: colorAlpha['11'],
+        textColor: colorScale['11'],
         borderColor: colorAlpha['8'],
       };
     case 'ghost':
       return {
         backgroundColor: 'transparent',
-        textColor: colorAlpha['11'],
+        textColor: colorScale['11'],
         borderColor: 'transparent',
       };
     default:

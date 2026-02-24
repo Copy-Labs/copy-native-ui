@@ -309,7 +309,7 @@ const AccordionTrigger = React.forwardRef<
   const { value, open, disabled } = itemContext;
   const { size, dir, collapsible, type, onValueChange } = accordionContext;
 
-  const grayAlpha = getGrayAlpha(theme);
+  const grayAlpha = getGrayAlpha(theme, mode);
 
   // Animation for chevron rotation
   const rotationAnim = useRef(new Animated.Value(open ? 1 : 0)).current;
@@ -395,12 +395,12 @@ const AccordionTrigger = React.forwardRef<
 
   // Get text color based on state
   const getTextColor = () => {
-    return isDark ? grayAlpha['12'] : grayAlpha['12'];
+    return grayAlpha['12'];
   };
 
   // Get icon color
   const getIconColor = () => {
-    return isDark ? grayAlpha['11'] : grayAlpha['11'];
+    return grayAlpha['11'];
   };
 
   return (
@@ -429,7 +429,14 @@ const AccordionTrigger = React.forwardRef<
         <View style={{ flex: 1 }}>{children}</View>
       )}
       {icon ? (
-        icon
+        <Animated.View
+          style={{
+            transform: [{ rotate: rtlRotationInterpolate }],
+            marginLeft: theme.space[2],
+          }}
+        >
+          {icon}
+        </Animated.View>
       ) : (
         <Animated.View
           style={{
