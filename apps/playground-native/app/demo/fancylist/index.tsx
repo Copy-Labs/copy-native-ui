@@ -14,8 +14,9 @@ import {
 } from '@radix-ui/themes-native';
 import { ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Colors } from '@/constants/theme';
+import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 
 function BasicFancyList() {
   interface User {
@@ -409,73 +410,78 @@ const CustomKeyList = () => {
 
 export default function Datalists() {
   return (
-    <ThemeProvider
-      mode={'light'}
-      themeOptions={{ accentColor: 'blue', radius: 'medium', scaling: 1 }}
-    >
-      <ScrollView nestedScrollEnabled>
-        <View style={{ flex: 1 }}>
-          <Flex direction={'column'} gap={32} padding={12}>
+    <ThemeProvider themeOptions={{ accentColor: 'blue', radius: 'medium', scaling: 1 }}>
+      <PageContainer>
+        <PageHeader showBackButton>
+          <PageHeading>
             <Box>
               <Heading size={6}>FancyList</Heading>
-              <Text size={4}>A FlatList with default styling</Text>
+              <Text color={'gray'}>A FlatList with default styling</Text>
             </Box>
-            <Flex direction={'column'} gap={16}>
-              {/* Basic FancyList */}
-              <Heading size={4}>Basic FancyList</Heading>
-              <BasicFancyList />
-            </Flex>
+          </PageHeading>
+        </PageHeader>
+        <PageBody>
+          <ScrollView nestedScrollEnabled>
+            <View style={{ flex: 1 }}>
+              <Flex direction={'column'} gap={32} padding={12}>
+                <Flex direction={'column'} gap={16}>
+                  {/* Basic FancyList */}
+                  <Heading size={4}>Basic FancyList</Heading>
+                  <BasicFancyList />
+                </Flex>
 
-            {/* Contact List with Avatar */}
-            <Flex direction={'column'} gap={16}>
-              <Heading>Contact List with Avatar</Heading>
-              <ContactWithAvatarFancyList />
-            </Flex>
+                {/* Contact List with Avatar */}
+                <Flex direction={'column'} gap={16}>
+                  <Heading>Contact List with Avatar</Heading>
+                  <ContactWithAvatarFancyList />
+                </Flex>
 
-            {/* Settings List */}
-            <Flex gap={12} direction="column">
-              <Heading>Settings List</Heading>
-              <SettingsList />
-            </Flex>
+                {/* Settings List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Settings List</Heading>
+                  <SettingsList />
+                </Flex>
 
-            {/* Products With Prices List */}
-            <Flex gap={12} direction="column">
-              <Heading>Products List With Prices</Heading>
-              <ProductWithPricesList />
-            </Flex>
+                {/* Products With Prices List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Products List With Prices</Heading>
+                  <ProductWithPricesList />
+                </Flex>
 
-            {/* Task List */}
-            <Flex gap={12} direction="column">
-              <Heading>Task List</Heading>
-              <TaskList />
-            </Flex>
+                {/* Task List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Task List</Heading>
+                  <TaskList />
+                </Flex>
 
-            {/* Form List */}
-            <Flex gap={12} direction="column">
-              <Heading>Form List</Heading>
-              <FormList />
-            </Flex>
+                {/* Form List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Form List</Heading>
+                  <FormList />
+                </Flex>
 
-            {/* Profile List */}
-            <Flex gap={12} direction="column">
-              <Heading>Profile List</Heading>
-              <ProfileList />
-            </Flex>
+                {/* Profile List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Profile List</Heading>
+                  <ProfileList />
+                </Flex>
 
-            {/* Empty List */}
-            <Flex gap={12} direction="column">
-              <Heading>Empty List</Heading>
-              <EmptyList />
-            </Flex>
+                {/* Empty List */}
+                <Flex gap={12} direction="column">
+                  <Heading>Empty List</Heading>
+                  <EmptyList />
+                </Flex>
 
-            {/* CustomKey List */}
-            <Flex gap={12} direction="column">
-              <Heading>CustomKey List</Heading>
-              <CustomKeyList />
-            </Flex>
-          </Flex>
-        </View>
-      </ScrollView>
+                {/* CustomKey List */}
+                <Flex gap={12} direction="column">
+                  <Heading>CustomKey List</Heading>
+                  <CustomKeyList />
+                </Flex>
+              </Flex>
+            </View>
+          </ScrollView>
+        </PageBody>
+      </PageContainer>
     </ThemeProvider>
   );
 }

@@ -3,8 +3,7 @@ import { Em, Flex, Strong, Text, ThemeProvider } from '@radix-ui/themes-native';
 export default function Texts() {
   return (
     <ThemeProvider
-      mode={'light'}
-      themeOptions={{ accentColor: 'blue', radiusFactor: 4, scaling: 1 }}
+      themeOptions={{ accentColor: 'blue', radius: 'medium', scaling: 1 }}
     >
       <Flex direction={'column'} gap={12} padding={12}>
         <Flex align={'baseline'} gap={8}>
