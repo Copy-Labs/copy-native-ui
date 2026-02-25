@@ -132,3 +132,20 @@ export type {
   ToastCloseProps,
   ToastActionProps,
 } from './Toast';
+
+// BottomSheet
+export { BottomSheet } from './BottomSheet';
+export type {
+  SnapPoint,
+  BottomSheetRootProps,
+  BottomSheetTriggerProps,
+  BottomSheetPortalProps,
+  BottomSheetOverlayProps,
+  BottomSheetContentProps,
+  BottomSheetHandleProps,
+  BottomSheetTitleProps,
+  BottomSheetDescriptionProps,
+  BottomSheetFooterProps,
+  BottomSheetCloseProps,
+  BottomSheetActionProps,
+} from './BottomSheet';

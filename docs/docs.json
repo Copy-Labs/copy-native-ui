@@ -137,6 +137,7 @@
             "pages": [
               "components/overlays/dialog",
               "components/overlays/alert-dialog",
+              "components/overlays/bottom-sheet",
               "components/overlays/popover",
               "components/overlays/tooltip",
               "components/overlays/dropdown-menu",

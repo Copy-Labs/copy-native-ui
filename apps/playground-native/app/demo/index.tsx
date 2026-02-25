@@ -124,13 +124,13 @@ export default function App() {
                 <Text size={4}>kbd</Text>
               </Link>
               <Link href={'/demo/strong'}>
-                <Text size={4}>strong</Text>
+                <Text size={4}>Strong</Text>
               </Link>
               <Link href={'/demo/fancylist'}>
-                <Text size={4}>fancylist</Text>
+                <Text size={4}>Fancylist</Text>
               </Link>
               <Link href={'/demo/segmented_control'}>
-                <Text size={4}>segmented control</Text>
+                <Text size={4}>Segmented Control</Text>
               </Link>
               <Link href={'/demo/popover'}>
                 <Flex align={'center'} gap={8}>
@@ -218,6 +218,14 @@ export default function App() {
               <Link href={'/demo/center'}>
                 <Flex align={'center'} gap={8}>
                   <Text size={4}>Center</Text>
+                  <Badge color={'green'} radius={'full'} size={2} variant={'solid'}>
+                    New
+                  </Badge>
+                </Flex>
+              </Link>
+              <Link href={'/demo/bottom_sheet'}>
+                <Flex align={'center'} gap={8}>
+                  <Text size={4}>Bottom Sheet</Text>
                   <Badge color={'green'} radius={'full'} size={2} variant={'solid'}>
                     New
                   </Badge>

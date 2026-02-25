@@ -1,0 +1,256 @@
+# BottomSheet
+
+A bottom sheet component that slides up from the bottom of the screen, commonly used for displaying additional content, actions, or forms on mobile devices.
+
+## Import
+
+```tsx
+import { BottomSheet } from '@radix-ui/themes-native';
+```
+
+## Basic Usage
+
+```tsx
+<BottomSheet.Root>
+  <BottomSheet.Trigger>
+    <Button>Open Sheet</Button>
+  </BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Content>
+      <BottomSheet.Title>Sheet Title</BottomSheet.Title>
+      <BottomSheet.Description>
+        Sheet description text goes here.
+      </BottomSheet.Description>
+      <BottomSheet.Footer>
+        <BottomSheet.Close>
+          <Button variant="soft" color="gray">Cancel</Button>
+        </BottomSheet.Close>
+        <Button>Confirm</Button>
+      </BottomSheet.Footer>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet.Root>
+```
+
+## Anatomy
+
+The BottomSheet follows the Radix compound component pattern:
+
+- **Root**: Wraps all components and manages the open state
+- **Trigger**: The element that opens the bottom sheet
+- **Portal**: Renders the sheet at the root level using Modal
+- **Overlay**: The backdrop that dims the background
+- **Content**: The main sheet container
+- **Handle**: Visual drag handle at the top (optional)
+- **Title**: Accessible title for the sheet
+- **Description**: Accessible description for the sheet
+- **Footer**: Sticky footer for action buttons
+- **Close**: Button to close the sheet
+- **Action**: Action button that closes the sheet after executing
+
+## API Reference
+
+### BottomSheet.Root
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `open` | `boolean` | `false` | Controlled open state |
+| `onOpenChange` | `(open: boolean) => void` | - | Callback when open state changes |
+| `snapPoints` | `(string \| number)[]` | `['50%']` | Height snap points (e.g., `['25%', '50%', '90%']`) |
+| `defaultSnapPoint` | `number` | `0` | Initial snap point index |
+
+### BottomSheet.Trigger
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Trigger element |
+| `asChild` | `boolean` | `true` | Merge props onto child element |
+
+### BottomSheet.Portal
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Portal content |
+| `hostId` | `string` | - | Optional portal host ID |
+
+### BottomSheet.Overlay
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `style` | `StyleProp<ViewStyle>` | - | Custom styles |
+| `blur` | `boolean` | `false` | Future: backdrop blur effect |
+
+### BottomSheet.Content
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Sheet content |
+| `snapPoints` | `(string \| number)[]` | - | Override root snap points |
+| `style` | `StyleProp<ViewStyle>` | - | Custom styles |
+| `size` | `1 \| 2 \| 3 \| 4` | `2` | Padding size |
+| `hideHandle` | `boolean` | `false` | Hide drag handle |
+
+### BottomSheet.Handle
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `style` | `StyleProp<ViewStyle>` | - | Custom styles |
+
+### BottomSheet.Title
+
+Extends `Heading` component props.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Title content |
+| `size` | `1-9` | `4` | Heading size |
+| `weight` | `string` | `bold` | Font weight |
+
+### BottomSheet.Description
+
+Extends `Text` component props.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Description content |
+| `size` | `1-9` | `2` | Text size |
+
+### BottomSheet.Footer
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Footer content (typically buttons) |
+| `style` | `StyleProp<ViewStyle>` | - | Custom styles |
+| `withBorder` | `boolean` | `true` | Show top border separator |
+| `withPadding` | `boolean` | `true` | Apply theme padding |
+
+### BottomSheet.Close
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Close trigger element |
+| `asChild` | `boolean` | `true` | Merge props onto child element |
+
+### BottomSheet.Action
+
+Extends `Button` component props.
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `children` | `ReactNode` | - | Action button content |
+| `onPress` | `() => void` | - | Callback executed before closing |
+
+## Examples
+
+### Snap Points
+
+Control the height of the bottom sheet using snap points:
+
+```tsx
+<BottomSheet.Root snapPoints={['25%', '50%', '90%']}>
+  <BottomSheet.Trigger>
+    <Button>Open</Button>
+  </BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Content snapPoints={['25%', '50%', '90%']}>
+      <BottomSheet.Title>Select Height</BottomSheet.Title>
+      <BottomSheet.Description>
+        This sheet can snap to 25%, 50%, or 90% of screen height.
+      </BottomSheet.Description>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet.Root>
+```
+
+### Controlled State
+
+Manage the open state externally:
+
+```tsx
+const [open, setOpen] = React.useState(false);
+
+<BottomSheet.Root open={open} onOpenChange={setOpen}>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Content>
+      <BottomSheet.Title>Controlled Sheet</BottomSheet.Title>
+      <BottomSheet.Close>
+        <Button>Close</Button>
+      </BottomSheet.Close>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet.Root>
+```
+
+### Action Sheet
+
+Create an action sheet style bottom sheet:
+
+```tsx
+<BottomSheet.Root snapPoints={['40%']}>
+  <BottomSheet.Trigger>
+    <Button color="red">Delete</Button>
+  </BottomSheet.Trigger>
+  <BottomSheet.Portal>
+    <BottomSheet.Overlay />
+    <BottomSheet.Content snapPoints={['40%']}>
+      <BottomSheet.Title color="red">Confirm Deletion</BottomSheet.Title>
+      <BottomSheet.Description>
+        This action cannot be undone.
+      </BottomSheet.Description>
+      <BottomSheet.Footer>
+        <BottomSheet.Close>
+          <Button variant="soft" color="gray">Cancel</Button>
+        </BottomSheet.Close>
+        <BottomSheet.Action color="red">Delete</BottomSheet.Action>
+      </BottomSheet.Footer>
+    </BottomSheet.Content>
+  </BottomSheet.Portal>
+</BottomSheet.Root>
+```
+
+### Without Handle
+
+Hide the drag handle for a cleaner look:
+
+```tsx
+<BottomSheet.Content hideHandle>
+  <BottomSheet.Title>No Handle</BottomSheet.Title>
+  {/* content */}
+</BottomSheet.Content>
+```
+
+## Accessibility
+
+The BottomSheet component follows accessibility best practices:
+
+- Uses React Native's `Modal` component for proper focus management
+- Provides `Title` and `Description` components for screen readers
+- Supports hardware back button on Android
+- Overlay closes on tap for easy dismissal
+
+## Theming
+
+The BottomSheet automatically adapts to the current theme:
+
+- Background colors use theme gray scale
+- Border radius follows theme radii
+- Shadows adapt to light/dark mode
+- Padding uses theme spacing scale
+
+## Future Enhancements
+
+The following features are planned for future releases:
+
+- **Gesture-based interactions**: Drag to dismiss and snap
+- **Keyboard handling**: Automatic adjustment when keyboard appears
+- **Dynamic snapping**: Velocity-based snap point selection
+- **Backdrop blur**: Native blur effect for overlay
+
+## Related Components
+
+- [Dialog](/components/overlays/dialog) - Centered modal dialogs
+- [AlertDialog](/components/overlays/alert-dialog) - Confirmation dialogs
+- [Popover](/components/overlays/popover) - Anchored overlay content

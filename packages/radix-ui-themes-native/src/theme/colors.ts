@@ -63,6 +63,39 @@ export const grayAlpha: AlphaColorScale = {
   },
 };
 
+export const black: ColorScale = {
+  1: '#000000',
+  2: '#000000',
+  3: '#000000',
+  4: '#000000',
+  5: '#000000',
+  6: '#000000',
+  7: '#000000',
+  8: '#000000',
+  9: '#000000',
+  10: '#000000',
+  11: '#000000',
+  12: '#000000',
+  dark: {
+    1: '#000000',
+    2: '#000000',
+    3: '#000000',
+    4: '#000000',
+    5: '#000000',
+    6: '#000000',
+    7: '#000000',
+    8: '#000000',
+    9: '#000000',
+    10: '#000000',
+    11: '#000000',
+    12: '#000000',
+  },
+  contrast: '#000000',
+  surface: '#000000',
+  track: '#000000',
+  indicator: '#000000',
+};
+
 export const blackAlpha: AlphaColorScale = {
   1: "hsla(0, 0%, 0%, 0.05)",
   2: "hsla(0, 0%, 0%, 0.1)",
@@ -90,6 +123,39 @@ export const blackAlpha: AlphaColorScale = {
     11: "hsla(0, 0%, 0%, 0.9)",
     12: "hsla(0, 0%, 0%, 0.95)",
   },
+};
+
+export const white: ColorScale = {
+  1: '#ffffff',
+  2: '#ffffff',
+  3: '#ffffff',
+  4: '#ffffff',
+  5: '#ffffff',
+  6: '#ffffff',
+  7: '#ffffff',
+  8: '#ffffff',
+  9: '#ffffff',
+  10: '#ffffff',
+  11: '#ffffff',
+  12: '#ffffff',
+  dark: {
+    1: '#ffffff',
+    2: '#ffffff',
+    3: '#ffffff',
+    4: '#ffffff',
+    5: '#ffffff',
+    6: '#ffffff',
+    7: '#ffffff',
+    8: '#ffffff',
+    9: '#ffffff',
+    10: '#ffffff',
+    11: '#ffffff',
+    12: '#ffffff',
+  },
+  contrast: '#ffffff',
+  surface: '#ffffff',
+  track: '#ffffff',
+  indicator: '#ffffff',
 };
 
 export const whiteAlpha: AlphaColorScale = {
