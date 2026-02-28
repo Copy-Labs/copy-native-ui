@@ -11,7 +11,7 @@ import {
   Select,
   Text,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { useState } from 'react';
 import { Link } from 'expo-router';
 import { ThemeToggle } from '@/components/ThemeToggle';

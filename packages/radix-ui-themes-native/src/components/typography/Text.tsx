@@ -137,7 +137,7 @@ const TextComponent = React.memo(
           : numberOfLines
         : numberOfLines;
 
-      console.log("fontSize", fontSizes, size, children)
+      // console.log("fontSize", fontSizes, size, children)
       const textStyle: TextStyle = useMemo(
         () => ({
           fontSize: fontSizes.fontSize,

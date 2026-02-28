@@ -1,4 +1,4 @@
-import { Box, Flex, SegmentedControl, ThemeProvider, Text, Heading, Card } from '@radix-ui/themes-native';
+import { Box, Flex, SegmentedControl, ThemeProvider, Text, Heading, Card } from 'radix-native-ui';
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 

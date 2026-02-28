@@ -16,7 +16,7 @@ import {
   Arrow,
   FocusScope,
   RovingFocusGroup
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 ```
 
 ## Primitive
@@ -26,7 +26,7 @@ The base primitive component that all other components are built on.
 ### Usage
 
 ```tsx
-import { Primitive } from '@radix-ui/themes-native';
+import { Primitive } from 'radix-native-ui';
 
 <Primitive.view
   style={{ padding: 16 }}
@@ -54,7 +54,7 @@ Makes icon components accessible to screen readers.
 ### Usage
 
 ```tsx
-import { AccessibleIcon } from '@radix-ui/themes-native';
+import { AccessibleIcon } from 'radix-native-ui';
 
 <AccessibleIcon label="Search">
   <Icon name="search" />
@@ -79,7 +79,7 @@ Arrow element for tooltips, popovers, and other floating elements.
 ### Usage
 
 ```tsx
-import { Arrow } from '@radix-ui/themes-native';
+import { Arrow } from 'radix-native-ui';
 
 <Popover.Content>
   <Arrow />
@@ -108,7 +108,7 @@ Manages focus within a container, useful for modals and dialogs.
 ### Usage
 
 ```tsx
-import { FocusScope } from '@radix-ui/themes-native';
+import { FocusScope } from 'radix-native-ui';
 
 <FocusScope trapped>
   <TextField placeholder="Focus is trapped here" />
@@ -140,7 +140,7 @@ Manages focus navigation between items in a group (e.g., radio group, toolbar).
 ### Usage
 
 ```tsx
-import { RovingFocusGroup } from '@radix-ui/themes-native';
+import { RovingFocusGroup } from 'radix-native-ui';
 
 <RovingFocusGroup>
   <Button>First</Button>
@@ -174,7 +174,7 @@ import { RovingFocusGroup } from '@radix-ui/themes-native';
 ### Custom Button
 
 ```tsx
-import { Primitive } from '@radix-ui/themes-native';
+import { Primitive } from 'radix-native-ui';
 
 function CustomButton({ children, variant = 'solid', ...props }) {
   const variantStyles = {
@@ -201,7 +201,7 @@ function CustomButton({ children, variant = 'solid', ...props }) {
 ### Accessible Icon Button
 
 ```tsx
-import { AccessibleIcon, IconButton } from '@radix-ui/themes-native';
+import { AccessibleIcon, IconButton } from 'radix-native-ui';
 
 function SearchButton() {
   return (
@@ -217,7 +217,7 @@ function SearchButton() {
 ### Focus Trapped Modal
 
 ```tsx
-import { FocusScope, Dialog } from '@radix-ui/themes-native';
+import { FocusScope, Dialog } from 'radix-native-ui';
 
 function Modal({ open, onClose }) {
   return (
@@ -239,7 +239,7 @@ function Modal({ open, onClose }) {
 ### Keyboard Navigation
 
 ```tsx
-import { RovingFocusGroup, Button } from '@radix-ui/themes-native';
+import { RovingFocusGroup, Button } from 'radix-native-ui';
 
 function Toolbar() {
   return (
@@ -263,7 +263,7 @@ function Toolbar() {
 ### Custom Popover
 
 ```tsx
-import { Primitive, Arrow } from '@radix-ui/themes-native';
+import { Primitive, Arrow } from 'radix-native-ui';
 
 function CustomPopover({ content, children }) {
   const [open, setOpen] = useState(false);

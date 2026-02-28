@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, ThemeProvider, Text, Box, Card } from '@radix-ui/themes-native';
+import { Button, Flex, Heading, ThemeProvider, Text, Box, Card } from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';

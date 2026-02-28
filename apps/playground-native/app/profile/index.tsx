@@ -10,7 +10,7 @@ import {
   Tabs,
   Text,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { useState } from 'react';
 import {
   LucideBookmark,

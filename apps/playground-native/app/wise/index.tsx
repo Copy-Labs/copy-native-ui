@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import { Avatar, Box, Button, Flex, Heading, IconButton, Text } from '@radix-ui/themes-native';
+import { Avatar, Box, Button, Flex, Heading, IconButton, Text } from 'radix-native-ui';
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { PageBody, PageContainer, PageHeader } from '@/components/PageSection';

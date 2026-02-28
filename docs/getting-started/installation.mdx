@@ -21,13 +21,13 @@ Choose your preferred package manager:
 
 ```bash
 # npm
-npm install @radix-ui/themes-native
+npm install radix-native-ui
 
 # yarn
-yarn add @radix-ui/themes-native
+yarn add radix-native-ui
 
 # pnpm
-pnpm add @radix-ui/themes-native
+pnpm add radix-native-ui
 ```
 
 ## Install Peer Dependencies
@@ -38,12 +38,12 @@ If you're starting a new project, make sure you have React Native and Expo insta
 # Using Expo (recommended)
 npx create-expo-app my-app
 cd my-app
-npm install @radix-ui/themes-native
+npm install radix-native-ui
 
 # Using React Native CLI
 npx react-native init my-app
 cd my-app
-npm install @radix-ui/themes-native
+npm install radix-native-ui
 ```
 
 ## Optional Dependencies
@@ -66,7 +66,7 @@ Create a simple test to verify the installation:
 
 ```tsx
 // App.tsx
-import { ThemeProvider, Button, Text, Flex } from '@radix-ui/themes-native';
+import { ThemeProvider, Button, Text, Flex } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -85,7 +85,7 @@ export default function App() {
 Radix Themes Native is written in TypeScript and includes type definitions out of the box. No additional installation is required.
 
 ```tsx
-import { ButtonProps, ThemeProviderProps } from '@radix-ui/themes-native';
+import { ButtonProps, ThemeProviderProps } from 'radix-native-ui';
 
 // Types are automatically available
 const customButtonProps: ButtonProps = {

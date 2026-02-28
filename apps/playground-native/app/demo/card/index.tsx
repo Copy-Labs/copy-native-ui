@@ -7,7 +7,7 @@ import {
   Avatar,
   Box,
   Text,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';

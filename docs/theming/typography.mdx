@@ -28,7 +28,7 @@ The typography scale includes 9 sizes:
 ### Text Component
 
 ```tsx
-import { Text } from '@radix-ui/themes-native';
+import { Text } from 'radix-native-ui';
 
 <Text size={1}>Small text</Text>
 <Text size={3}>Regular text (default)</Text>
@@ -38,7 +38,7 @@ import { Text } from '@radix-ui/themes-native';
 ### Heading Component
 
 ```tsx
-import { Heading } from '@radix-ui/themes-native';
+import { Heading } from 'radix-native-ui';
 
 <Heading size={1}>H1 Heading</Heading>
 <Heading size={3}>H3 Heading</Heading>
@@ -66,7 +66,7 @@ import { Heading } from '@radix-ui/themes-native';
 ### Through Theme Object
 
 ```tsx
-import { useTheme } from '@radix-ui/themes-native';
+import { useTheme } from 'radix-native-ui';
 
 function CustomText() {
   const theme = useTheme();
@@ -88,7 +88,7 @@ function CustomText() {
 ### Font Weights
 
 ```tsx
-import { useTheme } from '@radix-ui/themes-native';
+import { useTheme } from 'radix-native-ui';
 
 function Component() {
   const theme = useTheme();
@@ -132,7 +132,7 @@ Configure custom fonts through ThemeProvider:
 
 ```tsx
 import { useFonts } from 'expo-font';
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 function App() {
   const [fontsLoaded] = useFonts({

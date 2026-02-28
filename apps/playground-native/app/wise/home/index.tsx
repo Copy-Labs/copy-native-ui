@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Button, Card, Flex, Heading, IconButton, SegmentedControl, Text } from '@radix-ui/themes-native';
+import { Avatar, Badge, Box, Button, Card, Flex, Heading, IconButton, SegmentedControl, Text } from 'radix-native-ui';
 import { Ionicons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native';
 import { PageBody, PageContainer, PageHeader } from '@/components/PageSection';

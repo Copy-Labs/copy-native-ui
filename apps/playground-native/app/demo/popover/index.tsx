@@ -9,7 +9,7 @@ import {
   Popover,
   Text,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import React, { useState } from 'react';
 import { LucideX } from 'lucide-react-native';

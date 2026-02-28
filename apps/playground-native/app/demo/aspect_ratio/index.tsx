@@ -8,7 +8,7 @@ import {
   ThemeProvider,
   useTheme,
   useThemeMode,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { Image as RNImage, ScrollView, View } from 'react-native';
 import React from 'react';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';

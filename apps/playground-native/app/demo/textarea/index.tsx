@@ -9,7 +9,7 @@ import {
   TextArea,
   TextField,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { LucideMail } from 'lucide-react-native';

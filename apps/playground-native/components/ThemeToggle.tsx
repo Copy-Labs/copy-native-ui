@@ -8,7 +8,7 @@ import {
   useThemeActions,
   useThemeMode,
   useToast,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 
 export function ThemeToggle() {
   // const { isDarkColorScheme, setColorScheme } = useColorScheme();

@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 export default function LayoutScreen() {
   return (

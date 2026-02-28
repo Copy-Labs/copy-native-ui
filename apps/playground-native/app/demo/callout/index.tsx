@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Callout, Text, Card, Flex, Button, Link, Heading, Box, ThemeProvider } from '@radix-ui/themes-native';
+import { Callout, Text, Card, Flex, Button, Link, Heading, Box, ThemeProvider } from 'radix-native-ui';
 import { Ionicons } from '@expo/vector-icons';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 

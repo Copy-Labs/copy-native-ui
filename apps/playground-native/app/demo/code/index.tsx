@@ -1,4 +1,4 @@
-import { Box, Code, Flex, Heading, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Code, Flex, Heading, Text, ThemeProvider } from 'radix-native-ui';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 import React from 'react';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import { DataList, Badge, Button, Heading, Text, Flex, Box } from '@radix-ui/themes-native';
+import { DataList, Badge, Button, Heading, Text, Flex, Box } from 'radix-native-ui';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 
 export default function DataListDemoScreen() {

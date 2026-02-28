@@ -8,7 +8,7 @@ import {
   Slider,
   Card,
   Button,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { useState } from 'react';
 
 export default function SliderDemo() {

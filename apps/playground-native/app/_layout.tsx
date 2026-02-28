@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { ThemeProvider, useTheme, useThemeActions, useThemeMode } from '@radix-ui/themes-native';
+import { ThemeProvider, useTheme, useThemeActions, useThemeMode } from 'radix-native-ui';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export const unstable_settings = {
@@ -34,7 +34,9 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider
-      themeOptions={{ accentColor: 'indigo', radius: 'large', scaling: 1 }}
+      accentColor="indigo"
+      radius="large"
+      scaling={1}
     >
       <AppContent />
     </ThemeProvider>

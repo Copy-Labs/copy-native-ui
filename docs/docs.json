@@ -21,7 +21,7 @@
     ],
     "primary": {
       "type": "button",
-      "href": "https://www.npmjs.com/package/@radix-ui/themes-native",
+      "href": "https://www.npmjs.com/package/radix-native-ui",
       "label": "npm"
     }
   },
@@ -36,7 +36,7 @@
         {
           "anchor": "npm",
           "icon": "npm",
-          "href": "https://www.npmjs.com/package/@radix-ui/themes-native"
+          "href": "https://www.npmjs.com/package/radix-native-ui"
         }
       ]
     },
@@ -75,8 +75,7 @@
               "components/layout/box",
               "components/layout/flex",
               "components/layout/grid",
-              "components/layout/container",
-              "components/layout/inset"
+              "components/layout/container"
             ]
           },
           {
@@ -88,8 +87,7 @@
               "components/typography/em",
               "components/typography/code",
               "components/typography/kbd",
-              "components/typography/blockquote",
-              "components/typography/link"
+              "components/typography/blockquote"
             ]
           },
           {
@@ -120,15 +118,13 @@
               "components/data-display/data-list",
               "components/data-display/fancy-list",
               "components/data-display/progress",
-              "components/data-display/spinner",
-              "components/data-display/table"
+              "components/data-display/spinner"
             ]
           },
           {
             "group": "Navigation",
             "pages": [
               "components/navigation/tabs",
-              "components/navigation/tab-nav",
               "components/navigation/segmented-control"
             ]
           },

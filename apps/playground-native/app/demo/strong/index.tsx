@@ -1,4 +1,4 @@
-import { Flex, Strong, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Flex, Strong, Text, ThemeProvider } from 'radix-native-ui';
 
 export default function Strongs() {
   return (

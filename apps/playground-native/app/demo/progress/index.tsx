@@ -7,7 +7,7 @@ import {
   ThemeProvider,
   Card,
   Progress,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { useState, useEffect } from 'react';
 
 export default function ProgressDemo() {

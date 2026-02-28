@@ -10,13 +10,13 @@ description: Theme provider component for configuring the theme.
 ## Import
 
 ```tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 ```
 
 ## Usage
 
 ```tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 function App() {
   return (
@@ -29,30 +29,56 @@ function App() {
 
 ## Props
 
+### Theme Configuration
+
 <PropTable>
-  <Prop name="children" type="ReactNode">
-    Application content.
+  <Prop name="accentColor" type="Color" default="'indigo'">
+    Primary accent color for the theme.
   </Prop>
-  <Prop name="accentColor" type="string" default="'iris'">
-    Primary accent color.
-  </Prop>
-  <Prop name="grayColor" type="string" default="'slate'">
+  <Prop name="grayColor" type="'mauve' | 'olive' | 'sage' | 'sand' | 'slate' | 'gray'" default="'mauve'">
     Gray scale color.
-  </Prop>
-  <Prop name="panelBackground" type="'solid' | 'translucent'" default="'solid'">
-    Background style for panels.
   </Prop>
   <Prop name="radius" type="'none' | 'small' | 'medium' | 'large' | 'full'" default="'medium'">
     Border radius scale.
   </Prop>
-  <Prop name="scaling" type="'90%' | '95%' | '100%' | '105%' | '110%'" default="'100%'">
-    Overall scaling factor.
+  <Prop name="scaling" type="number" default="1">
+    Overall scaling factor (1 = 100%).
   </Prop>
+  <Prop name="panelBackground" type="'solid' | 'translucent'" default="'solid'">
+    Background style for panels.
+  </Prop>
+</PropTable>
+
+### Runtime Behavior
+
+<PropTable>
   <Prop name="appearance" type="'light' | 'dark' | 'inherit'" default="'inherit'">
-    Color scheme preference.
+    Color scheme preference. Use 'inherit' to follow device/parent settings.
+  </Prop>
+  <Prop name="forcedMode" type="'light' | 'dark'">
+    Force a specific mode, overriding device and parent settings.
   </Prop>
   <Prop name="hasBackground" type="boolean" default="true">
     Whether to apply background color.
+  </Prop>
+  <Prop name="onModeChange" type="(mode: 'light' | 'dark') => void">
+    Callback when theme mode changes.
+  </Prop>
+</PropTable>
+
+### Legacy Support
+
+<PropTable>
+  <Prop name="themeOptions" type="Partial<Theme>">
+    Theme options object (legacy - use flat props instead). If provided alongside flat props, flat props take precedence.
+  </Prop>
+</PropTable>
+
+### Toast Configuration
+
+<PropTable>
+  <Prop name="toastConfig" type="ToastConfig">
+    Configuration options for toast notifications.
   </Prop>
 </PropTable>
 
@@ -61,7 +87,7 @@ function App() {
 ### Basic Setup
 
 ```tsx
-import { ThemeProvider, Text } from '@radix-ui/themes-native';
+import { ThemeProvider, Text } from 'radix-native-ui';
 
 function App() {
   return (
@@ -178,36 +204,39 @@ function App() {
 ## Available Colors
 
 ### Accent Colors
-- `iris` (default)
-- `indigo`
-- `violet`
-- `purple`
+- `indigo` (default)
+- `amber`
+- `blue`
+- `bronze`
+- `brown`
+- `crimson`
+- `cyan`
+- `gold`
+- `grass`
+- `green`
+- `iris`
+- `jade`
+- `lime`
+- `mint`
+- `orange`
 - `pink`
 - `plum`
-- `crimson`
+- `purple`
 - `red`
 - `ruby`
-- `orange`
-- `amber`
-- `yellow`
-- `lime`
-- `green`
-- `teal`
-- `cyan`
 - `sky`
-- `blue`
+- `teal`
 - `tomato`
+- `violet`
+- `yellow`
 
 ### Gray Colors
-- `slate` (default)
+- `mauve` (default)
 - `gray`
-- `mauve`
-- `sage`
 - `olive`
+- `sage`
 - `sand`
-- `aqua`
-- `gold`
-- `bronze`
+- `slate`
 
 ## Related
 

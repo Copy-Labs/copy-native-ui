@@ -43,7 +43,7 @@ Provide accessible labels for interactive elements:
 Ensure proper focus management:
 
 ```tsx
-import { FocusScope } from '@radix-ui/themes-native';
+import { FocusScope } from 'radix-native-ui';
 
 <Dialog.Root>
   <Dialog.Content>
@@ -81,7 +81,7 @@ Ensure all interactive elements have accessible names:
 Announce dynamic content changes:
 
 ```tsx
-import { announceForAccessibility } from '@radix-ui/themes-native';
+import { announceForAccessibility } from 'radix-native-ui';
 
 function SaveButton() {
   const handleSave = async () => {
@@ -132,7 +132,7 @@ Ensure touch targets are large enough:
 Ensure sufficient color contrast:
 
 ```tsx
-import { getContrastColor, getColor } from '@radix-ui/themes-native';
+import { getContrastColor, getColor } from 'radix-native-ui';
 
 function AccessibleButton({ color }) {
   const bgColor = getColor(color, 9);
