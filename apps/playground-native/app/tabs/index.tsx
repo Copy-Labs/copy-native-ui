@@ -14,7 +14,7 @@ import {
   Switch,
   Text, TextArea, TextField,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { Image } from 'expo-image';
 import { Platform, StyleSheet } from 'react-native';
 

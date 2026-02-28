@@ -1,4 +1,4 @@
-import { Flex, ThemeProvider, Heading, Switch, Grid, Text, Box } from '@radix-ui/themes-native';
+import { Flex, ThemeProvider, Heading, Switch, Grid, Text, Box } from 'radix-native-ui';
 import React, { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';

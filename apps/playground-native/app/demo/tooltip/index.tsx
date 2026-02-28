@@ -7,7 +7,7 @@ import {
   Text,
   Tooltip,
   IconButton,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
 import { LucideInfo, LucideSettings, LucideSearch } from 'lucide-react-native';

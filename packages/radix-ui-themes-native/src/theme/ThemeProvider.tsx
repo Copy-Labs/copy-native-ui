@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useEffect, useState, useMemo, useCallback, useRef, ReactNode } from 'react';
-import type { Theme, ThemeMode } from './types';
+import type { Theme, ThemeMode, Color, RadiusSize } from './types';
 import { createTheme, defaultTheme } from './index';
 import { useDeviceColorScheme } from '../hooks/useColorScheme';
 import type { ToastConfig, ToastData, ToastOptions } from '../components/overlays/Toast.types';
 import { DEFAULT_TOAST_CONFIG } from '../components/overlays/Toast.types';
 import { ToastViewport } from '../components/overlays/Toast';
+
+// Gray color type based on available options in the theme
+type GrayColor = 'mauve' | 'olive' | 'sage' | 'sand' | 'slate' | 'gray';
 
 interface ThemeContextValue {
   theme: Theme;
@@ -34,22 +37,68 @@ export const useThemeContext = () => {
 
 export interface ThemeProviderProps {
   children: ReactNode;
+
+  // ===== THEME CONFIGURATION (Flat Props - Preferred) =====
+  /**
+   * Primary accent color for the theme
+   * @default 'indigo'
+   */
+  accentColor?: Color;
+  /**
+   * Gray scale color
+   * @default 'mauve'
+   */
+  grayColor?: GrayColor;
+  /**
+   * Border radius scale
+   * @default 'medium'
+   */
+  radius?: RadiusSize;
+  /**
+   * Overall scaling factor (1 = 100%)
+   * @default 1
+   */
+  scaling?: number;
+  /**
+   * Panel background style
+   * @default 'solid'
+   */
+  panelBackground?: 'solid' | 'translucent';
+
+  // ===== RUNTIME BEHAVIOR =====
   /**
    * Initial theme mode. If not provided, will inherit from parent ThemeProvider or use device color scheme.
+   * @deprecated Use `appearance` instead for consistency with Radix web
    */
   mode?: ThemeMode;
+  /**
+   * Color scheme preference ('light' | 'dark' | 'inherit')
+   * Alias for `mode` - matches Radix UI Themes web API
+   * @default 'inherit'
+   */
+  appearance?: 'light' | 'dark' | 'inherit';
   /**
    * Force theme mode (overrides parent and device settings)
    */
   forcedMode?: ThemeMode;
   /**
-   * Theme options
+   * Whether to apply background color to the container
+   * @default true
    */
-  themeOptions?: Partial<Theme>;
+  hasBackground?: boolean;
   /**
    * Callback when theme mode changes
    */
   onModeChange?: (mode: ThemeMode) => void;
+
+  // ===== LEGACY SUPPORT =====
+  /**
+   * Theme options object (legacy - use flat props instead)
+   * If provided alongside flat props, flat props take precedence
+   */
+  themeOptions?: Partial<Theme>;
+
+  // ===== TOAST CONFIGURATION =====
   /**
    * Toast configuration options
    */
@@ -61,26 +110,45 @@ export interface ThemeProviderProps {
  *
  * Mode resolution priority:
  * 1. forcedMode prop (highest - overrides everything)
- * 2. mode prop (explicit initial mode)
+ * 2. appearance/mode prop (explicit initial mode)
  * 3. Parent ThemeProvider's mode (inheritance for nested providers)
  * 4. Device color scheme
  * 5. 'light' (default fallback)
+ *
+ * Theme configuration priority:
+ * 1. Flat props (accentColor, radius, etc.) - highest precedence
+ * 2. themeOptions object (legacy support)
+ * 3. Default values
  */
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
+  // Theme config (flat props)
+  accentColor,
+  grayColor,
+  radius,
+  scaling,
+  panelBackground,
+  // Runtime props
   mode: initialMode,
+  appearance,
   forcedMode,
-  themeOptions = {},
   onModeChange,
+  // Legacy
+  themeOptions = {},
+  // Toast
   toastConfig: userToastConfig,
 }) => {
   // Get parent theme context if it exists (for nested ThemeProviders)
   const parentContext = useContext(ThemeContext);
   const deviceColorScheme = useDeviceColorScheme();
 
-  // Initialize mode with priority: initialMode > parent mode > device scheme > 'light'
+  // Resolve mode from appearance or mode prop
+  const resolvedInitialMode: ThemeMode | undefined =
+    appearance === 'inherit' ? undefined : (appearance as ThemeMode) ?? initialMode;
+
+  // Initialize mode with priority: resolvedInitialMode > parent mode > device scheme > 'light'
   const [mode, setMode] = useState<ThemeMode>(
-    initialMode ?? parentContext?.mode ?? deviceColorScheme ?? 'light'
+    resolvedInitialMode ?? parentContext?.mode ?? deviceColorScheme ?? 'light'
   );
 
   // Toast state
@@ -92,9 +160,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (forcedMode !== undefined) {
       // forcedMode takes highest priority
       setMode(forcedMode);
-    } else if (initialMode !== undefined) {
-      // Explicit mode prop takes second priority
-      setMode(initialMode);
+    } else if (resolvedInitialMode !== undefined) {
+      // Explicit mode/appearance prop takes second priority
+      setMode(resolvedInitialMode);
     } else if (parentContext?.mode !== undefined) {
       // Inherit from parent ThemeProvider
       setMode(parentContext.mode);
@@ -102,7 +170,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       // Fall back to device color scheme
       setMode(deviceColorScheme ?? 'light');
     }
-  }, [forcedMode, initialMode, parentContext?.mode, deviceColorScheme]);
+  }, [forcedMode, resolvedInitialMode, parentContext?.mode, deviceColorScheme]);
 
   const handleSetMode = (newMode: ThemeMode) => {
     setMode(newMode);
@@ -113,7 +181,21 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     handleSetMode(mode === 'light' ? 'dark' : 'light');
   };
 
-  const theme = useMemo(() => createTheme(themeOptions), [themeOptions]);
+  // Build theme config: flat props take precedence over themeOptions
+  const finalThemeOptions = useMemo(() => {
+    return {
+      // Start with legacy themeOptions
+      ...themeOptions,
+      // Override with flat props if provided
+      ...(accentColor !== undefined && { accentColor }),
+      ...(grayColor !== undefined && { grayColor }),
+      ...(radius !== undefined && { radius }),
+      ...(scaling !== undefined && { scaling }),
+      // panelBackground is not part of Theme type, would need separate handling
+    };
+  }, [themeOptions, accentColor, grayColor, radius, scaling]);
+
+  const theme = useMemo(() => createTheme(finalThemeOptions), [finalThemeOptions]);
 
   // Merge toast config with defaults
   const toastConfig = useMemo<Required<ToastConfig>>(

@@ -11,7 +11,7 @@ import {
   Badge,
   Button,
   TextField,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';

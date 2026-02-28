@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-npm install @radix-ui/themes-native
+npm install radix-native-ui
 ```
 
 ## Peer Dependencies
@@ -17,7 +17,7 @@ npm install @radix-ui/themes-native
 ## Quick Start
 
 ```tsx
-import { ThemeProvider, Button, Text, Flex, Card, Heading } from '@radix-ui/themes-native';
+import { ThemeProvider, Button, Text, Flex, Card, Heading } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -42,16 +42,36 @@ Wrap your app with ThemeProvider to enable theming.
 
 ### Props
 
+#### Theme Configuration
+
 | Prop | Type | Default | Description |
 |------|------|---------|-------------|
-| `children` | `ReactNode` | required | Child components |
-| `mode` | `'light' \| 'dark'` | `undefined` | Initial theme mode (follows device if undefined) |
-| `forcedMode` | `'light' \| 'dark'` | `undefined` | Force specific mode (overrides device settings) |
-| `accentColor` | `string` | `'indigo'` | Accent color for components |
-| `grayColor` | `string` | `'gray'` | Gray scale variant |
-| `radius` | `string` | `'medium'` | Border radius scale |
-| `scaling` | `number` | `1` | Scale factor for all sizes |
-| `onModeChange` | `(mode: ThemeMode) => void` | `undefined` | Callback when mode changes |
+| `accentColor` | `Color` | `'indigo'` | Primary accent color for the theme |
+| `grayColor` | `'mauve' \| 'olive' \| 'sage' \| 'sand' \| 'slate' \| 'gray'` | `'mauve'` | Gray scale color |
+| `radius` | `'none' \| 'small' \| 'medium' \| 'large' \| 'full'` | `'medium'` | Border radius scale |
+| `scaling` | `number` | `1` | Overall scaling factor (1 = 100%) |
+| `panelBackground` | `'solid' \| 'translucent'` | `'solid'` | Panel background style |
+
+#### Runtime Behavior
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `appearance` | `'light' \| 'dark' \| 'inherit'` | `'inherit'` | Color scheme preference. Use 'inherit' to follow device/parent settings |
+| `forcedMode` | `'light' \| 'dark'` | `undefined` | Force a specific mode, overriding device and parent settings |
+| `hasBackground` | `boolean` | `true` | Whether to apply background color |
+| `onModeChange` | `(mode: 'light' \| 'dark') => void` | `undefined` | Callback when theme mode changes |
+
+#### Legacy Support
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `themeOptions` | `Partial<Theme>` | `undefined` | Theme options object (legacy - use flat props instead). Flat props take precedence |
+
+#### Toast Configuration
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `toastConfig` | `ToastConfig` | `undefined` | Configuration options for toast notifications |
 
 ### Available Accent Colors
 
@@ -468,7 +488,7 @@ Padding component with overflow clipping.
 
 ```tsx
 // Using the toast hook
-import { useToast } from '@radix-ui/themes-native';
+import { useToast } from 'radix-native-ui';
 
 function MyComponent() {
   const { toast } = useToast();
@@ -631,5 +651,5 @@ Each color has a 12-step scale:
 ## Links
 
 - **GitHub**: https://github.com/Copy-Labs/radix-ui-native-kilo
-- **npm**: https://www.npmjs.com/package/@radix-ui/themes-native
+- **npm**: https://www.npmjs.com/package/radix-native-ui
 - **Original Radix Themes**: https://www.radix-ui.com/themes

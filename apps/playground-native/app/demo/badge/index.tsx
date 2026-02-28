@@ -1,4 +1,4 @@
-import { Badge, Flex, ThemeProvider, Heading, Text, Box } from '@radix-ui/themes-native';
+import { Badge, Flex, ThemeProvider, Heading, Text, Box } from 'radix-native-ui';
 import { View } from 'react-native';
 import React from 'react';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';

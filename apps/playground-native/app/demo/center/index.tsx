@@ -14,7 +14,7 @@ import {
   useThemeMode,
   Card,
   Flex,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import { PageBody, PageContainer, PageHeader } from '@/components/PageSection';
 

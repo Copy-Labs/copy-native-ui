@@ -6,7 +6,7 @@ import {
   Text,
   Heading,
   Flex,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 
 export default function AccordionScreen() {

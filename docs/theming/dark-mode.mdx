@@ -12,7 +12,7 @@ Radix Themes Native provides built-in support for dark mode with automatic color
 By default, the theme follows the device's color scheme:
 
 ```tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -32,15 +32,20 @@ Set a fixed mode that doesn't respond to device settings:
 
 ```tsx
 // Always light mode
-<ThemeProvider mode="light">
+<ThemeProvider appearance="light">
   <AppContent />
 </ThemeProvider>
 
 // Always dark mode
-<ThemeProvider mode="dark">
+<ThemeProvider appearance="dark">
   <AppContent />
 </ThemeProvider>
 ```
+
+<Note>
+  The `appearance` prop is the preferred way to set the color scheme. It accepts `'light'`, `'dark'`, or `'inherit'`.
+  The legacy `mode` prop is still supported for backward compatibility.
+</Note>
 
 ### Forced Mode
 
@@ -63,7 +68,7 @@ import {
   useThemeActions,
   useThemeMode,
   Button
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 
 function ThemeToggle() {
   const mode = useThemeMode();
@@ -91,17 +96,17 @@ Manage theme mode with state:
 
 ```tsx
 import { useState } from 'react';
-import { ThemeProvider, useThemeMode, Button } from '@radix-ui/themes-native';
+import { ThemeProvider, useThemeMode, Button } from 'radix-native-ui';
 
 function App() {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
+  const [appearance, setAppearance] = useState<'light' | 'dark'>('light');
 
   return (
     <ThemeProvider
-      mode={mode}
-      onModeChange={setMode}
+      appearance={appearance}
+      onModeChange={setAppearance}
     >
-      <Button onPress={() => setMode(m => m === 'light' ? 'dark' : 'light')}>
+      <Button onPress={() => setAppearance(a => a === 'light' ? 'dark' : 'light')}>
         Toggle Theme
       </Button>
     </ThemeProvider>
@@ -116,7 +121,7 @@ Store user preference with AsyncStorage:
 ```tsx
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 const THEME_KEY = '@theme_mode';
 
@@ -146,7 +151,7 @@ function App() {
 
   return (
     <ThemeProvider
-      mode={mode}
+      appearance={mode}
       onModeChange={handleModeChange}
     >
       <AppContent />
@@ -160,7 +165,7 @@ function App() {
 Colors automatically adapt to the current mode:
 
 ```tsx
-import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { useTheme, useThemeMode } from 'radix-native-ui';
 
 function ThemedComponent() {
   const theme = useTheme();
@@ -190,7 +195,7 @@ function ThemedComponent() {
 The theme automatically detects system preference changes:
 
 ```tsx
-import { ThemeProvider, useThemeMode } from '@radix-ui/themes-native';
+import { ThemeProvider, useThemeMode } from 'radix-native-ui';
 
 function SystemThemeIndicator() {
   const mode = useThemeMode();

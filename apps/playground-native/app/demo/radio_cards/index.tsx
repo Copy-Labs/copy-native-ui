@@ -5,7 +5,7 @@ import {
   RadioCards,
   Text,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import { useState } from 'react';
 

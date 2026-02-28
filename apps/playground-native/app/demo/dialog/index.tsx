@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, Flex, Heading, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Button, Dialog, Flex, Heading, Text, ThemeProvider } from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import React, { useState } from 'react';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';

@@ -8,7 +8,7 @@ import {
   DropdownMenu,
   Card,
   Avatar,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View, StyleSheet, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';

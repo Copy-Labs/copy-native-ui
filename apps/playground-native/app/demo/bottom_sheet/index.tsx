@@ -10,7 +10,7 @@ import {
   Heading,
   Separator,
   Text,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { PageBody, PageContainer, PageHeader } from '@/components/PageSection';
 
 export default function BottomSheetDemo() {

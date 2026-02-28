@@ -10,7 +10,7 @@ import {
   TextArea,
   TextField,
   ThemeProvider,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import React, { useState } from 'react';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';

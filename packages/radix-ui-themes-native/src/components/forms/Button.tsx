@@ -21,6 +21,7 @@ import {
 } from '../../theme/color-helpers';
 import RnTouchableOpacity from '../../components/primitives/TouchableOpacity';
 import { Color, RadiusSize } from '../../theme';
+import RnPressable from '../../components/primitives/Pressable';
 
 // ============================================================================
 // Types
@@ -204,7 +205,7 @@ interface ButtonCompoundComponent extends React.ForwardRefExoticComponent<Button
 }
 
 const Button = React.memo(
-  React.forwardRef<React.ComponentRef<typeof RnTouchableOpacity>, ButtonProps>(
+  React.forwardRef<React.ComponentRef<typeof RnPressable>, ButtonProps>(
     (
       {
         children,
@@ -410,7 +411,7 @@ const Button = React.memo(
       };
 
       return (
-        <TouchableOpacity
+        <RnPressable
           ref={ref}
           style={[buttonStyle, style]}
           onPress={handlePress}
@@ -439,7 +440,7 @@ const Button = React.memo(
               {rightIcons.map((icon, index) => renderIcon(icon, index))}
             </>
           )}
-        </TouchableOpacity>
+        </RnPressable>
       );
     }
   ),

@@ -1,4 +1,4 @@
-import { Box, Flex, Strong, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Flex, Strong, Text, ThemeProvider } from 'radix-native-ui';
 
 export default function Texts() {
   return (

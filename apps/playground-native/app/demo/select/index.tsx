@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import { Box, Button, Flex, Heading, Select, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Box, Button, Flex, Heading, Select, Text, ThemeProvider } from 'radix-native-ui';
 import { PageBody, PageContainer, PageHeader, PageHeading } from '@/components/PageSection';
 
 export default function SelectDemo() {

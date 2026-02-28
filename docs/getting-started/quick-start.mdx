@@ -13,7 +13,7 @@ The `ThemeProvider` component provides theme context to all child components. Wr
 
 ```tsx
 // App.tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -37,7 +37,7 @@ import {
   Flex,
   TextField,
   Switch
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 
 function Example() {
   return (
@@ -60,7 +60,7 @@ function Example() {
 Configure the theme with your preferred options:
 
 ```tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -95,7 +95,7 @@ import {
   Badge,
   Avatar,
   Separator
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView } from 'react-native';
 
 function ProfileCard() {
@@ -192,7 +192,7 @@ export default function App() {
 Access theme values and controls with hooks:
 
 ```tsx
-import { useTheme, useThemeMode, useThemeActions } from '@radix-ui/themes-native';
+import { useTheme, useThemeMode, useThemeActions } from 'radix-native-ui';
 
 function ThemeToggle() {
   const theme = useTheme();

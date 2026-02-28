@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import { router } from "expo-router";
 import {LucideArrowLeft} from "lucide-react-native";
-import { Flex, Heading, IconButton, Text, useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { Flex, Heading, IconButton, Text, useTheme, useThemeMode } from 'radix-native-ui';
 import { Icon } from '@/components/ui/icon-lucide';
 
 type childrenProps = ReactElement | ReactElement[] | any | any[] | null;

@@ -7,7 +7,7 @@ import {
   Box,
   Text,
   Strong,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View, Image } from 'react-native';
 
 export default function InsetDemo() {

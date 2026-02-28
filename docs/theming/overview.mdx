@@ -12,7 +12,7 @@ Radix Themes Native provides a powerful theming system that allows you to custom
 The `ThemeProvider` component is the root component that provides theme context to all child components.
 
 ```tsx
-import { ThemeProvider } from '@radix-ui/themes-native';
+import { ThemeProvider } from 'radix-native-ui';
 
 export default function App() {
   return (
@@ -133,7 +133,7 @@ Use `forcedMode` to override device settings:
 Access the full theme object:
 
 ```tsx
-import { useTheme } from '@radix-ui/themes-native';
+import { useTheme } from 'radix-native-ui';
 
 function MyComponent() {
   const theme = useTheme();
@@ -154,7 +154,7 @@ function MyComponent() {
 Get the current theme mode:
 
 ```tsx
-import { useThemeMode } from '@radix-ui/themes-native';
+import { useThemeMode } from 'radix-native-ui';
 
 function MyComponent() {
   const mode = useThemeMode();
@@ -170,7 +170,7 @@ function MyComponent() {
 Get theme control functions:
 
 ```tsx
-import { useThemeActions } from '@radix-ui/themes-native';
+import { useThemeActions } from 'radix-native-ui';
 
 function ThemeToggle() {
   const { setMode, toggleMode, mode } = useThemeActions();

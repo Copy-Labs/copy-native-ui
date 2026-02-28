@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Grid, Heading, Text, ThemeProvider } from '@radix-ui/themes-native';
+import { Avatar, Box, Flex, Grid, Heading, Text, ThemeProvider } from 'radix-native-ui';
 import { ScrollView, View } from 'react-native';
 import { LucideUsers } from 'lucide-react-native';
 import React from 'react';

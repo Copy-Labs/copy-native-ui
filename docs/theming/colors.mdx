@@ -43,7 +43,7 @@ Most components accept a `color` prop:
 Access colors through the theme object:
 
 ```tsx
-import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { useTheme, useThemeMode } from 'radix-native-ui';
 
 function CustomComponent() {
   const theme = useTheme();
@@ -115,7 +115,7 @@ function CustomComponent() {
 For transparent overlays, use the alpha color scales:
 
 ```tsx
-import { useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { useTheme, useThemeMode } from 'radix-native-ui';
 
 function Overlay() {
   const theme = useTheme();
@@ -173,7 +173,7 @@ High contrast mode uses:
 Get colors for a specific variant:
 
 ```tsx
-import { getVariantColors, useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { getVariantColors, useTheme, useThemeMode } from 'radix-native-ui';
 
 function CustomButton({ variant = 'solid', highContrast = false }) {
   const theme = useTheme();
@@ -196,7 +196,7 @@ function CustomButton({ variant = 'solid', highContrast = false }) {
 Get the full color scale:
 
 ```tsx
-import { getColorScale, useTheme, useThemeMode } from '@radix-ui/themes-native';
+import { getColorScale, useTheme, useThemeMode } from 'radix-native-ui';
 
 function Component() {
   const theme = useTheme();

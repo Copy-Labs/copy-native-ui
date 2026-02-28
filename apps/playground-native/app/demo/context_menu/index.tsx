@@ -6,7 +6,7 @@ import {
   Text,
   ContextMenu,
   Card,
-} from '@radix-ui/themes-native';
+} from 'radix-native-ui';
 import { ScrollView, View, StyleSheet, Alert, Pressable } from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';

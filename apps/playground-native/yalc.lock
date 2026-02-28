@@ -5,6 +5,11 @@
       "signature": "6b1c91e8f402bf2f006164e52c8578cd",
       "file": true,
       "replaced": "link:.yalc/@radix-ui/themes-native"
+    },
+    "radix-native-ui": {
+      "version": "0.1.0-alpha.0",
+      "signature": "d7741f3fe2186503b587ff2ff8e1568c",
+      "file": true
     }
   }
 }
